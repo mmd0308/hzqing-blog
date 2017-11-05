@@ -12,7 +12,7 @@
 
 
 <script>
-import { Navbar, Sidebar, AppMain } from '@/views/layout'
+import { Navbar, Sidebar, AppMain } from '@/views/admin/layout'
 
 export default {
   name: 'layout',

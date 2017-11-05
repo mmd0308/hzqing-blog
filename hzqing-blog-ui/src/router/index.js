@@ -4,7 +4,7 @@ const _import = require('./_import_' + process.env.NODE_ENV)
 // in development env not use Lazy Loading,because Lazy Loading too many pages will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
-import Layout from '../views/layout/Layout'
+import Layout from '../views/admin/layout/Layout'
 
 Vue.use(Router)
 
@@ -16,25 +16,39 @@ Vue.use(Router)
 * meta : `{ role: ['admin'] }`  will control the page role
 **/
 export const constantRouterMap = [
-  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/login', component: _import('admin/login/index'), hidden: true },
   { path: '/404', component: _import('404'), hidden: true },
+  { 
+    path: '/', 
+    component:_import('show/layout/Layout'), 
+    hidden:true,
+    redirect: '/index',
+    children: [
+      { path: 'index', component: _import('show/layout/AppMain'), hidden:true    },
+      { path: 'details', component: _import('show/blog/Details'), hidden:true    }
+  ]
+  },
   {
-    path: '/',
+    path: '/admin',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/admin/dashboard',
     name: 'Dashboard',
     hidden: true,
-    children: [{ path: 'dashboard', component: _import('dashboard/index') }]
+    children: [{ path: 'dashboard', component: _import('admin/dashboard/index') }]
   },
-
   {
-    path: '/example',
+    path: '/blog',
     component: Layout,
     redirect: 'noredirect',
-    name: 'Example',
+    name: '博客管理',
     icon: 'zujian',
     children: [
-      { path: 'index', name: 'Form', icon: 'zonghe', component: _import('page/form') }
+      { path: 'write', name: '新增博客', icon: 'zonghe', component: _import('admin/blog/blog') },
+      { path: 'article', name: '文章管理', icon: 'zonghe', component: _import('admin/blog/article') },
+      { path: 'category', name: '类别管理', icon: 'zonghe', component: _import('admin/blog/category') },
+      { path: 'comment', name: '评论管理', icon: 'zonghe', component: _import('admin/blog/comment') },
+      { path: 'drafts', name: '草稿箱', icon: 'zonghe', component: _import('admin/page/form') },
+      { path: 'recycle', name: '回收站', icon: 'zonghe', component: _import('admin/page/form') }
     ]
   },
 
@@ -44,7 +58,7 @@ export const constantRouterMap = [
     redirect: '/table/index',
     icon: 'tubiao',
     noDropdown: true,
-    children: [{ path: 'index', name: 'Table', component: _import('table/index'), meta: { role: ['admin'] }}]
+    children: [{ path: 'index', name: 'Table', component: _import('admin/table/index'), meta: { role: ['admin'] }}]
   },
 
   { path: '*', redirect: '/404', hidden: true }
