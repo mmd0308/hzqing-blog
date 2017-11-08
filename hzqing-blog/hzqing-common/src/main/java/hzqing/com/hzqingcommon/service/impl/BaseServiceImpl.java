@@ -1,20 +1,22 @@
 package hzqing.com.hzqingcommon.service.impl;
 
+import hzqing.com.hzqingcommon.dao.IBaseDao;
 import hzqing.com.hzqingcommon.service.IBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.common.Mapper;
 
 public class BaseServiceImpl<T> implements IBaseService<T> {
     @Autowired
-    private Mapper<T> mapper;
+    private IBaseDao<T> baseDao;
+
+    public String mapper;
 
     @Override
-    public void save(T t) {
-        mapper.insert(t);
+    public int save(T t) {
+        return baseDao.save(mapper+".save",t);
     }
 
     @Override
-    public void update(T t) {
-        mapper.updateByPrimaryKey(t);
+    public T getById(String id) {
+        return baseDao.selectById(mapper+".selectById",id);
     }
 }

@@ -1,7 +1,7 @@
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3306/laundry?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     # 使用druid数据源
@@ -21,11 +21,7 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
 mybatis:
-  basepackage: com.hzqing.hzqingadmin.mapper.sys
-  mapper-locations: classpath:mapper/sys/*.xml
-  mappers: tk.mybatis.mapper.common.Mapper
-  type-aliases-package: com.hzqing.hzqingadmin.entity.sys
+  mapper-locations: classpath:mapper/*/*.xml
+  type-aliases-package: hzqing.com.blogadmin.entity
 server:
-  port: 8888
-pagehelper:
-  dialect: com.github.pagehelper.dialect.helper.MySqlDialect #配置拦截器
+  port: 8899

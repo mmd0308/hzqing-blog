@@ -1,7 +1,8 @@
 package hzqing.com.hzqingcommon.service;
 
 public interface IBaseService<T> {
-    void save(T t);
 
-    void update(T t);
+    int save(T t);
+
+     T getById(String id);
 }

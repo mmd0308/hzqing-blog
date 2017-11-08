@@ -1,27 +1,46 @@
 package hzqing.com.hzqingcommon.controller;
 
+import hzqing.com.hzqingcommon.response.ResponseMessage;
 import hzqing.com.hzqingcommon.service.IBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-public class BaseController<T> {
+public class BaseController<T,M extends IBaseService<T>> {
     @Autowired
-    private IBaseService baseService;
+    private M baseService;
 
-    @PostMapping(value = "/add")
-    @ResponseBody
-    public String add(T t){
-        baseService.save(t);
-        return "base_add";
+    /**
+     * 新增
+     * @param t
+     * @return 返回状态码和影响行数目
+     */
+    @PostMapping("/add")
+    public ResponseMessage<Integer> add(T t){
+        return  new ResponseMessage<Integer>().success(baseService.save(t));
     }
-    @PutMapping(value = "/update")
-    public String update(@RequestBody T t){
-        baseService.update(t);
-        return null;
+
+    /**
+     * 根据id获取信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/get/{id}")
+    public ResponseMessage<T> get(@PathVariable String id){
+        T t = baseService.getById(id);
+        return new ResponseMessage<T>().success(t);
     }
-    @GetMapping(value = "/get/{id}")
-    public T get(@PathVariable String id){
-        return null;
+
+    /**
+     * 根据id进行修改
+     * @param t
+     * @return
+     */
+    @PutMapping("/put/{id}")
+    public ResponseMessage<String> update(T t){
+        return  new ResponseMessage<>().success("");
     }
+
+
+
 
 }
