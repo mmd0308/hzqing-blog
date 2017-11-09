@@ -82,6 +82,17 @@
 			<artifactId>hzqing-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!--JSON web Token,简称JWT-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

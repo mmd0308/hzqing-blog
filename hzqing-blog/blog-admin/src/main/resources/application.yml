@@ -20,8 +20,19 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
+  redis:
+      database: 0
+      host: 127.0.0.1
+      pool:
+        max-active: 20
 mybatis:
   mapper-locations: classpath:mapper/*/*.xml
   type-aliases-package: hzqing.com.blogadmin.entity
 server:
   port: 8899
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+debug: true

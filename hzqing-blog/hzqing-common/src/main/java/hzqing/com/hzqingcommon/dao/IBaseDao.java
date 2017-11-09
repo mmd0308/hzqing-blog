@@ -44,7 +44,7 @@ public interface IBaseDao<T>{
     public T selectById(String str,String id);
 
     /**
-     * 获取所有的数据
+     * 获取所有的数据 带分页
      * @param str
      * @param obj
      * @return

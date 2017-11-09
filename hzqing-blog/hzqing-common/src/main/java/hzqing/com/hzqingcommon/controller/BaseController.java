@@ -1,13 +1,17 @@
 package hzqing.com.hzqingcommon.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
 import hzqing.com.hzqingcommon.service.IBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 public class BaseController<T,M extends IBaseService<T>> {
     @Autowired
-    private M baseService;
+    protected M baseService;
 
     /**
      * 新增
@@ -40,6 +44,25 @@ public class BaseController<T,M extends IBaseService<T>> {
         return  new ResponseMessage<>().success("");
     }
 
+    /**
+     * 按照条件查询，默认查询所有 带分页
+     * @param
+     * @return
+     */
+    @GetMapping("/page")
+    public ResponseMessage<PageInfo<T>> page(Integer page,Integer pageSize,T t){
+        PageInfo<T> res = baseService.queryPage(page,pageSize,t);
+        return new ResponseMessage<>().success(res);
+    }
+
+    /**
+     * 获取所有数据
+     * @return
+     */
+    @GetMapping("/all")
+    public ResponseMessage<List<T>> all(){
+        return new ResponseMessage<List<T>>().success(baseService.findAll());
+    }
 
 
 

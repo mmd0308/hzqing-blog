@@ -51,7 +51,18 @@ export const constantRouterMap = [
       { path: 'recycle', name: '回收站', icon: 'zonghe', component: _import('admin/page/form') }
     ]
   },
-
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '系统管理',
+    icon: 'zujian',
+    children: [
+      { path: 'user', name: '用户管理', icon: 'zonghe', component: _import('admin/system/user/index') },
+      { path: 'role', name: '角色管理', icon: 'zonghe', component: _import('admin/system/role/index') },
+      { path: 'menu', name: '菜单管理', icon: 'zonghe', component: _import('admin/system/menu/index') }
+    ]
+  },
   {
     path: '/table',
     component: Layout,

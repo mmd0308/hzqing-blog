@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="menuMapper" >
+    <resultMap id="menuMap" type="menu">
+        <id column="id" property="id"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_code" property="menuCode"/>
+        <result column="levelcode" property="levelcode" />
+        <result column="parent_id" property="parentId"/>
+        <result column="href" property="href"/>
+        <result column="component" property="component"/>
+        <result column="icon" property="icon"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="note" property="note"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+    <sql id="table">
+        sys_menu
+    </sql>
+    <sql id="field">
+      id,
+      menu_name,
+      menu_code,
+      levelcode,
+      parent_id,
+      href,
+      component,
+      icon,
+      menu_type,
+      note,
+      enabled
+    </sql>
+    <sql id="fieldValue">
+      #{id},
+      #{menuName},
+      #{menuCode},
+      #{levelcode},
+      #{parentId},
+      #{href},
+      #{component},
+      #{icon},
+      #{menuType},
+      #{note},
+      #{enabled}
+    </sql>
+
+    <insert id="save" parameterType="menu">
+        INSERT  INTO
+          <include refid="table"/>
+        (
+          <include refid="field"/>
+        )
+        VALUES
+        (
+            <choose>
+                <when test="id == null || id == ''">
+                    (SELECT replace((SELECT  uuid()),"-","")),
+                </when>
+                <otherwise>
+                    #{id},
+                </otherwise>
+            </choose>
+            #{menuName},
+            #{menuCode},
+            #{levelcode},
+            #{parentId},
+            #{href},
+            #{component},
+            #{icon},
+            #{menuType},
+            #{note},
+            #{enabled}
+        )
+    </insert>
+    <select id="query" parameterType="menu" resultMap="menuMap">
+        SELECT
+          <include refid="field"/>
+        FROM
+          <include refid="table"/>
+        where
+          1 = 1
+        <if test="id != null and id != ''">
+            id = ${id}
+        </if>
+    </select>
+</mapper>

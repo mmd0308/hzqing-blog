@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="roleMapper" >
+    <resultMap id="roleMap" type="role">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="levelcode" property="levelcode" />
+        <result column="note" property="note"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+    <sql id="table">
+        sys_role
+    </sql>
+    <sql id="field">
+        id,
+        role_name,
+        role_code,
+        levelcode,
+        enabled,
+        note
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{roleName},
+        #{roleCode},
+        #{levelcode},
+        #{enabled},
+        #{note}
+    </sql>
+    <insert id="save" parameterType="role">
+        INSERT  INTO
+            <include refid="table"/>
+        (
+            <include refid="field"/>
+        ) VALUES (
+            <choose>
+                <when test="id == null || id == ''">
+                    (SELECT replace((SELECT  uuid()),"-","")),
+                </when>
+                <otherwise>
+                    #{id},
+                </otherwise>
+            </choose>
+            #{roleName},
+            #{roleCode},
+            #{levelcode},
+            #{enabled},
+            #{note}
+        )
+    </insert>
+    <select id="query" parameterType="role" resultMap="roleMap">
+        SELECT
+          <include refid="field"/>
+        FROM
+          <include refid="table"/>
+        where 1 = 1
+        <if test="id != null and id != ''">
+            id = ${id}
+        </if>
+    </select>
+</mapper>

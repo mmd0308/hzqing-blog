@@ -1,8 +1,11 @@
 package hzqing.com.blogadmin.entity.sys;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("user")
 public class User {
     private String id;
-    private String userName;
+    private String username;
     private String password;
     private String email;
     private String note;
@@ -15,12 +18,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -45,5 +48,16 @@ public class User {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

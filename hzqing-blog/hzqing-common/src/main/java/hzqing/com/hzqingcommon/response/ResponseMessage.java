@@ -2,24 +2,24 @@ package hzqing.com.hzqingcommon.response;
 
 public class ResponseMessage<T> {
 
-    private String status;
-    private T body;
+    private int status;
+    private T data;
 
     public ResponseMessage() {
     }
 
-    public ResponseMessage(String status, T body) {
+    public ResponseMessage(int status, T data) {
         this.status = status;
-        this.body = body;
+        this.data = data;
     }
 
     /**
      * 返回正确的结果和数据
-     * @param body
+     * @param data
      * @return
      */
-    public ResponseMessage success(T body){
-        return  new ResponseMessage("success",body);
+    public ResponseMessage success(T data){
+        return  new ResponseMessage(200,data);
     }
 
     /**
@@ -28,6 +28,22 @@ public class ResponseMessage<T> {
      * @return
      */
     public ResponseMessage error(String message){
-        return new ResponseMessage("error",message);
+        return new ResponseMessage(404,message);
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
