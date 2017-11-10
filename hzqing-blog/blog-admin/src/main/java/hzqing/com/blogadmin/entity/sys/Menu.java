@@ -14,7 +14,7 @@ public class Menu {
     private String icon;
     private String menuType;
     private String note;
-    private int enabled;
+    private String enabled;
 
     public String getId() {
         return id;
@@ -88,11 +88,11 @@ public class Menu {
         this.note = note;
     }
 
-    public int getEnabled() {
+    public String getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
 

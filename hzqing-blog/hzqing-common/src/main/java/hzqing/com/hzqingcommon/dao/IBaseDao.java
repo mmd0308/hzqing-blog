@@ -1,6 +1,7 @@
 package hzqing.com.hzqingcommon.dao;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IBaseDao<T>{
     /**
@@ -52,4 +53,12 @@ public interface IBaseDao<T>{
     public List<T> findForList(String str, Object obj) ;
 
     public Object findForMap(String sql, Object obj, String key, String value) ;
+
+    /**
+     * 批量新增
+     * @param s
+     * @param lists
+     * @return
+     */
+    int batchSave(String s, List<Map<String,String>> lists);
 }

@@ -41,6 +41,17 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         return baseDao.findForList(mapper+".all",null);
     }
 
+    @Override
+    public int update(T t) {
+
+        return baseDao.update(mapper+".update",t);
+    }
+
+    @Override
+    public int deletedById(String id) {
+        return baseDao.delete(mapper+".deletedById",id);
+    }
+
 
     public List<T> list(T t){
         return  null;

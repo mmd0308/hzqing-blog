@@ -14,4 +14,8 @@ public interface IBaseService<T> {
      PageInfo<T> queryPage(Integer start, Integer pageSize, T t);
 
      List<T> findAll();
+
+    int update(T t);
+
+    int deletedById(String id);
 }

@@ -19,7 +19,7 @@ public class BaseController<T,M extends IBaseService<T>> {
      * @return 返回状态码和影响行数目
      */
     @PostMapping("/add")
-    public ResponseMessage<Integer> add(T t){
+    public ResponseMessage<Integer> add(@RequestBody T t){
         return  new ResponseMessage<Integer>().success(baseService.save(t));
     }
 
@@ -40,8 +40,9 @@ public class BaseController<T,M extends IBaseService<T>> {
      * @return
      */
     @PutMapping("/put/{id}")
-    public ResponseMessage<String> update(T t){
-        return  new ResponseMessage<>().success("");
+    public ResponseMessage<Integer> update(@RequestBody T t){
+        int res = baseService.update(t);
+        return  new ResponseMessage<>().success(res);
     }
 
     /**
@@ -64,6 +65,11 @@ public class BaseController<T,M extends IBaseService<T>> {
         return new ResponseMessage<List<T>>().success(baseService.findAll());
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseMessage<Integer> delete(@PathVariable String id){
+        int res = baseService.deletedById(id);
+        return new ResponseMessage<>().success("nu");
+    }
 
 
 }

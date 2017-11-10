@@ -23,6 +23,14 @@ public class ResponseMessage<T> {
     }
 
     /**
+     * 返回成功  数据 success
+     * @return
+     */
+    public ResponseMessage success(){
+        return  new ResponseMessage(200,"success");
+    }
+
+    /**
      * 返回错误结果
      * @param message
      * @return

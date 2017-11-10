@@ -5,7 +5,6 @@
         <id column="id" property="id"/>
         <result column="role_name" property="roleName"/>
         <result column="role_code" property="roleCode"/>
-        <result column="levelcode" property="levelcode" />
         <result column="note" property="note"/>
         <result column="enabled" property="enabled"/>
     </resultMap>
@@ -16,7 +15,6 @@
         id,
         role_name,
         role_code,
-        levelcode,
         enabled,
         note
     </sql>
@@ -24,7 +22,6 @@
         #{id},
         #{roleName},
         #{roleCode},
-        #{levelcode},
         #{enabled},
         #{note}
     </sql>
@@ -44,7 +41,6 @@
             </choose>
             #{roleName},
             #{roleCode},
-            #{levelcode},
             #{enabled},
             #{note}
         )
@@ -56,7 +52,51 @@
           <include refid="table"/>
         where 1 = 1
         <if test="id != null and id != ''">
-            id = ${id}
+            and id = #{id}
         </if>
+        <if test="enabled != null and enabled !=''">
+            and enabled = #{enabled}
+        </if>
+    </select>
+    <select id="selectById" parameterType="String" resultMap="roleMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{0}
+    </select>
+    <update id="update" parameterType="role" >
+        UPDATE
+        <include refid="table"/>
+        SET
+        id = #{id}
+        <if test="roleName != null and roleName !=''">
+            , role_name = #{roleName}
+        </if>
+        <if test="roleCode != null and roleCode !=''">
+            , role_code = #{roleCode}
+        </if>
+        <if test="note != null and note !=''">
+            , note = #{note}
+        </if>
+        <if test="enabled  != null and enabled !=''">
+            , enabled = #{enabled}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
+    <select id="getRoleByUserId" parameterType="string" resultMap="roleMap">
+        SELECT
+        r.*
+        FROM
+        <include refid="table"/> r
+        LEFT JOIN rl_user_role s ON r.id = s.role_id
+        WHERE s.user_id = #{0}
     </select>
 </mapper>

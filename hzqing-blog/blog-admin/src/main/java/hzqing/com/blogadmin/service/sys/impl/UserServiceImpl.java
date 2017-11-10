@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.service.sys.impl;
 
+import hzqing.com.blogadmin.entity.sys.Role;
 import hzqing.com.blogadmin.entity.sys.User;
 import hzqing.com.blogadmin.service.sys.IUserService;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
@@ -7,10 +8,9 @@ import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -46,6 +46,28 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         System.out.println("........"+user);
         return user;
     }
+
+    @Override
+    @Transactional
+    public void saveUserRole(HashMap<String, Object> map) {
+        String userId  = map.get("userId").toString();
+        ArrayList<HashMap<String,Object>> roles = (ArrayList<HashMap<String, Object>>) map.get("roles");
+        List<Map<String,String>> lists = new ArrayList<>();
+        for (HashMap r : roles){
+            HashMap<String,String> m = new HashMap<>();
+            m.put("user_id",userId);
+            m.put("role_id", (String) r.get("id"));
+            lists.add(m);
+        }
+        //删除原先的
+        baseDao.delete(mapper+".deleteUserRoleByUserId",userId);
+        if (lists.size()>0){
+            //批量新增新的权限
+            baseDao.batchSave(mapper+".batchSave",lists);
+        }
+
+    }
+
 
     /**
      * 获取token  并将信息存储在redis中

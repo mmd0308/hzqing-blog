@@ -7,8 +7,7 @@ public class Role {
     private String id;
     private String roleCode;
     private String roleName;
-    private String levelcode;
-    private int enabled;
+    private String enabled;
     private String note;
 
     public String getId() {
@@ -35,19 +34,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public String getLevelcode() {
-        return levelcode;
-    }
-
-    public void setLevelcode(String levelcode) {
-        this.levelcode = levelcode;
-    }
-
-    public int getEnabled() {
+    public String getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(int enabled) {
+    public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
 

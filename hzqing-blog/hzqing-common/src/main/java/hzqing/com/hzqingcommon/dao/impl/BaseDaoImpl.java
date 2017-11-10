@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 public class BaseDaoImpl<T> implements IBaseDao<T> {
     @Resource(name = "sqlSessionTemplate")
@@ -13,10 +14,6 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 
     public int save(String str, Object obj) {
         return sqlSessionTemplate.insert(str, obj);
-    }
-
-    public Object batchSave(String str, List<Object> objs ){
-        return sqlSessionTemplate.insert(str, objs);
     }
 
     public int update(String str, Object obj)  {
@@ -47,5 +44,11 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     public Object findForMap(String str, Object obj, String key, String value)  {
         return sqlSessionTemplate.selectMap(str, obj, key);
     }
+
+    @Override
+    public int batchSave(String s, List<Map<String, String>> lists) {
+        return sqlSessionTemplate.insert(s,lists);
+    }
+
 
 }
