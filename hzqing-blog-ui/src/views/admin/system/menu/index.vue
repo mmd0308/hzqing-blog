@@ -1,115 +1,140 @@
 <template>
-    <div id="category">
-            <el-card>
-                <div id="query">
-                    <el-row>
-                        <el-col :span="8">
-                            <el-input v-model="input" style="width:96%" placeholder="请输入分类名称"></el-input>
-                        </el-col>
-                        <el-col :span="16">
-                            <el-button-group>
-                                <el-button type="primary">查询</el-button>
-                                <el-button type="primary">新增</el-button>
-                            </el-button-group>
-                        </el-col>
-                    </el-row>
+    <div id="menu">
+      <el-row  v-loading.body="listLoading">
+        <el-col :span="6">
+            <el-input placeholder="输入关键字进行过滤" v-model="filterText">
+            </el-input>
+            <el-tree class="filter-tree" style="margin-top:10px;"  :data="data2" :props="defaultProps" :default-expand-all="true"  :filter-node-method="filterNode" :default-expanded-keys="[0,1]" ref="tree2" @node-click="clickTree" @node-expand="expandTree">
+            </el-tree>
+        </el-col>
+        <el-col :span="18">
+             <div class="right-layout-from">
+                <div v-if="this.state == 'see'" class="top-button">
+                    <el-button-group>
+                    <el-button type="primary" native-type="submit"  @click="toCreate()" icon="plus">添加</el-button>
+                    <el-button type="primary"  @click="toUpdate()" icon="edit">编辑</el-button>
+                    <el-button type="danger"  @click="toDeleted()" icon="delete">删除</el-button>
+                    </el-button-group>
                 </div>
-                <el-table
-                :data="tableData"
-                style="width: 100%"
-                >
-                    <el-table-column
-                    label="类别"
-                    sortable
-                    width="180">
-                        <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                    label="文章"
-                    :formatter="formatter">
-                        <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.address }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                    label="创建时间"
-                    :formatter="formatter">
-                        <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.address }}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="操作" width="200px">
-                        <template scope="scope">
-                            <el-button
-                                size="mini"
-                                type="success"
-                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button
-                                v-if="scope.row.show == 'show'"
-                                size="mini"
-                                type="info"
-                                @click="handleEdit(scope.$index, scope.row)">显示</el-button>
-                            <el-button
-                                v-if="scope.row.show == 'hide'"
-                                size="mini"
-                                type="warning"
-                                @click="handleEdit(scope.$index, scope.row)">隐藏</el-button>
-                            <el-button
-                                size="mini"
-                                type="danger"
-                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-card>
+                <div  class="top-button">
+                    <el-button v-if="this.state == 'add'" type="primary" native-type="submit"  @click="createOrg('orgFrom')">保存</el-button>
+                    <el-button v-if="this.state == 'edit'" type="primary" native-type="submit"  @click="updateOrg('orgFrom')">保存</el-button>
+                </div>
+                 <el-card class="box-card" style="margin-bottom: 10px;">
+                     <el-form :model="form" :rules="rules" ref="menuForm" label-width="120px" >
+                        <el-row aria-disabled="">
+                            <el-col :span="8">
+                            <el-form-item  label="菜单名称" prop="menuName">
+                                <el-input v-model="form.menuName" v-if="this.state == 'see'" disabled="disabled" ></el-input>
+                                <el-input v-model="form.menuName" v-else ></el-input>
+                            </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="父级节点" prop="parentName">
+                                    <el-input v-model="form.parentName" disabled="disabled"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                            <el-form-item label="菜单编码" prop="menuCode">
+                                <el-input v-model="form.menuCode" v-if="this.state == 'see'" disabled="disabled" ></el-input>
+                                <el-input v-model="form.menuCode" v-else></el-input>
+                            </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="8">
+                                <el-form-item label="资源路径" prop="href">
+                                    <el-input v-model="form.href" disabled="disabled"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="前端组件" prop="component">
+                                    <el-input v-model="form.component" disabled="disabled"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="图标" prop="icon">
+                                    <el-input v-model="form.icon" disabled="disabled"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="8">
+                                <el-form-item label="层级编码" prop="levelcode">
+                                    <el-input v-model="form.levelcode" disabled="disabled"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="是否可用" prop="enabled">
+                                    <el-switch on-text="可用" off-text="禁用" on-value='1'  off-value='0' v-model="form.enabled"></el-switch>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="请求资源类型" prop="menuType">
+                                    <el-select v-model="form.menuType" placeholder="请选择机构类别" v-if="this.state == 'see'" disabled="disabled" >
+                                        <el-option label="link" value="link"></el-option>
+                                        <el-option label="menu" value="menu"></el-option>
+                                    </el-select>
+                                    <el-select v-model="form.menuType" placeholder="请选择机构类别" v-else >
+                                        <el-option label="link" value="link"></el-option>
+                                        <el-option label="menu" value="menu"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-form-item label="机构说明" prop="note">
+                            <el-input type="textarea" v-model="form.note" v-if="this.state == 'see'" disabled="disabled"></el-input>
+                            <el-input type="textarea" v-model="form.note" v-else></el-input>
+                        </el-form-item>
+                        </el-form>
+                </el-card>
+             </div>
+        </el-col>
+      </el-row>
     </div>
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          show:'show'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          show:'hide'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          show:'hide'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          show:'hide'
-        }]
-      }
-    },
-    methods: {
-      formatter(row, column) {
-        return row.address;
-      },  
-      handleEdit(index, row) {
-        console.log(index, row);
+      data(){
+          return {
+              state: 'see',
+              form: this.initObj(),
+          }
       },
-      handleDelete(index, row) {
-        console.log(index, row);
+      methods: {
+        initObj() {
+            return {
+                id: '',
+                menuName: '',
+                menuCode: '',
+                levelcode: '',
+                parentId: '',
+                parentName: '',
+                href: '',
+                component: '',
+                icon: '',
+                menuType: '',
+                enabled: '0',
+                note: ''
+            }
+        }
       }
-    }
   }
 </script>
 <style>
-#query{
-    margin: 0px 0px 10px 0px;
+#menu{
+    padding: 20px;
+}
+.right-layout-from{
+  margin-left: 20px;
+}
+.top-button{
+  margin-bottom: 20px;
+}
+.grid-content{
+    border-radius: 4px;
+    min-height: 36px;
 }
 </style>
 

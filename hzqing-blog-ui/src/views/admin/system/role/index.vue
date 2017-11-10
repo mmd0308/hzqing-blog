@@ -1,43 +1,50 @@
 <template>
-    <div id="category">
+    <div id="role">
             <el-card>
                 <div id="query">
                     <el-row>
                         <el-col :span="8">
-                            <el-input v-model="input" style="width:96%" placeholder="请输入分类名称"></el-input>
+                            <el-input v-model="query" style="width:96%" placeholder="请输入角色名称"></el-input>
                         </el-col>
                         <el-col :span="16">
                             <el-button-group>
                                 <el-button type="primary">查询</el-button>
-                                <el-button type="primary">新增</el-button>
+                                <el-button type="primary" @click="toCreate()">新增</el-button>
                             </el-button-group>
                         </el-col>
                     </el-row>
                 </div>
                 <el-table
-                :data="tableData"
+                :data="list"
                 style="width: 100%"
                 >
+                    <el-table-column align="center" label="序号" type="index" width="90"></el-table-column>
                     <el-table-column
-                    label="类别"
-                    sortable
-                    width="180">
+                    label="角色名称"
+                    sortable>
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.roleName }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
-                    label="文章"
-                    :formatter="formatter">
+                    label="编码">
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.address }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.roleCode }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
-                    label="创建时间"
-                    :formatter="formatter">
+                    label="是否启用" >
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.address }}</span>
+                            <span style="margin-left: 10px">
+                              <el-tag v-if="scope.row.enabled == '1'" type="success">启用</el-tag>
+                              <el-tag v-else type="danger">禁用</el-tag>
+                              </span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="备注" >
+                        <template scope="scope">
+                            <span style="margin-left: 10px">{{ scope.row.note }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="操作" width="200px">
@@ -47,15 +54,9 @@
                                 type="success"
                                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                             <el-button
-                                v-if="scope.row.show == 'show'"
                                 size="mini"
                                 type="info"
-                                @click="handleEdit(scope.$index, scope.row)">显示</el-button>
-                            <el-button
-                                v-if="scope.row.show == 'hide'"
-                                size="mini"
-                                type="warning"
-                                @click="handleEdit(scope.$index, scope.row)">隐藏</el-button>
+                                @click="handleResouce(scope.$index, scope.row)">资源分配</el-button>
                             <el-button
                                 size="mini"
                                 type="danger"
@@ -63,46 +64,191 @@
                         </template>
                     </el-table-column>
                 </el-table>
-            </el-card>
+                <div class="pagination-container">
+                    <el-pagination @size-change="handleSizeChange" 
+                                    @current-change="handleCurrentChange"
+                                    :current-page.sync="listQuery.page"
+                                    :page-sizes="[10.,20,30,50]" 
+                                    :page-size="listQuery.pageSize"
+                                    layout="total, sizes, prev, pager, next, jumper" 
+                                    :total="total">
+                    </el-pagination>
+                </div>
+                 <!--编辑框-->
+                <el-dialog  :visible.sync="dialogFormVisible" :before-close="handleClose">
+                <el-form :model="form" :inline="true" :rules="rules" ref="form" label-width="90px">
+                    <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="角色名称" prop="roleName" >
+                        <el-input v-model="form.roleName" placeholder="请输入姓名" class="input-selects-width"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="角色编码" prop="roleCode">
+                        <el-input  v-model="form.roleCode" placeholder="请输入账户" class="input-selects-width"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="12">
+                          <el-form-item label="是否可用" prop="enabled">
+                            <el-switch on-text="可用" off-text="禁用" on-value='1'  off-value='0' v-model="form.enabled"></el-switch>
+                          </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="备注" prop="note">
+                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" class="input-selects-width" placeholder="请输入备注"
+                                    v-model="form.note"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    </el-row>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="cancel('form')">取 消</el-button>
+                    <el-button v-if="dialogStatus=='create'" type="primary" @click="create('form')">确 定</el-button>
+                    <el-button v-else type="primary" @click="update('form')">确 定</el-button>
+                </div>
+                </el-dialog>
+
+            </el-card>                
     </div>
 </template>
 
 <script>
+  import {  page, getObj, putObj, delObj, addObj } from '@/api/admin/system/role/index'
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          show:'show'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          show:'hide'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          show:'hide'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          show:'hide'
-        }]
+        list: null,
+        query: '',
+        total: null,
+        listQuery:{
+            page: 1,
+            pageSize: 10,
+            roleName: ''
+        },
+        textMap: {
+          update: '更新',
+          create: '创建'
+        },
+        dialogStatus:'',
+        dialogFormVisible: false,
+        form: this.initObj(),
+         rules: {
+          roleName: [
+                {  required: true,  message: '请输入用户名',  trigger: 'blur'    },
+                {  min: 3,  max: 20,   message: '长度在3到20个字符',   trigger: 'blur' }
+            ],
+          roleCode: [
+                 {  required: true,  message: '请输入编码',  trigger: 'blur'    },
+            ]
+        },
       }
     },
+    created() {
+      this.getList()
+    },
     methods: {
-      formatter(row, column) {
-        return row.address;
-      },  
+      initObj() {
+        return {
+          id: '',
+          roleName: '',
+          roleCode: '',
+          enabled: '0',
+          note: ''
+        }
+      },
+      resetTemp() {
+        this.form = this.initObj();
+      },
+      getList() {
+        page(this.listQuery).then(response => {
+            this.list = response.data.list
+            this.total = response.data.total
+        })
+      },
+      cancel(formName) {
+        this.dialogFormVisible = false
+        this.$refs[formName].resetFields()
+      },
+      handleClose(done) {
+        this.cancel('form');
+        done();
+      },
       handleEdit(index, row) {
-        console.log(index, row);
+        getObj(row.id).then(response => {
+          this.form = response.data
+          this.dialogFormVisible = true;
+          this.dialogStatus = 'update'
+        })
+      },
+      update(formName) {
+        const set = this.$refs
+        set[formName].validate(valid => {
+          if (valid) {
+            putObj(this.form.id, this.form).then(() => {
+              this.cancel(formName);
+              this.getList()
+              this.$notify({
+                title: '成功',
+                message: '更新成功',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          } else {
+            return false
+          }
+        })
       },
       handleDelete(index, row) {
-        console.log(index, row);
+        this.$confirm('是否刪除该记录？', '记录', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          delObj(row.id).then(() => {
+            this.$notify({
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList();
+          })
+        })
+      },
+      toCreate(){
+          this.resetTemp();
+          this.dialogFormVisible = true;
+          this.dialogStatus = "create"
+      },
+      create(formName){
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            addObj(this.form).then(() => {
+              this.$notify({
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
+                duration: 2000
+              })
+              this.cancel(formName);
+              this.getList();
+            })
+          } else {
+            return false
+          }
+        })
+      },
+      handleResouce(index,row){
+         alert("用戶權限分配....")
+      },
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
       }
     }
   }
@@ -110,6 +256,12 @@
 <style>
 #query{
     margin: 0px 0px 10px 0px;
+}
+.input-selects-width{
+    width: 260px;
+}
+.el-form-item-width{
+    width: 100%;
 }
 </style>
 

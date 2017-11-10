@@ -10,7 +10,7 @@ export function page(query) {
 
 export function addObj(obj) {
   return fetch({
-    url: '/api/admin/user/add',
+    url: '/admin/user/add',
     method: 'post',
     data: obj
   })
@@ -18,22 +18,31 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return fetch({
-    url: '/api/admin/user/get/' + id,
+    url: '/admin/user/get/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return fetch({
-    url: '/api/admin/user/delete/' + id,
+    url: '/admin/user/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return fetch({
-    url: '/api/admin/user/put/' + id,
+    url: '/admin/user/put/' + id,
     method: 'put',
     data: obj
   })
 }
+
+export function saveUserRole(obj) {
+  return fetch({
+    url: '/admin/user/saveUserRole',
+    method: 'post',
+    data: obj
+  })
+}
+
