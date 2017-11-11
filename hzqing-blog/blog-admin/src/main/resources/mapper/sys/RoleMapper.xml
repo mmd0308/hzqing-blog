@@ -99,4 +99,23 @@
         LEFT JOIN rl_user_role s ON r.id = s.role_id
         WHERE s.user_id = #{0}
     </select>
+
+    <insert id="addBatchRoleMenu" parameterType="list">
+        INSERT  INTO  rl_role_resource (id, role_id, resource_id, resource_type, note) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+              (SELECT replace((SELECT uuid()),"-","")),
+              #{item.roleId},
+              #{item.resId},
+              #{item.resType},
+              null
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteRoleMenuByRid" parameterType="string">
+        DELETE  FROM  rl_role_resource WHERE role_id = #{0}
+    </delete>
+    <select id="getMenuIdByRoleId" parameterType="string" resultType="string">
+        SELECT resource_id FROM  rl_role_resource WHERE resource_type = 'menu' AND role_id  = #{0}
+    </select>
 </mapper>

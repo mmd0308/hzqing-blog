@@ -57,3 +57,18 @@ export function getRoleByUserId(id) {
   })
 }
 
+export function addRoleMenu(roleId,menu){
+  return fetch({
+    url: '/admin/role/addRoleMenu/' + roleId,
+    data: menu,
+    method: 'post'
+  })
+}
+
+export function getMenuIdByRoleId(roleId){
+  return fetch({
+    url: '/admin/role/getMenuIdByRoleId/' + roleId,
+    method: 'get'
+  })
+}
+

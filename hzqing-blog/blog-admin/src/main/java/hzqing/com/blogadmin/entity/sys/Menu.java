@@ -2,6 +2,8 @@ package hzqing.com.blogadmin.entity.sys;
 
 import org.apache.ibatis.type.Alias;
 
+import java.util.List;
+
 @Alias("menu")
 public class Menu {
     private String id;
@@ -15,6 +17,25 @@ public class Menu {
     private String menuType;
     private String note;
     private String enabled;
+
+    private List<Menu> menus;
+    private String parentName;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
 
     public String getId() {
         return id;

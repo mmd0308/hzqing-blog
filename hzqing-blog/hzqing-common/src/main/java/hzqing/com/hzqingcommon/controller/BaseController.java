@@ -66,9 +66,13 @@ public class BaseController<T,M extends IBaseService<T>> {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseMessage<Integer> delete(@PathVariable String id){
+    public ResponseMessage<Boolean> delete(@PathVariable String id){
         int res = baseService.deletedById(id);
-        return new ResponseMessage<>().success("nu");
+        Boolean bool = false;
+        if (res>0){
+            bool = true;
+        }
+        return new ResponseMessage<Boolean>().success(bool);
     }
 
 

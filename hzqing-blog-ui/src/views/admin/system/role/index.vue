@@ -110,13 +110,26 @@
                 </div>
                 </el-dialog>
 
+                <el-dialog  
+                :visible.sync="dialogMenuVisible" 
+                width='15%'
+                ref="dialog"
+                title="选择资源"
+                >
+                    <role-menu ref="roleMenuCom" :roleId="roleToMenuId" @roleMenuCancle="roleMenuCancle" ></role-menu>
+                </el-dialog>
+
             </el-card>                
     </div>
 </template>
 
 <script>
   import {  page, getObj, putObj, delObj, addObj } from '@/api/admin/system/role/index'
+  import roleMenu from '@/views/admin/system/role/roleMenu'
   export default {
+    components:{
+         roleMenu: roleMenu
+    },
     data() {
       return {
         list: null,
@@ -134,7 +147,9 @@
         dialogStatus:'',
         dialogFormVisible: false,
         form: this.initObj(),
-         rules: {
+        dialogMenuVisible: false,
+        roleToMenuId:'',
+        rules: {
           roleName: [
                 {  required: true,  message: '请输入用户名',  trigger: 'blur'    },
                 {  min: 3,  max: 20,   message: '长度在3到20个字符',   trigger: 'blur' }
@@ -142,7 +157,7 @@
           roleCode: [
                  {  required: true,  message: '请输入编码',  trigger: 'blur'    },
             ]
-        },
+        }
       }
     },
     created() {
@@ -242,7 +257,11 @@
         })
       },
       handleResouce(index,row){
-         alert("用戶權限分配....")
+         this.dialogMenuVisible = true
+         this.roleToMenuId = row.id
+      },
+      roleMenuCancle(){
+          this.dialogMenuVisible = false
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);

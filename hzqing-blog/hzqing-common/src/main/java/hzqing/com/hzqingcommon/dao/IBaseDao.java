@@ -3,14 +3,14 @@ package hzqing.com.hzqingcommon.dao;
 import java.util.List;
 import java.util.Map;
 
-public interface IBaseDao<T>{
+public interface IBaseDao{
     /**
      * 保存
      * @param str
      * @param obj
      * @return
      */
-    public int save(String str, Object obj);
+    public Object save(String str, Object obj);
 
     /**
      * 修改
@@ -18,7 +18,7 @@ public interface IBaseDao<T>{
      * @param obj
      * @return
      */
-    public int update(String str, Object obj);
+    public Object update(String str, Object obj);
 
     /**
      * 删除
@@ -26,7 +26,7 @@ public interface IBaseDao<T>{
      * @param obj
      * @return
      */
-    public int delete(String str, Object obj);
+    public Object delete(String str, Object obj);
 
     /**
      * 返回一个对象
@@ -34,7 +34,7 @@ public interface IBaseDao<T>{
      * @param obj
      * @return
      */
-    public T findForObject(String str, Object obj) ;
+    public Object findForObject(String str, Object obj) ;
 
     /**
      * 根据id获取数据
@@ -42,7 +42,7 @@ public interface IBaseDao<T>{
      * @param id
      * @return
      */
-    public T selectById(String str,String id);
+    public Object selectById(String str,String id);
 
     /**
      * 获取所有的数据 带分页
@@ -50,7 +50,7 @@ public interface IBaseDao<T>{
      * @param obj
      * @return
      */
-    public List<T> findForList(String str, Object obj) ;
+    public Object findForList(String str, Object obj) ;
 
     public Object findForMap(String sql, Object obj, String key, String value) ;
 
@@ -60,5 +60,5 @@ public interface IBaseDao<T>{
      * @param lists
      * @return
      */
-    int batchSave(String s, List<Map<String,String>> lists);
+    Object batchSave(String s, List<Map<String,String>> lists);
 }

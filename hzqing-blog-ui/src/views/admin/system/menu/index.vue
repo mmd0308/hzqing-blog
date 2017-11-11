@@ -4,7 +4,10 @@
         <el-col :span="6">
             <el-input placeholder="输入关键字进行过滤" v-model="filterText">
             </el-input>
-            <el-tree class="filter-tree" style="margin-top:10px;"  :data="data2" :props="defaultProps" :default-expand-all="true"  :filter-node-method="filterNode" :default-expanded-keys="[0,1]" ref="tree2" @node-click="clickTree" @node-expand="expandTree">
+            <el-tree class="filter-tree" style="margin-top:10px;"  :data="menuTreeDate" 
+            :props="defaultProps" :default-expand-all="true"  :filter-node-method="filterNode" 
+            :default-expanded-keys="[0,1]" ref="menuTree"
+             @node-click="clickTree" @node-expand="expandTree">
             </el-tree>
         </el-col>
         <el-col :span="18">
@@ -17,11 +20,11 @@
                     </el-button-group>
                 </div>
                 <div  class="top-button">
-                    <el-button v-if="this.state == 'add'" type="primary" native-type="submit"  @click="createOrg('orgFrom')">保存</el-button>
-                    <el-button v-if="this.state == 'edit'" type="primary" native-type="submit"  @click="updateOrg('orgFrom')">保存</el-button>
+                    <el-button v-if="this.state == 'add'" type="primary" native-type="submit"  @click="createMenu('form')">保存</el-button>
+                    <el-button v-if="this.state == 'edit'" type="primary" native-type="submit"  @click="updateMenu('form')">保存</el-button>
                 </div>
                  <el-card class="box-card" style="margin-bottom: 10px;">
-                     <el-form :model="form" :rules="rules" ref="menuForm" label-width="120px" >
+                     <el-form :model="form"  ref="form" label-width="120px" >
                         <el-row aria-disabled="">
                             <el-col :span="8">
                             <el-form-item  label="菜单名称" prop="menuName">
@@ -44,17 +47,20 @@
                         <el-row>
                             <el-col :span="8">
                                 <el-form-item label="资源路径" prop="href">
-                                    <el-input v-model="form.href" disabled="disabled"></el-input>
+                                    <el-input v-if="this.state == 'see'" v-model="form.href" disabled="disabled"></el-input>
+                                    <el-input v-else v-model="form.href" ></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="前端组件" prop="component">
-                                    <el-input v-model="form.component" disabled="disabled"></el-input>
+                                    <el-input v-if="this.state == 'see'" v-model="form.component" disabled="disabled"></el-input>
+                                    <el-input v-else v-model="form.component" ></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="图标" prop="icon">
-                                    <el-input v-model="form.icon" disabled="disabled"></el-input>
+                                    <el-input v-if="this.state == 'see'" v-model="form.icon" disabled="disabled"></el-input>
+                                    <el-input v-else v-model="form.icon" ></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
@@ -95,14 +101,30 @@
 </template>
 
 <script>
+  import { tree, addObj, getNextLevelCode, putObj, delObj } from '@/api/admin/system/menu/index'
   export default {
-      data(){
-          return {
-              state: 'see',
-              form: this.initObj(),
-          }
-      },
-      methods: {
+    watch: {
+        filterText(val) {
+            this.$refs.menuTree.filter(val);
+        }
+    },
+    created() {
+        this.getTree();
+    },
+    data(){
+        return {
+            state: 'see',
+            form: this.initObj(),
+            filterText: '',
+            defaultProps: {
+                children: 'menus',
+                label: 'menuName'
+            },
+            menuTreeDate: null,
+            listLoading: false
+        }
+    },
+    methods: {
         initObj() {
             return {
                 id: '',
@@ -118,8 +140,102 @@
                 enabled: '0',
                 note: ''
             }
+        },
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.menuName.indexOf(value) !== -1;
+        },
+        getTree(){
+            tree('-1').then(response => {
+                this.menuTreeDate = response.data
+                this.form = response.data[0]
+                this.state = 'see'
+            })
+        },
+        clickTree(date) {
+            this.form = date
+            this.state = 'see'
+        },
+        expandTree(date) {
+            console.log('expand')
+        },
+        toCreate() {
+            this.state = 'add'
+            var parentId = this.form.id
+            var name = this.form.menuName
+            var levelcode = this.form.levelcode
+            this.resetTemp();
+            this.form.parentId = parentId
+            this.form.parentName = name
+            getNextLevelCode(parentId,levelcode).then(response =>{
+                this.form.levelcode = response.data
+            })
+        },
+        createMenu(form) {
+            this.$refs[form].validate(vaild =>{
+                if(vaild) {
+                    addObj(this.form).then(() => {
+                        this.getTree();
+                        this.$notify({
+                            title: '成功',
+                            message: '菜单新增成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                    })
+                }
+            })
+
+        },
+        toUpdate() {
+            this.state = 'edit'
+        },
+        updateMenu(form) {
+            this.$refs[form].validate(vaild => {
+                if(vaild){
+                    putObj(this.form.id, this.form).then(() => {
+                        this.getTree();
+                        this.$notify({
+                            title: '成功',
+                            message: '菜单修改成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                    })
+                }
+            })
+        },
+        toDeleted() {
+            this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                delObj(this.form.id).then(response => {
+                    if (response.data) {
+                        this.getTree();
+                        this.$notify({
+                            title: '成功',
+                            message: '删除成功',
+                            type: 'success',
+                            duration: 2000
+                        });
+                    } else {
+                        this.$notify({
+                            title: '失败',
+                            message: '请先删除下级菜单',
+                            type: 'error',
+                            duration: 2000
+                        });
+                    }
+                });
+            });
+        },
+        resetTemp() {
+            this.form = this.initObj();
         }
-      }
+
+    }
   }
 </script>
 <style>

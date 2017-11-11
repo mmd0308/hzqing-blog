@@ -7,16 +7,16 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-public class BaseDaoImpl<T> implements IBaseDao<T> {
+public class BaseDaoImpl implements IBaseDao {
     @Resource(name = "sqlSessionTemplate")
     private SqlSessionTemplate sqlSessionTemplate;
 
 
-    public int save(String str, Object obj) {
+    public Object save(String str, Object obj) {
         return sqlSessionTemplate.insert(str, obj);
     }
 
-    public int update(String str, Object obj)  {
+    public Object update(String str, Object obj)  {
         return sqlSessionTemplate.update(str, obj);
     }
 
@@ -24,20 +24,20 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         return sqlSessionTemplate.delete(str, objs);
     }
 
-    public int delete(String str, Object obj)  {
+    public Object delete(String str, Object obj)  {
         return sqlSessionTemplate.delete(str, obj);
     }
 
-    public T findForObject(String str, Object obj)  {
+    public Object findForObject(String str, Object obj)  {
         return sqlSessionTemplate.selectOne(str, obj);
     }
 
     @Override
-    public T selectById(String str, String id) {
+    public Object selectById(String str, String id) {
         return sqlSessionTemplate.selectOne(str,id);
     }
 
-    public List<T> findForList(String str, Object obj)  {
+    public Object findForList(String str, Object obj)  {
         return sqlSessionTemplate.selectList(str, obj);
     }
 
@@ -46,7 +46,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     }
 
     @Override
-    public int batchSave(String s, List<Map<String, String>> lists) {
+    public Object batchSave(String s, List<Map<String, String>> lists) {
         return sqlSessionTemplate.insert(s,lists);
     }
 

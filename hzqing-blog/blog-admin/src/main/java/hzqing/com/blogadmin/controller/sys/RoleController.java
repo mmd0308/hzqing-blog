@@ -4,11 +4,10 @@ import hzqing.com.blogadmin.entity.sys.Role;
 import hzqing.com.blogadmin.service.sys.IRoleService;
 import hzqing.com.hzqingcommon.controller.BaseController;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.omg.CORBA.OBJ_ADAPTER;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -33,5 +32,21 @@ public class RoleController extends BaseController<Role,IRoleService>{
     public ResponseMessage<List<Role>> getRoleByUserId(@PathVariable String id){
         List<Role> roles = baseService.getRoleByUserId(id);
         return new ResponseMessage<>().success(roles);
+    }
+
+    /**
+     * 角色绑定资源
+     * @param resouce
+     * @return
+     */
+    @PostMapping("/addRoleMenu/{roleId}")
+    public ResponseMessage<String> addRoleMenu(@RequestBody HashMap<String,Object> resouce){
+        baseService.addRoleMenu(resouce);
+        return  new ResponseMessage<>().success();
+    }
+    @GetMapping("/getMenuIdByRoleId/{roleId}")
+    public ResponseMessage<List<String>> getMenuIdByRoleId(@PathVariable String roleId){
+        List<String> mIds = baseService.getMenuIdByRoleId(roleId);
+        return  new ResponseMessage<>().success(mIds);
     }
 }

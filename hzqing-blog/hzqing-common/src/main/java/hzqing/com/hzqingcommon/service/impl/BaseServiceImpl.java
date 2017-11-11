@@ -10,18 +10,18 @@ import java.util.List;
 
 public class BaseServiceImpl<T> implements IBaseService<T> {
     @Autowired
-    protected IBaseDao<T> baseDao;
+    protected IBaseDao baseDao;
 
     public String mapper;
 
     @Override
     public int save(T t) {
-        return baseDao.save(mapper+".save",t);
+        return (int) baseDao.save(mapper+".save",t);
     }
 
     @Override
     public T getById(String id) {
-        return baseDao.selectById(mapper+".selectById",id);
+        return (T) baseDao.selectById(mapper+".selectById",id);
     }
 
     @Override
@@ -33,23 +33,22 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
             pageSize = 10;
         }
         PageHelper.startPage(start,pageSize);
-        return new PageInfo<T>(baseDao.findForList(mapper+".query",t));
+        return new PageInfo<T>((List<T>) baseDao.findForList(mapper+".query",t));
     }
 
     @Override
     public List<T> findAll() {
-        return baseDao.findForList(mapper+".all",null);
+        return (List<T>) baseDao.findForList(mapper+".all",null);
     }
 
     @Override
     public int update(T t) {
-
-        return baseDao.update(mapper+".update",t);
+        return (int) baseDao.update(mapper+".update",t);
     }
 
     @Override
     public int deletedById(String id) {
-        return baseDao.delete(mapper+".deletedById",id);
+        return (int) baseDao.delete(mapper+".deletedById",id);
     }
 
 

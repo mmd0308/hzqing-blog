@@ -3,5 +3,22 @@ package hzqing.com.blogadmin.service.sys;
 import hzqing.com.blogadmin.entity.sys.Menu;
 import hzqing.com.hzqingcommon.service.IBaseService;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IMenuService extends IBaseService<Menu> {
+    /**
+     * 根据父id获取tree
+     * @param id
+     * @return
+     */
+    List<Menu> getTree(String id);
+
+    /**
+     * 根据父级别的id,获取子类下一个levelcode
+     * @param parentId
+     * @return
+     */
+    String getNextLevelCode(String parentId,String levelCode);
+
 }
