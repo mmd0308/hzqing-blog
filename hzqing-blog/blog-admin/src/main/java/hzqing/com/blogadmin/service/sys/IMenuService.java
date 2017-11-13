@@ -21,4 +21,10 @@ public interface IMenuService extends IBaseService<Menu> {
      */
     String getNextLevelCode(String parentId,String levelCode);
 
+    /**
+     * 根据角色id,获取菜单信息
+     * @param roles
+     * @return
+     */
+    List<Menu> getMenusByRids(List<String> roles);
 }

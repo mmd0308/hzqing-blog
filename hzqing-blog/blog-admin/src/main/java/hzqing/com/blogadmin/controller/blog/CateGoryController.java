@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/blog/cateGroy")
+@RequestMapping("/admin/blog/categroy")
 public class CateGoryController extends BaseController<CateGory,ICateGoryService> {
 }

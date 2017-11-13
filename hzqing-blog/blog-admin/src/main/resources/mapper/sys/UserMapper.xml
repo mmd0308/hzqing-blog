@@ -107,4 +107,18 @@
         WHERE
           user_id = #{0}
     </delete>
+
+
+    <select id="getUserByUName" resultMap="userMap" parameterType="string">
+        SELECT
+          <include refid="field"/>
+        FROM
+          <include refid="table"/>
+        WHERE
+          username = #{0}
+    </select>
+
+    <select id="getRoleByUserId" resultType="string" parameterType="string">
+        SELECT DISTINCT role_id FROM  rl_user_role WHERE  user_id = #{0}
+    </select>
 </mapper>

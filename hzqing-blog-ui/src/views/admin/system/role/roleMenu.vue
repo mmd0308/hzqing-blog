@@ -22,7 +22,7 @@ export default {
     props: ['roleId'],
     created() {
         this.menuTreeLoading = true
-        this.getTree();
+     //   this.getTree();
     },
     data(){
         return{

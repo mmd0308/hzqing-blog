@@ -1,10 +1,15 @@
 package hzqing.com.blogadmin.service.sys.impl;
 
+import hzqing.com.blogadmin.entity.sys.Menu;
 import hzqing.com.blogadmin.entity.sys.Role;
 import hzqing.com.blogadmin.entity.sys.User;
+import hzqing.com.blogadmin.service.sys.IMenuService;
+import hzqing.com.blogadmin.service.sys.IRoleService;
 import hzqing.com.blogadmin.service.sys.IUserService;
+import hzqing.com.blogadmin.vo.sys.UserVo;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements IUserService{
+    @Autowired
+    private IMenuService menuService;
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -37,14 +45,38 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
-    public User getUserinfo(String token) {
+    public UserVo getUserinfo(String token) {
         String username = JwtTokenUtil.getUsernameFromToken(token,secret);
         if (username == null)
             return null;
-        User user = new User();
-        user.setUsername(username);
-        System.out.println("........"+user);
-        return user;
+        User user = this.getUserByUName(username);
+        UserVo uservo = new UserVo();
+        BeanUtils.copyProperties(user,uservo);
+        //设置用户的角色
+        uservo.setRoles(this.getRoleIdByUid(uservo.getId()));
+        //设置菜单 根据角色id获取菜单
+        uservo.getRoles();
+        List<Menu> menus = menuService.getMenusByRids(uservo.getRoles());
+        uservo.setMenus(menus);
+        return uservo;
+    }
+
+    /**
+     * 根据用户id,获取角色的id
+     * @param id
+     * @return
+     */
+    private List<String> getRoleIdByUid(String id){
+        return (List<String>) baseDao.findForList(mapper+".getRoleByUserId",id);
+    }
+
+    /**
+     * 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    private User getUserByUName(String username){
+        return (User) baseDao.findForObject(mapper+".getUserByUName",username);
     }
 
     @Override

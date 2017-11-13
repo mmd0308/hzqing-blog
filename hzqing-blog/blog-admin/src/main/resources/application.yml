@@ -36,3 +36,6 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 debug: true
+
+logging:
+  level: org.springframework=WARN hzqing.com.hzqingcommon.dao=DEBUG

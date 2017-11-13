@@ -113,8 +113,8 @@
                 <el-dialog  
                 :visible.sync="dialogMenuVisible" 
                 width='15%'
-                ref="dialog"
                 title="选择资源"
+                @open="menuDialogOpen"
                 >
                     <role-menu ref="roleMenuCom" :roleId="roleToMenuId" @roleMenuCancle="roleMenuCancle" ></role-menu>
                 </el-dialog>
@@ -259,6 +259,9 @@
       handleResouce(index,row){
          this.dialogMenuVisible = true
          this.roleToMenuId = row.id
+      },
+      menuDialogOpen() {
+        this.$refs.roleMenuCom.getTree();
       },
       roleMenuCancle(){
           this.dialogMenuVisible = false

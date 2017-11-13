@@ -1,7 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="CateGoryMapper" >
+    <resultMap id="cateGoryMap" type="category">
+        <id column="id" property="id"/>
+        <result column="cate_name" property="cateName"/>
+        <result column="enabled" property="enabled"/>
+        <result column="sort" property="sort"/>
+        <result column="note" property="note"/>
+    </resultMap>
+    <sql id="table">
+        blog_category
+    </sql>
+    <sql id="field">
+        id,
+        cate_name,
+        enabled,
+        note,
+        sort
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{cateName},
+        #{enabled},
+        #{note},
+        #{sort}
+    </sql>
     <insert id="save" parameterType="category">
-        INSERT  INTO  sys_log (id, opt_path, opt_type, opt_time, note) VALUES (#{id},#{optPath},#{optType},#{optTime},#{note})
+        INSERT  INTO
+        <include refid="table"/>
+        (
+        <include refid="field"/>
+        )
+        VALUES
+        (
+        <choose>
+            <when test="id == null || id == ''">
+                (SELECT replace((SELECT  uuid()),"-","")),
+            </when>
+            <otherwise>
+                #{id},
+            </otherwise>
+        </choose>
+        #{cateName},
+        #{enabled},
+        #{note},
+        #{sort}
+        )
     </insert>
+    <select id="query" parameterType="category" resultMap="cateGoryMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where 1 = 1
+        <if test="id != null and id != ''">
+            id = ${id}
+        </if>
+    </select>
+    <select id="selectById" parameterType="String" resultMap="cateGoryMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{0}
+    </select>
+    <update id="update" parameterType="category" >
+        UPDATE
+        <include refid="table"/>
+        SET
+        id = #{id}
+        <if test="cateName != null and cateName !=''">
+            , cate_name = #{cateName}
+        </if>
+        <if test="enabled != null and enabled !=''">
+            , enabled = #{enabled}
+        </if>
+        <if test="note != null and note !=''">
+            , note = #{note}
+        </if>
+        <if test="sort != null">
+            , sort = #{sort}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
 </mapper>

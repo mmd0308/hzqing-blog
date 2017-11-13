@@ -7,8 +7,17 @@ public class CateGory {
 
     private String id;
     private String cateName;
-    private String cateShow;
+    private String enabled;
     private int sort;
+    private String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getId() {
         return id;
@@ -26,13 +35,6 @@ public class CateGory {
         this.cateName = cateName;
     }
 
-    public String getCateShow() {
-        return cateShow;
-    }
-
-    public void setCateShow(String cateShow) {
-        this.cateShow = cateShow;
-    }
 
     public int getSort() {
         return sort;
@@ -40,5 +42,13 @@ public class CateGory {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public String getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
     }
 }

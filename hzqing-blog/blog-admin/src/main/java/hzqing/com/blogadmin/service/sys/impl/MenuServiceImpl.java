@@ -28,6 +28,11 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
         return LevelCodeUtil.getNextLevelCode(maxLCodeByPid,levelCode);
     }
 
+    @Override
+    public List<Menu> getMenusByRids(List<String> roles) {
+        return (List<Menu>) baseDao.findForList(mapper+".getMenusByRids",roles);
+    }
+
     /**
      * 采用递归组装树
      * @param menus

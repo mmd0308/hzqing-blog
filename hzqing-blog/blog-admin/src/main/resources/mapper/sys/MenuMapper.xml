@@ -145,4 +145,14 @@
         WHERE
         id = #{0}
     </delete>
+
+    <select id="getMenusByRids" parameterType="list" resultMap="menuMap">
+        SELECT  m.* FROM sys_menu m
+        where m.id IN (SELECT  resource_id FROM  rl_role_resource where role_id in (
+            <foreach collection="list" item="item" separator="," >
+               #{item}
+            </foreach>
+        ))
+
+    </select>
 </mapper>

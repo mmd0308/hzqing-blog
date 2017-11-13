@@ -124,4 +124,23 @@ public class Menu {
     public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", menuName='" + menuName + '\'' +
+                ", menuCode='" + menuCode + '\'' +
+                ", levelcode='" + levelcode + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", href='" + href + '\'' +
+                ", component='" + component + '\'' +
+                ", icon='" + icon + '\'' +
+                ", menuType='" + menuType + '\'' +
+                ", note='" + note + '\'' +
+                ", enabled='" + enabled + '\'' +
+                ", menus=" + menus +
+                ", parentName='" + parentName + '\'' +
+                '}';
+    }
 }
