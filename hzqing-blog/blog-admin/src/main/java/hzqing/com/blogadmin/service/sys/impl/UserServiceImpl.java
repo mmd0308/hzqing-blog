@@ -24,10 +24,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     private IMenuService menuService;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     private String secret = "hzqing";
-    private Integer expiration = 7200;
+    private Integer expiration = 72000;
 
 
     public UserServiceImpl() {
@@ -38,10 +38,27 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
 
     public String login(String username,String password){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("username","admin");
-        map.put("password","admin");
-        return  generateToken(map);
+        User user = (User) baseDao.findForObject(mapper + ".getUserByUName", username);
+        if (null != user){
+            if (password.equals(user.getPassword())){ //判断密码是否正确
+                Object old = redisTemplate.opsForValue().get(user.getUsername());
+                String token = "";
+                if (old == null) {
+                    Map<String, Object> claims = new HashMap<String, Object>();
+                    claims.put(CLAIM_KEY_USERNAME, user.getUsername());
+                    claims.put(CLAIM_KEY_CREATED, new Date());
+                    //获取tocken
+                    token = JwtTokenUtil.generateToken(claims,secret,expiration);
+                    //key username value tocken 存储在redis中
+                    redisTemplate.opsForValue().set(user.getUsername(), token, expiration, TimeUnit.SECONDS);
+                } else {
+                    token = old.toString();
+                }
+                return token;
+            }
+        }
+        return  null;
+
     }
 
     @Override
@@ -53,10 +70,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         UserVo uservo = new UserVo();
         BeanUtils.copyProperties(user,uservo);
         //设置用户的角色
-        uservo.setRoles(this.getRoleIdByUid(uservo.getId()));
+        uservo.setRoles(this.getRoleCodeByUid(uservo.getId()));
         //设置菜单 根据角色id获取菜单
-        uservo.getRoles();
-        List<Menu> menus = menuService.getMenusByRids(uservo.getRoles());
+        List<Menu> menus = menuService.getMenusByUid(uservo.getId());
         uservo.setMenus(menus);
         return uservo;
     }
@@ -66,8 +82,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
      * @param id
      * @return
      */
-    private List<String> getRoleIdByUid(String id){
-        return (List<String>) baseDao.findForList(mapper+".getRoleByUserId",id);
+    private List<String> getRoleCodeByUid(String id){
+        return (List<String>) baseDao.findForList(mapper+".getRoleCodeByUid",id);
     }
 
     /**
@@ -100,24 +116,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
     }
 
-
-    /**
-     * 获取token  并将信息存储在redis中
-     * @param info
-     * @return
-     */
-    public String generateToken(Map<String,Object> info) {
-        Object old = redisTemplate.opsForValue().get(info.get("username"));
-        String token = "";
-        if (old == null) {
-            Map<String, Object> claims = new HashMap<String, Object>();
-            claims.put(CLAIM_KEY_USERNAME, info.get("username").toString());
-            claims.put(CLAIM_KEY_CREATED, new Date());
-            token = JwtTokenUtil.generateToken(claims,secret,expiration);
-            redisTemplate.opsForValue().set(info.get("username").toString(), token, expiration, TimeUnit.SECONDS);
-        } else {
-            token = old.toString();
-        }
-        return token;
+    @Override
+    public void logout(String token) {
+        String username = JwtTokenUtil.getUsernameFromToken(token,secret);
+        System.out.println("logout ........... "+username);
+        redisTemplate.opsForValue().set(username,null);
     }
+
+
 }

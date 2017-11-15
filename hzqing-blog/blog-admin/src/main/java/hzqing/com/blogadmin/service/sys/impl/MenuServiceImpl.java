@@ -33,6 +33,11 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
         return (List<Menu>) baseDao.findForList(mapper+".getMenusByRids",roles);
     }
 
+    @Override
+    public List<Menu> getMenusByUid(String id) {
+        return (List<Menu>) baseDao.findForList(mapper+".getMenusByUid",id);
+    }
+
     /**
      * 采用递归组装树
      * @param menus

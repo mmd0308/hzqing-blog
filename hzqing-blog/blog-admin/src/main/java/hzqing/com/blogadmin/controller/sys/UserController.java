@@ -11,6 +11,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +27,7 @@ public class UserController extends BaseController<User,IUserService>{
      * @return
      */
     @PostMapping("/login")
-    public ResponseMessage<String> login(String username, String password){
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+    public ResponseMessage<String> login( String username, String password){
         String token = baseService.login(username,password);
         return  new ResponseMessage().success(token);
     }
@@ -55,6 +53,12 @@ public class UserController extends BaseController<User,IUserService>{
         return new ResponseMessage().success();
     }
 
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    public ResponseMessage logout(@RequestHeader("access-token") String token,HttpServletRequest request){
+        baseService.logout(token);
+        request.getSession().invalidate();
+        return new ResponseMessage().success();
+    }
 
 
 }

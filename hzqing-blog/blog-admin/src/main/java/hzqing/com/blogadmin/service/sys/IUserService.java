@@ -15,4 +15,5 @@ public interface IUserService extends IBaseService<User>{
 
     void saveUserRole(HashMap<String, Object> map);
 
+    void logout(String token);
 }

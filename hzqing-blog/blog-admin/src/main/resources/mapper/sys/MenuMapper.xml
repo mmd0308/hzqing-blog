@@ -155,4 +155,9 @@
         ))
 
     </select>
+    <select id="getMenusByUid" parameterType="string" resultMap="menuMap">
+    SELECT m.* FROM  sys_menu m LEFT JOIN  rl_role_resource r ON  m.id = r.resource_id
+    LEFT JOIN rl_user_role u ON  r.role_id = u.role_id
+    where u.user_id = #{0} AND  m.menu_type = 'menu'
+    </select>
 </mapper>

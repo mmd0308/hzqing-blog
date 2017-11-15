@@ -5,18 +5,23 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
-const whiteList = ['/login','/','/index','/details','/admin','/admin/dashboard','/system','/system/user'] // 不重定向白名单
+const whiteList = ['/login','/','/index','/details'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {  //获取tocken 是否登陆
     if (to.path === '/login') { //如果已经登陆,直接进入/admin后台系统
       next({ path: '/admin' })
     } else {
-      if (store.getters.roles.length === 0) {  //获取用户角色
+      if (store.getters.roles.length === 0) {  // 判断当前用户是否已拉取完user_info信息 获取用户的角色信息
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          const roles = res.roles
           debugger
-          next()
+          const roles = res.data.roles
+          const menus = res.data.menus
+          store.dispatch('GenerateRoutes', { menus, roles }).then(() => { // 生成可访问的路由表
+            console.log(store.getters.addRouters)
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to }) // hack方法 确保addRoutes已完成
+          })
         }).catch(() => {
           // 前端退出登陆
           store.dispatch('FedLogOut').then(() => {

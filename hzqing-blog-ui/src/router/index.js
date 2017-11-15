@@ -18,6 +18,26 @@ Vue.use(Router)
 export const constantRouterMap = [
   { path: '/login', component: _import('admin/login/index'), hidden: true },
   { path: '/404', component: _import('404'), hidden: true },
+
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/dashboard',
+    name: 'Dashboard',
+    hidden: true,
+    children: [{ path: 'dashboard', component: _import('admin/dashboard/index') }]
+  }
+]
+
+export default new Router({
+  // mode: 'history', //后端支持可开
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+})
+
+export const asyncRouterMap = [
+  { path: '/login', component: _import('admin/login/index'), hidden: true },
+  { path: '/404', component: _import('404'), hidden: true },
   { 
     path: '/', 
     component:_import('show/layout/Layout'), 
@@ -75,9 +95,4 @@ export const constantRouterMap = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
 

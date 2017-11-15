@@ -27,4 +27,11 @@ public interface IMenuService extends IBaseService<Menu> {
      * @return
      */
     List<Menu> getMenusByRids(List<String> roles);
+
+    /**
+     * 根据用户id，获取菜单
+     * @param id
+     * @return
+     */
+    List<Menu> getMenusByUid(String id);
 }

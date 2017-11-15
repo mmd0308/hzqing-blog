@@ -118,7 +118,7 @@
           username = #{0}
     </select>
 
-    <select id="getRoleByUserId" resultType="string" parameterType="string">
-        SELECT DISTINCT role_id FROM  rl_user_role WHERE  user_id = #{0}
+    <select id="getRoleCodeByUid" resultType="string" parameterType="string">
+        SELECT DISTINCT s.role_code FROM  sys_role s LEFT  JOIN rl_user_role r ON  s.id = r.role_id  WHERE  user_id = #{0}
     </select>
 </mapper>
