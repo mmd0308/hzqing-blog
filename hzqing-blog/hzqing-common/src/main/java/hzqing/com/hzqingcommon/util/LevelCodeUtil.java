@@ -21,7 +21,4 @@ public class LevelCodeUtil {
         }
         return  levelCode+lCode;
     }
-
-    public static void main(String[] args) {
-    }
 }

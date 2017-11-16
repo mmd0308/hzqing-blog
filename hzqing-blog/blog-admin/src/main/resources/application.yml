@@ -1,7 +1,7 @@
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://localhost:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.1.21:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     # 使用druid数据源
@@ -22,7 +22,7 @@ spring:
     maxOpenPreparedStatements: 20
   redis:
       database: 0
-      host: 127.0.0.1
+      host: 192.168.1.21
       pool:
         max-active: 20
 mybatis:
@@ -39,3 +39,7 @@ debug: true
 
 logging:
   level: org.springframework=WARN hzqing.com.hzqingcommon.dao=DEBUG
+
+blog:
+  images:
+    path: /home/hzq/hblog/

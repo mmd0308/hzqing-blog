@@ -27,6 +27,8 @@
 		<mysql.version>5.1.44</mysql.version>
 		<mybatis-spring-boot-starter.version>1.3.1</mybatis-spring-boot-starter.version>
 		<mapper.version>3.4.0</mapper.version>
+		<docker.image.prefix>10.27.213.66:5000</docker.image.prefix>
+		<docker.plugin.version>1.0.0</docker.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -100,6 +102,23 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- docker 插件 -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${docker.plugin.version}</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>${project.basedir}</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
