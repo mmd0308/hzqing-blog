@@ -20,6 +20,7 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
+
     private static Date generateExpirationDate(Integer expiration) {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }

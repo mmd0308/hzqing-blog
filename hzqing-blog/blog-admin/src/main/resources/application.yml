@@ -43,3 +43,8 @@ logging:
 blog:
   images:
     path: /home/hzq/hblog/
+
+admin:
+  jwt:
+    secret: 'hzqing'
+    expiration: 600

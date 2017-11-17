@@ -11,10 +11,15 @@ import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -25,28 +30,28 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-    private String secret = "hzqing";
-    private Integer expiration = 72000;
-
+    @Value("${admin.jwt.secret}")
+    private String secret;
+    @Value("${admin.jwt.expiration}")
+    private Integer expiration;
 
     public UserServiceImpl() {
         super.mapper="UserMapper";
     }
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
 
 
     public String login(String username,String password){
+        // 密码加密
+        password = DigestUtils.md5DigestAsHex(password.getBytes());
         User user = (User) baseDao.findForObject(mapper + ".getUserByUName", username);
         if (null != user){
             if (password.equals(user.getPassword())){ //判断密码是否正确
                 Object old = redisTemplate.opsForValue().get(user.getUsername());
                 String token = "";
                 if (old == null) {
-                    Map<String, Object> claims = new HashMap<String, Object>();
-                    claims.put(CLAIM_KEY_USERNAME, user.getUsername());
-                    claims.put(CLAIM_KEY_CREATED, new Date());
+                    Map<String, Object> claims = new HashMap<String, Object>();  // Claims包含您想要签署的任何信息
+                    claims.put("username", user.getUsername());
+                    claims.put("date", new Date());
                     //获取tocken
                     token = JwtTokenUtil.generateToken(claims,secret,expiration);
                     //key username value tocken 存储在redis中
@@ -58,7 +63,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
             }
         }
         return  null;
-
     }
 
     @Override
@@ -119,8 +123,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     @Override
     public void logout(String token) {
         String username = JwtTokenUtil.getUsernameFromToken(token,secret);
-        System.out.println("logout ........... "+username);
         redisTemplate.opsForValue().set(username,null);
+    }
+
+    @Override
+    public int save(User user) {
+        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        return super.save(user);
     }
 
 

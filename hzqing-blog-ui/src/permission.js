@@ -14,14 +14,22 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) {  // 判断当前用户是否已拉取完user_info信息 获取用户的角色信息
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
-          debugger
           const roles = res.data.roles
           const menus = res.data.menus
-          store.dispatch('GenerateRoutes', { menus, roles }).then(() => { // 生成可访问的路由表
-            console.log(store.getters.addRouters)
-            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to }) // hack方法 确保addRoutes已完成
-          })
+          debugger
+          if(roles.length !=0 && menus.length !=0){
+            store.dispatch('GenerateRoutes', { menus, roles }).then(() => { // 生成可访问的路由表
+              console.log(store.getters.addRouters)
+              router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+              next({ ...to }) // hack方法 确保addRoutes已完成
+            })
+          }else{
+            // 无权限
+            store.dispatch('FedLogOut').then(() => {
+              Message.error('您没有登陆权限，等联系管员。')
+              next({ path: '/login' })
+            })
+          }
         }).catch(() => {
           // 前端退出登陆
           store.dispatch('FedLogOut').then(() => {
