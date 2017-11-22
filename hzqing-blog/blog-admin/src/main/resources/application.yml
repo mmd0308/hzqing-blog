@@ -47,4 +47,4 @@ blog:
 admin:
   jwt:
     secret: 'hzqing'
-    expiration: 600
+    expiration: 6000

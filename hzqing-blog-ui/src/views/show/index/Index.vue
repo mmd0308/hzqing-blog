@@ -5,22 +5,20 @@
             <h3>{{ item }}</h3>
             </el-carousel-item>
         </el-carousel>
-        <div class="list-div-item" v-for="o in 5" :key="o">
+        <div class="list-div-item" v-for="o in list" :key="o" >
             <div class="list-div-item-title">
                 <i class="iconfont hzqing-blog-yuan"></i>
                 <h1>
                     <span class="link_title">
                         <router-link to="/details">
                             <font color="red">[置顶]</font>
-                            JAVA之对象初始化过程详解及面试题            
+                                {{ o.arTitle }}
                         </router-link>
                     </span>
                 </h1>
             </div>
             <div class="list-div-item-description">
-                一个朋友在JAVA面试题中遇到了对象的初始化问题，发现自己只能靠敲代码，查看运行结果才能做出来。真是丢人呀。所以今天通过测试，在巩固一下基础，顺便写写笔记。
-                对象的初始化流程如下：
-                初始化父类的静态成员初始化父类的静态代码块初始化子类的静态成员初始化子类的静态代码块初始化父类的非静态成员初始化父类的非静态代码块初始化父类的构造方法初始化子类的非静态成员初始化子类的非静态代码块初始化...        
+                {{ o.arDesc }}
             </div>
             <div class="article_manage">
                 <span class="link_postdate">2017-07-20 08:48</span>
@@ -36,6 +34,54 @@
         </div>
     </div>
 </template>
+<script>
+import {  page, getObj } from '@/api/admin/blog/article'
+import detailsFoot from '@/views/show/blog/DetailsFoot'
+export default{
+    components:{
+        detailsFoot
+    },
+    data(){
+        return {
+            form: this.initObj(),
+            listQuery:{
+                page: 1,
+                pageSize: 10
+            },
+            list: null,
+            total: null
+        }
+    },
+    created() {
+        this.getList();
+    },
+    methods: {
+        initObj() {
+            return {
+                id: '',
+                arTitle: '',
+                arContent: '',
+                arContentHtml: '',
+                arDesc: ''
+            }
+        },
+        findById() {
+            getObj(this.form.id).then(response => {
+                this.form = response.data
+                console.log(response.data)
+            })
+        },
+        getList() {
+            page(this.listQuery).then(response => {
+                this.list = response.data.list
+                this.total = response.data.total
+            })
+        }
+
+    }
+
+}
+</script>
 <style>
 .article_manage{
     margin-bottom: 10px;

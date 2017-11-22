@@ -18,14 +18,15 @@ Vue.use(Router)
 export const constantRouterMap = [
   { path: '/login', component: _import('admin/login/index'), hidden: true },
   { path: '/404', component: _import('404'), hidden: true },
-
-  {
-    path: '/admin',
-    component: Layout,
-    redirect: '/admin/dashboard',
-    name: 'Dashboard',
-    hidden: true,
-    children: [{ path: 'dashboard', component: _import('admin/dashboard/index') }]
+  { 
+    path: '/', 
+    component:_import('show/layout/Layout'), 
+    hidden:true,
+    redirect: '/index',
+    children: [
+      { path: 'index', component: _import('show/layout/AppMain'), hidden:true    },
+      { path: 'details', component: _import('show/blog/Details'), hidden:true    }
+  ]
   }
 ]
 
@@ -36,18 +37,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  { path: '/login', component: _import('admin/login/index'), hidden: true },
-  { path: '/404', component: _import('404'), hidden: true },
-  { 
-    path: '/', 
-    component:_import('show/layout/Layout'), 
-    hidden:true,
-    redirect: '/index',
-    children: [
-      { path: 'index', component: _import('show/layout/AppMain'), hidden:true    },
-      { path: 'details', component: _import('show/blog/Details'), hidden:true    }
-  ]
-  },
+
   {
     path: '/admin',
     component: Layout,

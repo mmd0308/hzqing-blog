@@ -13,35 +13,67 @@
         </div>
         <mavon-editor 
             style="height: 100%"
+            ref="mavonEditor"
             placeholder="请开始你的表演..."
             @save="$save"
             @change="$change"
             @imgAdd="$imgAdd"
             @imgDel="$imgDel"
+            :value="mavonDate"
         ></mavon-editor>
     </div>
 </template>
 <script>
+import {  addObj, getObj } from '@/api/admin/blog/article'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import axios from 'axios'
 export default {
     data(){
         return {
             img_file: {},
-            title: ''
+            title: '',
+            form: this.initObj(),
+            blodId: '',
+            mavonDate: ''
         }
     },
     components: {
         mavonEditor
     },
+    created() {
+        this.blodId = this.$route.query.blodId;
+        if(this.blodId != undefined){
+            this.findById();
+        }
+    },
     methods: {
+        initObj() {
+            return {
+                id: '',
+                arTitle: '',
+                arContent: '',
+                arContentHtml: '',
+                arDesc: ''
+            }
+        },
         saveBlog(){
             alert('发表博客')
         },
         $save(value,render){
-            alert(value)
-            alert(render)
-            debugger
+            this.form.arContent = value;
+            this.form.arContentHtml = render;
+            this.form.arTitle = this.title;
+            addObj(this.form).then(response => {
+                debugger
+                this.form.id = response.data.id
+                this.$notify({
+                    title: '成功',
+                    message: '保存成功',
+                    type: 'success',
+                    duration: 2000
+                })
+            })
         },
         $change(value,render){ // 编辑区发生变化的回调事件
             console.log("1..."+value)
@@ -49,10 +81,31 @@ export default {
         },
         $imgAdd(pos, $file){
             this.img_file[pos] = $file;
-           this.$refs.mavonEditor.$imgUpdateByUrl( $file,"http://localhost:8080/jfjf");
+            let file = $file
+            let param = new FormData()  // 创建form对象
+            param.append('file', file)  // 通过append向form对象添加数据
+            console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+            let config = {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
+            var that = this;
+            // 添加请求头
+            axios.post('/admin/blog/article/uploadImages', param, config)
+                .then(response => {
+                    // that.$refs.mavonEditor.$imgUpdateByUrl(pos,process.env.BASE_API+response.data.data)
+                    that.$refs.mavonEditor.$img2Url(pos,process.env.BASE_API+response.data.data)
+            })
         },
         $imgDel(pos){
             delete this.img_file[pos];
+        },
+        findById() {
+            getObj(this.blodId).then(response => {
+                this.mavonDate = response.data.arContent
+                this.form = response.data
+                this.title = response.data.arTitle
+                console.log(response.data)
+            })
         }
     }
 }

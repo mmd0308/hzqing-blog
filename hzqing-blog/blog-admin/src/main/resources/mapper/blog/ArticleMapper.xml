@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ArticleMapper" >
+    <resultMap id="articleMap" type="article">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="cate_id" property="cateId"/>
+        <result column="ar_title" property="arTitle"/>
+        <result column="ar_type" property="arType"/>
+        <result column="ar_url" property="arUrl"/>
+        <result column="ar_label" property="arLabel"/>
+        <result column="ar_desc" property="arDesc"/>
+        <result column="ar_content" property="arContent"/>
+        <result column="ar_content_html" property="arContentHtml"/>
+        <result column="ar_ctime" property="arCtime"/>
+        <result column="ar_etime" property="arEtime"/>
+        <result column="ar_state" property="arState"/>
+        <result column="ar_up" property="arUp"/>
+        <result column="ar_support" property="arSupport"/>
+    </resultMap>
+    <sql id="table">
+        blog_article
+    </sql>
+    <sql id="field">
+        id,
+        user_id,
+        cate_id,
+        ar_title,
+        ar_type,
+        ar_url,
+        ar_label,
+        ar_desc,
+        ar_content,
+        ar_content_html,
+        ar_ctime,
+        ar_etime,
+        ar_state,
+        ar_up,
+        ar_support
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{userId},
+        #{cateId},
+        #{arTitle},
+        #{arType},
+        #{arUrl},
+        #{arLabel},
+        #{arDesc},
+        #{arContent},
+        #{arContentHtml},
+        #{arCtime},
+        #{arEtime},
+        #{arState},
+        #{arUp},
+        #{arSupport}
+    </sql>
+
+    <insert id="save" parameterType="article">
+        INSERT  INTO
+        <include refid="table"/>
+        (
+        <include refid="field"/>
+        )
+        VALUES
+        (
+        <choose>
+            <when test="id == null || id == ''">
+                (SELECT replace((SELECT  uuid()),"-","")),
+            </when>
+            <otherwise>
+                #{id},
+            </otherwise>
+        </choose>
+        #{userId},
+        #{cateId},
+        #{arTitle},
+        #{arType},
+        #{arUrl},
+        #{arLabel},
+        #{arDesc},
+        #{arContent},
+        #{arContentHtml},
+        #{arCtime},
+        #{arEtime},
+        #{arState},
+        #{arUp},
+        #{arSupport}
+        )
+    </insert>
+    <select id="query" parameterType="article" resultMap="articleMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where 1 = 1
+        <if test="id != null and id != ''">
+            id = ${id}
+        </if>
+    </select>
+    <select id="selectById" parameterType="String" resultMap="articleMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{0}
+    </select>
+    <update id="update" parameterType="article" >
+        UPDATE
+        <include refid="table"/>
+        SET
+        id = #{id}
+        <if test="cateId != null and cateId !=''">
+            , cate_id = #{cateId}
+        </if>
+        <if test="arTitle != null and arTitle !=''">
+            , ar_title = #{arTitle}
+        </if>
+        <if test="arType != null and arType !=''">
+            , ar_type = #{arType}
+        </if>
+        <if test="arUrl != null and arUrl !=''">
+            , ar_url = #{arUrl}
+        </if>
+        <if test="arLabel != null and arLabel !=''">
+            , ar_label = #{arLabel}
+        </if>
+        <if test="arDesc != null and arDesc !=''">
+            , ar_desc = #{arDesc}
+        </if>
+        <if test="arContent != null and arContent !=''">
+            , ar_content = #{arContent}
+        </if>
+        <if test="arContentHtml != null and arContentHtml !=''">
+            , ar_content_html = #{arContentHtml}
+        </if>
+        <if test="arEtime != null ">
+            , ar_etime = #{arEtime}
+        </if>
+        <if test="arState != null and arState !=''">
+            , ar_state = #{arState}
+        </if>
+        <if test="arUp != null and arUp !=''">
+            , ar_up = #{arUp}
+        </if>
+        <if test="arSupport != null and arSupport !=''">
+            , ar_support = #{arSupport}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
+</mapper>

@@ -16,10 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +38,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
 
     public String login(String username,String password){
+        //@todo 暂时调试用
+        redisTemplate.opsForValue().set(username,null);
         // 密码加密
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         User user = (User) baseDao.findForObject(mapper + ".getUserByUName", username);
@@ -50,8 +49,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
                 String token = "";
                 if (old == null) {
                     Map<String, Object> claims = new HashMap<String, Object>();  // Claims包含您想要签署的任何信息
-                    claims.put("username", user.getUsername());
-                    claims.put("date", new Date());
+                    claims.put("sub", user.getUsername());
+                    claims.put("created", new Date());
                     //获取tocken
                     token = JwtTokenUtil.generateToken(claims,secret,expiration);
                     //key username value tocken 存储在redis中

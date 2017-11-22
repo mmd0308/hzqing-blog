@@ -1,14 +1,14 @@
 <template>
   <div id="navbar" class="navbar-div">
         <el-row>
-            <el-col :span="5">
+            <el-col :span="4">
                 <div class="show-navbar-title">
                     <router-link to="/">
                          衡钊清的博客
                     </router-link>
                 </div>
             </el-col>
-            <el-col :span="16">
+            <el-col :span="17">
                 <el-menu :default-active="activeIndex" class="el-menu-demo show-navbar-menu" mode="horizontal" @select="handleSelect">
                     <el-menu-item index="1">
                         <router-link to="/">
