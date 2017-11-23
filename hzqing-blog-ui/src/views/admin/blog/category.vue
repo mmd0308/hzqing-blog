@@ -82,30 +82,23 @@
                 <el-form :model="form" :inline="true" :rules="rules" ref="form" label-width="90px">
                     <el-row>
                     <el-col :span="12">
-                        <el-form-item label="帐户" prop="username" >
-                        <el-input v-model="form.username" placeholder="请输入姓名" class="input-selects-width"></el-input>
+                        <el-form-item label="类别名称" prop="cateName" >
+                        <el-input v-model="form.cateName" placeholder="请输入姓名" class="input-selects-width"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="邮箱" prop="email">
-                        <el-input  v-model="form.email" placeholder="请输入账户" class="input-selects-width"></el-input>
+                        <el-form-item label="是否启用" prop="enabled">
+                        <el-switch on-text="可用" off-text="禁用" on-value='Y'  off-value='N' v-model="form.enabled"></el-switch>
                         </el-form-item>
                     </el-col>
                     </el-row>
                     <el-row>
                     <el-col :span="12">
-                        <el-form-item  label="密码" placeholder="请输入密码" prop="password">
-                        <el-input type="password" v-model="form.password" class="input-selects-width"></el-input>
+                        <el-form-item  label="排序" placeholder="请输入密码" prop="sort">
+                        <el-input v-model="form.sort" class="input-selects-width"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="确认密码" placeholder="请输入密码" prop="password">
-                        <el-input type="password" v-model="form.password" class="input-selects-width"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    </el-row>
-                    <el-row>
-                    <el-col :span="24">
                         <el-form-item label="备注" prop="note">
                         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" class="input-selects-width" placeholder="请输入备注"
                                     v-model="form.note"></el-input>
@@ -147,10 +140,7 @@
         rules: {
           cateName: [
                 {  required: true,  message: '请输入用户名',  trigger: 'blur'    },
-                {  min: 3,  max: 20,   message: '长度在3到20个字符',   trigger: 'blur' }
-            ],
-          note: [
-              {  required:true,  message: '请输入有效的邮箱格式',  trigger: 'blur'   }
+                {  min: 2,  max: 20,   message: '长度在3到20个字符',   trigger: 'blur' }
             ]
         }
       }

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
 import hzqing.com.hzqingcommon.service.IBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import java.util.List;
 public class BaseController<T,M extends IBaseService<T>> {
     @Autowired
     protected M baseService;
+    @Value("${admin.jwt.secret}")
+    protected String secret;
 
     /**
      * 新增

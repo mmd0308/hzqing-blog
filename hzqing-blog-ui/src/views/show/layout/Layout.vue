@@ -24,10 +24,10 @@
 </script>
 <style>
 .index-left{
-    margin: 17px 10px 0px 300px;
+    margin: 17px 10px 0px 260px;
 }
 .index-right{
-    margin: 17px 300px 0px 10px;
+    margin: 17px 260px 0px 10px;
 }
 .app-wrapper{
     font: 14px/24px 'microsoft yahei';

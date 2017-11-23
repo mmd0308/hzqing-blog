@@ -37,7 +37,12 @@
                     width="100px"
                     :formatter="formatter">
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.arState }}</span>
+                            <span style="margin-left: 10px" v-if="scope.row.arState == 'FB'">
+                                <el-tag type="success">发布</el-tag>
+                            </span>
+                            <span style="margin-left: 10px" v-if="scope.row.arState == 'CG'">
+                                <el-tag type="danger">草稿</el-tag>
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -45,7 +50,9 @@
                     width="100px"
                     :formatter="formatter">
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.arUp }}</span>
+                            <span style="margin-left: 10px" v-if="scope.row.arUp == 'Y'">
+                                <el-tag type="warning" >置顶</el-tag>
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column label="操作" width="200px">
@@ -54,6 +61,10 @@
                                 size="mini"
                                 type="success"
                                 @click="toUpdate(scope.row.id)">编辑</el-button>
+                            <el-button
+                                size="mini"
+                                type="info"
+                                @click="toFb(scope.row.id)">发布</el-button>
                             <el-button
                                 v-if="scope.row.show == 'show'"
                                 size="mini"

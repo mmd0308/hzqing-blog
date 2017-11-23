@@ -3,6 +3,7 @@ package hzqing.com.blogadmin.controller.blog;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.service.blog.IArticleService;
 import hzqing.com.hzqingcommon.controller.BaseController;
+import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
 import hzqing.com.hzqingcommon.util.DateUtils;
 import hzqing.com.hzqingcommon.util.FileUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -46,7 +48,22 @@ public class ArticleController extends BaseController<Article,IArticleService> {
     @PostMapping("/saveOrUpdate")
     public ResponseMessage<Integer> add(@RequestBody Article article,HttpServletRequest request) {
         String tokens = request.getHeader(token);
-        baseService.saveOrUpdate(article,tokens);
+        String username = JwtTokenUtil.getUsernameFromToken(tokens, secret);
+        if (null== username || username == ""){
+            return new ResponseMessage<>().tokenExpire();
+        }
+        baseService.saveOrUpdate(article,username);
         return  new ResponseMessage<>().success(article);
+    }
+
+    /**
+     * 根据文章id，获取分类
+     * @param id
+     * @return
+     */
+    @GetMapping("/getCateByAid/{id}")
+    public ResponseMessage<List<String>> getCateByAid(@PathVariable String id) {
+        List<String> cates = baseService.getCateByAid(id);
+        return  new ResponseMessage<>().success(cates);
     }
 }

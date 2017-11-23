@@ -3,11 +3,11 @@
         <div class="title-div">
             <el-row>
                 <el-col :span="21">
-                    <el-input placeholder="请输入文章标题" v-model="title" class="title-input">
+                    <el-input placeholder="请输入文章标题" v-model="title"  class="title-input">
                     </el-input>
                 </el-col>
                 <el-col :span="3">
-                    <el-button type="danger" @click="saveBlog">发表博客</el-button>
+                    <el-button type="danger" @click="toSaveBlog">发表博客</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -21,10 +21,44 @@
             @imgDel="$imgDel"
             :value="mavonDate"
         ></mavon-editor>
+        <el-dialog title="发布博客" :visible.sync="dialogFormVisible" width="30%">
+            <el-form :model="form"  :rules="rule" ref="form">
+                <el-form-item label="文章类型" :label-width="formLabelWidth" prop="arType">
+                    <el-select v-model="form.arType"  placeholder="请选择活动区域"  >
+                        <el-option label="原创" value="Y"></el-option>
+                        <el-option label="转载" value="Z"></el-option>
+                    </el-select>
+                </el-form-item>
+                 <el-form-item label="转载地址" :label-width="formLabelWidth" v-if="form.arType == 'Z'">
+                    <el-input v-model="form.arUrl" auto-complete="off" class="dialog-element-width"></el-input>
+                </el-form-item>
+                <el-form-item label="分类" :label-width="formLabelWidth" prop="cateId">
+                    <el-select v-model="form.cateId" multiple placeholder="请选择">
+                        <el-option
+                        v-for="item in categorys"
+                        :key="item.id"
+                        :label="item.cateName"
+                        :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="标签" :label-width="formLabelWidth" prop="arLabel">
+                    <el-input v-model="form.arLabel" auto-complete="off" class="dialog-element-width"></el-input>
+                </el-form-item>
+                <el-form-item label="描述" :label-width="formLabelWidth" prop="arDesc">
+                    <el-input type="textarea" v-model="form.arDesc" auto-complete="off" class="dialog-element-width"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveBlog('form')">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <script>
-import {  addObj, getObj } from '@/api/admin/blog/article'
+import {  addObj, getObj ,getCateByAid } from '@/api/admin/blog/article'
+import {  getAll } from '@/api/admin/blog/category'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import axios from 'axios'
@@ -35,7 +69,16 @@ export default {
             title: '',
             form: this.initObj(),
             blodId: '',
-            mavonDate: ''
+            mavonDate: '',
+            dialogFormVisible: false,
+            formLabelWidth: '120px',
+            categorys: null,
+            rule: {
+                arType: {  required: true,  message: '请选择文章类型',  trigger: 'blur'    },
+                arLabel: {  required: true,  message: '请输入标签',  trigger: 'blur'    },
+                cateId: {  required: true,  message: '请选择类别'  },
+                arDesc: {  required: true,  message: '请写摘要',  trigger: 'blur'    }
+            }
         }
     },
     components: {
@@ -54,18 +97,65 @@ export default {
                 arTitle: '',
                 arContent: '',
                 arContentHtml: '',
-                arDesc: ''
+                arDesc: '',
+                arType: '',
+                arUrl: '',
+                arLabel: '',
+                cateId: [],
+                arState: 'CG'
             }
         },
-        saveBlog(){
-            alert('发表博客')
+        toSaveBlog(){
+            if(this.title == ''){
+                this.$message({
+                    message:'请输入博客标题...',
+                    type: 'warning'
+                    });
+                return false;
+            }
+            this.dialogFormVisible = true
+            //查询所有类别
+            getAll().then(response => {
+                this.categorys = response.data
+            })
+            //根据文章id获取类别
+            if(this.form.id != ''){
+                getCateByAid(this.form.id).then(response =>{
+                    this.form.cateId = response.data
+                })
+            }
+        },
+        saveBlog(formName) {
+            this.form.arState = 'FB'
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    addObj(this.form).then(response => {
+                        this.form.id = response.data.id
+                        this.dialogFormVisible = false
+                        this.$notify({
+                            title: '成功',
+                            message: '保存成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                    })
+                } else {
+                    return false
+                }
+            })
         },
         $save(value,render){
+            if(this.title == ''){
+                this.$message({
+                    message:'请输入博客标题...',
+                    type: 'warning'
+                    });
+                return false;
+            }
             this.form.arContent = value;
             this.form.arContentHtml = render;
             this.form.arTitle = this.title;
             addObj(this.form).then(response => {
-                debugger
                 this.form.id = response.data.id
                 this.$notify({
                     title: '成功',
@@ -76,8 +166,13 @@ export default {
             })
         },
         $change(value,render){ // 编辑区发生变化的回调事件
-            console.log("1..."+value)
-            console.log("2..."+render)
+/*            this.form.arContent = value;
+            this.form.arContentHtml = render;
+            this.form.arTitle = this.title;
+            addObj(this.form).then(response => {
+                this.form.id = response.data.id
+            })
+            */
         },
         $imgAdd(pos, $file){
             this.img_file[pos] = $file;
@@ -100,12 +195,16 @@ export default {
             delete this.img_file[pos];
         },
         findById() {
+            this.restTemp();
             getObj(this.blodId).then(response => {
                 this.mavonDate = response.data.arContent
                 this.form = response.data
                 this.title = response.data.arTitle
                 console.log(response.data)
             })
+        },
+        restTemp() {
+            this.form = this.initObj();
         }
     }
 }
@@ -123,6 +222,9 @@ export default {
 .title-input input{
     border: none;
     font-size: 25px;
+}
+.dialog-element-width{
+    width: 90%;
 }
 
 </style>

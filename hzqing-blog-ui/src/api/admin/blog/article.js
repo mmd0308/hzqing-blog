@@ -24,6 +24,13 @@ export function getObj(id) {
   })
 }
 
+export function getCateByAid(id) {
+  return fetch({
+    url: '/admin/blog/article/getCateByAid/' + id,
+    method: 'get'
+  })
+}
+
 export function delObj(id) {
   return fetch({
     url: '/admin/blog/categroy/delete/' + id,

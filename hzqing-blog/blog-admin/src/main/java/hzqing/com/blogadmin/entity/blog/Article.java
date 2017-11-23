@@ -3,12 +3,12 @@ package hzqing.com.blogadmin.entity.blog;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
+import java.util.List;
 
 @Alias("article")
 public class Article {
     private String id;
     private String userId;
-    private String cateId;
     private String arTitle;
     private String arType;
     private String arUrl;
@@ -22,6 +22,8 @@ public class Article {
     private String arUp;
     private String arSupport;
 
+
+    private List<String> cateId;
     @Override
     public String toString() {
         return "Article{" +
@@ -59,11 +61,11 @@ public class Article {
         this.userId = userId;
     }
 
-    public String getCateId() {
+    public List<String> getCateId() {
         return cateId;
     }
 
-    public void setCateId(String cateId) {
+    public void setCateId(List<String> cateId) {
         this.cateId = cateId;
     }
 

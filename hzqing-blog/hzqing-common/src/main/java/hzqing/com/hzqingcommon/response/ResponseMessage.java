@@ -54,4 +54,12 @@ public class ResponseMessage<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    /**
+     * 会话超时，请重新登录，或者取消继续留在该页面
+     * @return
+     */
+    public ResponseMessage<Integer> tokenExpire() {
+        return  new ResponseMessage(40101,data);
+    }
 }

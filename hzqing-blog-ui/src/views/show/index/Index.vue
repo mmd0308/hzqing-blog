@@ -2,7 +2,7 @@
     <div id="sIndex">
         <el-carousel indicator-position="outside">
             <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+            <h3>待开发...{{ item }}</h3>
             </el-carousel-item>
         </el-carousel>
         <div class="list-div-item" v-for="o in list" :key="o" >
@@ -54,7 +54,8 @@ export default{
             form: this.initObj(),
             listQuery:{
                 page: 1,
-                pageSize: 15
+                pageSize: 15,
+                arState: 'FB'
             },
             list: null,
             total: null
@@ -71,7 +72,8 @@ export default{
                 arContent: '',
                 arContentHtml: '',
                 arDesc: '',
-                arUp: ''
+                arUp: '',
+                arState: ''
             }
         },
         findById() {
@@ -160,5 +162,8 @@ export default{
 .el-carousel__container{
     position: relative;
     height: 180px;
+}
+.pagination-container{
+    margin: 23px 20px 39px 40px;
 }
 </style>

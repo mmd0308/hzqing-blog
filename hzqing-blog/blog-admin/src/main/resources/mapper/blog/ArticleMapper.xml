@@ -4,7 +4,6 @@
     <resultMap id="articleMap" type="article">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
-        <result column="cate_id" property="cateId"/>
         <result column="ar_title" property="arTitle"/>
         <result column="ar_type" property="arType"/>
         <result column="ar_url" property="arUrl"/>
@@ -24,7 +23,6 @@
     <sql id="field">
         id,
         user_id,
-        cate_id,
         ar_title,
         ar_type,
         ar_url,
@@ -41,7 +39,6 @@
     <sql id="fieldValue">
         #{id},
         #{userId},
-        #{cateId},
         #{arTitle},
         #{arType},
         #{arUrl},
@@ -73,7 +70,6 @@
             </otherwise>
         </choose>
         #{userId},
-        #{cateId},
         #{arTitle},
         #{arType},
         #{arUrl},
@@ -93,9 +89,12 @@
         <include refid="field"/>
         FROM
         <include refid="table"/>
-        where 1 = 1
+        where 1 =1
         <if test="id != null and id != ''">
-            id = ${id}
+            AND id = ${id}
+        </if>
+        <if test="arState != null and arState != ''">
+            AND ar_state = #{arState}
         </if>
     </select>
     <select id="selectById" parameterType="String" resultMap="articleMap">
@@ -110,9 +109,6 @@
         <include refid="table"/>
         SET
         id = #{id}
-        <if test="cateId != null and cateId !=''">
-            , cate_id = #{cateId}
-        </if>
         <if test="arTitle != null and arTitle !=''">
             , ar_title = #{arTitle}
         </if>
@@ -156,4 +152,20 @@
         WHERE
         id = #{0}
     </delete>
+    <insert id="saveRlCateOrArt" parameterType="list">
+        INSERT  INTO rl_article_category (id, cate_id, article_id) VALUES
+        <foreach collection="list"  item="item" separator=",">
+            (
+            (SELECT replace((SELECT uuid()),"-","")),
+            #{item.cateId},
+            #{item.articleId}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleRlCateByArtId" parameterType="string">
+        DELETE  FROM  rl_article_category WHERE  article_id = #{0}
+    </delete>
+    <select id="getCateByAid" parameterType="string" resultType="string">
+        SELECT cate_id from rl_article_category WHERE  article_id = #{0}
+    </select>
 </mapper>

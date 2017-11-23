@@ -11,20 +11,28 @@
                     <span><a href="http://my.csdn.net/mmd0308" class="user_name" target="_blank">mmd0308</a></span>
                 </div>
                 <ul id="blog_rank">
-                    <li>访问：<span>22297次</span></li>
-                    <li>积分：<span>888</span> </li>    
-                    <li>排名：<span>千里之外</span></li>
+                    <li>访问：<span>22297 次</span></li>
+                    <li>邮箱：<span>mmd0308@126.com</span> </li>    
+                    <li>gitHub：<a href='https://github.com/mmd0308'><span style="color:#20a0ff;">『mmd0308』</span></a> </li>    
+                    <li>码云：<a href='https://gitee.com/hszj'><span style="color:#20a0ff;">『奋斗吧趁我们还年轻』</span></a> </li>    
+                    <li>座右铭：<span>做一个决定，并不难，难的是付诸行动，并且坚持到底</span></li>
                 </ul>
             </ul>
         </div>
-        <div class="sidebar-panel" v-for="o in 4" :key="o">
+        <div class="sidebar-panel">
+            <ul class="sidebar-panel_head"><span>文章搜索</span></ul>
+            <ul class="sidebar-panel_body">    
+                <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+                    <el-button size="small" slot="append">搜索</el-button>
+                </el-input>
+            </ul>
+
+        </div>
+        <div class="sidebar-panel" v-for="o in 2" :key="o">
             <ul class="sidebar-panel_head"><span>文章分类</span></ul>
             <ul class="sidebar-panel_body">    
                 <li v-for="a in 5" :key="a">
-                    <a href="/mmd0308/article/category/6298567" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JQuery</a><span>(1)</span>
-                </li>
-                <li>
-                    <a href="/mmd0308/article/category/7148135" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">软考之软件设计师</a><span>(3)</span>
+                    <span>待开发</span>
                 </li>
             </ul>
         </div>
@@ -88,4 +96,7 @@
     padding: 0px;
     font-weight: bold;
 }
+  .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+  }
 </style>

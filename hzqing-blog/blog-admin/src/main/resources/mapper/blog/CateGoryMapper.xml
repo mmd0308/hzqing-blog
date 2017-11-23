@@ -57,6 +57,14 @@
             id = ${id}
         </if>
     </select>
+    <select id="all"  resultMap="cateGoryMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+          enabled = 'Y'
+    </select>
     <select id="selectById" parameterType="String" resultMap="cateGoryMap">
         SELECT
         <include refid="field"/>

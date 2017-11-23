@@ -8,6 +8,13 @@ export function page(query) {
   })
 }
 
+export function getAll() {
+  return fetch({
+    url: '/admin/blog/categroy/all',
+    method: 'get'
+  })
+}
+
 export function addObj(obj) {
   return fetch({
     url: '/admin/blog/categroy/add',
