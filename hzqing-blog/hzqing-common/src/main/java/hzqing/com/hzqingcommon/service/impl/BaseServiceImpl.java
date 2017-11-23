@@ -5,12 +5,16 @@ import com.github.pagehelper.PageInfo;
 import hzqing.com.hzqingcommon.dao.IBaseDao;
 import hzqing.com.hzqingcommon.service.IBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
 public class BaseServiceImpl<T> implements IBaseService<T> {
     @Autowired
     protected IBaseDao baseDao;
+
+    @Value("${admin.jwt.secret}")
+    protected String secret;
 
     public String mapper;
 

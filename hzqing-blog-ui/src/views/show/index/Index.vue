@@ -9,11 +9,9 @@
             <div class="list-div-item-title">
                 <i class="iconfont hzqing-blog-yuan"></i>
                 <h1>
-                    <span class="link_title">
-                        <router-link to="/details">
-                            <font color="red">[置顶]</font>
+                    <span class="link_title" @click="toDetail(o.id)">
+                            <font color="red" v-if="o.arUp == 'Y'">[置顶]</font>
                                 {{ o.arTitle }}
-                        </router-link>
                     </span>
                 </h1>
             </div>
@@ -32,6 +30,16 @@
                 </span>
             </div>
         </div>
+        <div class="pagination-container">
+            <el-pagination @size-change="handleSizeChange" 
+                            @current-change="handleCurrentChange"
+                            :current-page.sync="listQuery.page"
+                            :page-sizes="[15,30,50,100]" 
+                            :page-size="listQuery.pageSize"
+                            layout="total, sizes, prev, pager, next, jumper" 
+                            :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -46,7 +54,7 @@ export default{
             form: this.initObj(),
             listQuery:{
                 page: 1,
-                pageSize: 10
+                pageSize: 15
             },
             list: null,
             total: null
@@ -62,7 +70,8 @@ export default{
                 arTitle: '',
                 arContent: '',
                 arContentHtml: '',
-                arDesc: ''
+                arDesc: '',
+                arUp: ''
             }
         },
         findById() {
@@ -76,6 +85,22 @@ export default{
                 this.list = response.data.list
                 this.total = response.data.total
             })
+        },
+        handleSizeChange(val) {
+            this.listQuery.pageSize = val
+            this.getList();
+        },
+        handleCurrentChange(val) {
+            this.listQuery.page = val
+            this.getList();
+        },
+        toDetail(id) {
+            this.$router.push({
+                path: '/details',
+                query: {
+                    blodId: id 
+                    }
+                })
         }
 
     }

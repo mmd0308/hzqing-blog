@@ -6,5 +6,5 @@ import hzqing.com.hzqingcommon.service.IBaseService;
 import java.util.Map;
 
 public interface IArticleService extends IBaseService<Article>{
-    void saveOrUpdate(Article article);
+    void saveOrUpdate(Article article,String token);
 }

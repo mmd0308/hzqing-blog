@@ -32,12 +32,13 @@ export default{
         }
     },
     created() {
-      this.findById();
+        this.form.id = this.$route.query.blodId;
+        this.findById();
     },
     methods: {
         initObj() {
             return {
-                id: '3a64013edf0b400d886205d4d77e74e9',
+                id: '',
                 arTitle: '',
                 arContent: '',
                 arContentHtml: '',

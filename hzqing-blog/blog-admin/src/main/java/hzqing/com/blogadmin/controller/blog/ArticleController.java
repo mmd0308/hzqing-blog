@@ -8,6 +8,7 @@ import hzqing.com.hzqingcommon.util.DateUtils;
 import hzqing.com.hzqingcommon.util.FileUtil;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ public class ArticleController extends BaseController<Article,IArticleService> {
 
     @Value("${blog.images.path}")
     private String filePath;
+    @Value("${blog.access.token}")
+    private String token;
 
     /**
      * 上传图片，返回图片路径
@@ -41,8 +44,9 @@ public class ArticleController extends BaseController<Article,IArticleService> {
     }
 
     @PostMapping("/saveOrUpdate")
-    public ResponseMessage<Integer> add(@RequestBody Article article) {
-        baseService.saveOrUpdate(article);
+    public ResponseMessage<Integer> add(@RequestBody Article article,HttpServletRequest request) {
+        String tokens = request.getHeader(token);
+        baseService.saveOrUpdate(article,tokens);
         return  new ResponseMessage<>().success(article);
     }
 }

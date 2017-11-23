@@ -64,6 +64,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         return  null;
     }
 
+    /**
+     * 根据token获取用户信息
+     * @param token
+     * @return
+     */
     @Override
     public UserVo getUserinfo(String token) {
         String username = JwtTokenUtil.getUsernameFromToken(token,secret);
@@ -94,7 +99,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
      * @param username
      * @return
      */
-    private User getUserByUName(String username){
+    @Override
+    public User getUserByUName(String username){
         return (User) baseDao.findForObject(mapper+".getUserByUName",username);
     }
 

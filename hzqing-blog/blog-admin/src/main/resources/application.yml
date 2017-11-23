@@ -43,7 +43,8 @@ logging:
 blog:
   images:
     path: /home/hzq/hblog/
-
+  access:
+    token: 'access-token'
 admin:
   jwt:
     secret: 'hzqing'
