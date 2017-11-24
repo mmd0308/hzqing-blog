@@ -7,6 +7,7 @@
         <result column="enabled" property="enabled"/>
         <result column="sort" property="sort"/>
         <result column="note" property="note"/>
+        <result column="artNumber" property="artNumber"/>
     </resultMap>
     <sql id="table">
         blog_category
@@ -56,14 +57,14 @@
         <if test="id != null and id != ''">
             id = ${id}
         </if>
+        ORDER  BY sort
     </select>
     <select id="all"  resultMap="cateGoryMap">
-        SELECT
-        <include refid="field"/>
-        FROM
-        <include refid="table"/>
+        SELECT c.*,r.num AS artNumber FROM blog_category c
+        LEFT JOIN (SELECT  count(id) num,cate_id FROM  rl_article_category GROUP BY  cate_id) r ON  c.id = r.cate_id
         WHERE
-          enabled = 'Y'
+        c.enabled = 'Y'
+        ORDER  BY c.sort
     </select>
     <select id="selectById" parameterType="String" resultMap="cateGoryMap">
         SELECT

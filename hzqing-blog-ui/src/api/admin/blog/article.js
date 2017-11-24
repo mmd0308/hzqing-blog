@@ -9,6 +9,14 @@ export function page(query) {
   })
 }
 
+export function pageByCid(query) {
+  return fetch({
+    url: '/admin/blog/article/pageByCid',
+    method: 'get',
+    params: query
+  })
+}
+
 export function addObj(obj) {
   return fetch({
     url: '/admin/blog/article/saveOrUpdate',

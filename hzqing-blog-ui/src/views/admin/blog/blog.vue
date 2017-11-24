@@ -21,7 +21,7 @@
             @imgDel="$imgDel"
             :value="mavonDate"
         ></mavon-editor>
-        <el-dialog title="发布博客" :visible.sync="dialogFormVisible" width="30%">
+        <el-dialog title="发布博客" :visible.sync="dialogFormVisible" width="30%" @open="openDialog">
             <el-form :model="form"  :rules="rule" ref="form">
                 <el-form-item label="文章类型" :label-width="formLabelWidth" prop="arType">
                     <el-select v-model="form.arType"  placeholder="请选择活动区域"  >
@@ -46,7 +46,11 @@
                     <el-input v-model="form.arLabel" auto-complete="off" class="dialog-element-width"></el-input>
                 </el-form-item>
                 <el-form-item label="描述" :label-width="formLabelWidth" prop="arDesc">
-                    <el-input type="textarea" v-model="form.arDesc" auto-complete="off" class="dialog-element-width"></el-input>
+                    <el-input  type="textarea" ref="textAreaSize" :maxlength = "textMaxSize" @change="textArea" v-model="form.arDesc" auto-complete="off" class="dialog-element-width" :autosize="{ minRows: 3, maxRows: 6}" >
+                    </el-input>
+                    <div style="width:90%;text-align:right;">
+                        字数:{{this.textSize}}
+                    </div>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -78,7 +82,9 @@ export default {
                 arLabel: {  required: true,  message: '请输入标签',  trigger: 'blur'    },
                 cateId: {  required: true,  message: '请选择类别'  },
                 arDesc: {  required: true,  message: '请写摘要',  trigger: 'blur'    }
-            }
+            },
+            textSize: 200,
+            textMaxSize: 200
         }
     },
     components: {
@@ -89,6 +95,7 @@ export default {
         if(this.blodId != undefined){
             this.findById();
         }
+        
     },
     methods: {
         initObj() {
@@ -124,6 +131,7 @@ export default {
                     this.form.cateId = response.data
                 })
             }
+            
         },
         saveBlog(formName) {
             this.form.arState = 'FB'
@@ -205,7 +213,15 @@ export default {
         },
         restTemp() {
             this.form = this.initObj();
+        },
+        textArea(){
+            var size = this.$refs.textAreaSize.value.length;
+            this.textSize = (200 - size ) > 0 ? size: 0;
+        },
+        openDialog(){
+            debugger
         }
+        
     }
 }
 </script>

@@ -2,23 +2,19 @@
   <div id="app" class="app-wrapper">
     <el-row>
       <el-col :span="24">
-          <navbar></navbar>
+          <navbar ref="index_navbar"></navbar>
       </el-col>
     </el-row>
     <el-row>
-       <router-view></router-view>
+       <router-view ref="index_router_view"></router-view>
     </el-row>
   </div>
 </template>
 <script>
   import navbar from '@/views/show/layout/Navbar'
-  import appmain from '@/views/show/layout/AppMain'
-  import sidebar from '@/views/show/layout/Sidebar'
   export default {
     components: {
-      navbar,
-      appmain,
-      sidebar
+      navbar
     }
   }
 </script>

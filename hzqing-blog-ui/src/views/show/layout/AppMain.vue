@@ -3,12 +3,12 @@
     <el-row>
       <el-col :span="17">
         <div class="index-left">
-          <index></index>
+          <index ref="blog_index"></index>
         </div>
       </el-col>
       <el-col :span="7">
         <div class="index-right">
-            <sidebar></sidebar>
+            <sidebar ref="index_sidebar"></sidebar>
         </div>
       </el-col>
     </el-row>

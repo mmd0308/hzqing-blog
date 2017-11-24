@@ -4,7 +4,7 @@
                 <div id="query">
                     <el-row>
                         <el-col :span="8">
-                            <el-input v-model="input" style="width:96%" placeholder="请输入分类名称"></el-input>
+                            <el-input v-model="query" style="width:96%" placeholder="请输入分类名称"></el-input>
                         </el-col>
                         <el-col :span="16">
                             <el-button-group>
@@ -26,10 +26,10 @@
                     </el-table-column>
                     <el-table-column
                     label="创建时间"
-                    width="150px"
+                    width="180px"
                     :formatter="formatter">
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.arCtime }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.arCtime | formatDate }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -98,7 +98,14 @@
 
 <script>
 import {  page, getObj } from '@/api/admin/blog/article'
+import { formatDate} from '@/utils/date'
 export default {
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
     data() {
         return {
             form: this.initObj(),
@@ -107,7 +114,8 @@ export default {
                 pageSize: 10
             },
             list: null,
-            total: null
+            total: null,
+            query: ''
         }
     },
     created() {

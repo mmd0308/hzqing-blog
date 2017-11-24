@@ -22,23 +22,61 @@
         <div class="sidebar-panel">
             <ul class="sidebar-panel_head"><span>文章搜索</span></ul>
             <ul class="sidebar-panel_body">    
-                <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
-                    <el-button size="small" slot="append">搜索</el-button>
+                <el-input placeholder="请输入内容" v-model="queryArticle" class="input-with-select" @keyup.enter.native="queryArt">
+                    <el-button size="small" slot="append" @click="queryArt">搜索</el-button>
                 </el-input>
             </ul>
 
         </div>
-        <div class="sidebar-panel" v-for="o in 2" :key="o">
+        <div class="sidebar-panel">
             <ul class="sidebar-panel_head"><span>文章分类</span></ul>
             <ul class="sidebar-panel_body">    
-                <li v-for="a in 5" :key="a">
-                    <span>待开发</span>
+                <li v-for="(cate,index) in categorys" :key="index" @click="getArticleByCId(cate.id)" class="category_span">
+                    <span>{{cate.cateName}} 
+                            <span  class="category_number" v-if="cate.artNumber == '' || cate.artNumber == null">
+                               (0)
+                            </span>
+                            <span  class="category_number" v-else>
+                               ({{cate.artNumber}})
+                            </span>
+                    </span>
                 </li>
             </ul>
         </div>
     </div>
 </template>
-        
+<script>
+import {  getAll} from '@/api/admin/blog/category'
+export default {
+    data() {
+        return{
+            categorys: null,
+            queryArticle: ''
+        }
+    },
+    created() {
+        this.getCategory();
+    },
+    methods: {
+        getCategory(){
+            getAll().then(response => {
+                this.categorys = response.data
+            })
+        },
+        getArticleByCId(id) {
+            this.$parent.$parent.$parent.$refs.blog_index.getBlogListByCId(id);
+        },
+        queryArt() {
+            this.$parent.$parent.$parent.$refs.blog_index.listQuery.arTitle = this.queryArticle;
+            this.$parent.$parent.$parent.$refs.blog_index.listQuery.arContent = this.queryArticle;
+            this.$parent.$parent.$parent.$refs.blog_index.listQuery.arDesc = this.queryArticle;
+            this.$parent.$parent.$parent.$refs.blog_index.getList();
+        }
+    }
+  
+}
+</script>
+ 
 <style>
 .sidebar{
     font-size: 12px;
@@ -96,7 +134,16 @@
     padding: 0px;
     font-weight: bold;
 }
-  .input-with-select .el-input-group__prepend {
+.input-with-select .el-input-group__prepend {
     background-color: #fff;
-  }
+}
+.category_span{
+    font-size: 17px;
+    color: #20a0ff;
+    margin: 3px 0px;
+}
+.category_number{
+    font-size: 13px;
+    color: black;
+}
 </style>

@@ -1,17 +1,22 @@
 <template>
     <div id="sIndex">
-        <el-carousel indicator-position="outside">
-            <el-carousel-item v-for="item in 4" :key="item">
-            <h3>待开发...{{ item }}</h3>
+        <el-carousel indicator-position="outside" ref="index_carousel">
+            <el-carousel-item>
+            <h3>待开发...</h3>
+            </el-carousel-item>
+             <el-carousel-item>
+            <h3>待开发...</h3>
             </el-carousel-item>
         </el-carousel>
-        <div class="list-div-item" v-for="o in list" :key="o" >
+        <div class="list-div-item" v-for="(o,index) in list" :key="index" >
             <div class="list-div-item-title">
                 <i class="iconfont hzqing-blog-yuan"></i>
                 <h1>
                     <span class="link_title" @click="toDetail(o.id)">
                             <font color="red" v-if="o.arUp == 'Y'">[置顶]</font>
+                            <span>
                                 {{ o.arTitle }}
+                            </span>
                     </span>
                 </h1>
             </div>
@@ -19,14 +24,16 @@
                 {{ o.arDesc }}
             </div>
             <div class="article_manage">
-                <span class="link_postdate">2017-07-20 08:48</span>
-                <span class="link_view" title="阅读次数">
-                    <i class="iconfont hzqing-blog-yuedu"></i>
-                    <a href="/mmd0308/article/details/75453720" title="阅读次数">阅读</a>(143)
+                <span class="link_comments">
+                    {{ o.arCtime | formatDate }}
                 </span>
-                <span class="link_comments" title="评论次数">
+                <span class="link_comments" title="待开发...">
+                    <i class="iconfont hzqing-blog-yuedu"></i>
+                    <span class="yuedu_tubiao">阅读</span>(143)
+                </span>
+                <span class="link_comments" title="待开发...">
                     <i class="iconfont hzqing-blog-tubiao"></i>
-                    <a href="/mmd0308/article/details/75453720#comments" title="评论次数" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)
+                    <span class="yuedu_tubiao">评论</span>(0)
                 </span>
             </div>
         </div>
@@ -43,9 +50,16 @@
     </div>
 </template>
 <script>
-import {  page, getObj } from '@/api/admin/blog/article'
+import {  page, getObj, pageByCid } from '@/api/admin/blog/article'
 import detailsFoot from '@/views/show/blog/DetailsFoot'
-export default{
+import { formatDate} from '@/utils/date'
+export default {
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
     components:{
         detailsFoot
     },
@@ -55,7 +69,12 @@ export default{
             listQuery:{
                 page: 1,
                 pageSize: 15,
-                arState: 'FB'
+                arState: 'FB',
+                cateId: [],
+                arContent: '',
+                arTitle: '',
+                arLabel:'',
+                arDesc: ''
             },
             list: null,
             total: null
@@ -103,6 +122,13 @@ export default{
                     blodId: id 
                     }
                 })
+        },
+        getBlogListByCId(id){
+            this.listQuery.cateId = id
+            pageByCid(this.listQuery).then(response => {
+                this.list = response.data.list
+                this.total = response.data.total
+            })
         }
 
     }
@@ -116,19 +142,20 @@ export default{
     color: #999;
     font-size: 12px;
 }
-.article_manage span{
-    margin-right: 16px;
-}
-.article_manage span a{
+.yuedu_tubiao{
     color: #20a0ff;
 }
+.link_comments{
+    margin-right: 16px;
+}
+
 .list-div-item-title h1{
     padding: 0;
     margin: 0;
     display: inline-block;
 }
 .list-div-item{
-    border: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
     margin: -1px 0 0 0;
     padding: 12px 30px 1px 30px;
 }

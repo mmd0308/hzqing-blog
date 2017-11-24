@@ -96,7 +96,23 @@
         <if test="arState != null and arState != ''">
             AND ar_state = #{arState}
         </if>
+        <if test="arContent != null and arContent != ''">
+            AND  ar_content LIKE  '%${arContent}%'
+        </if>
+        <if test="arLabel != null and arLabel != ''">
+            AND  ar_label LIKE  '%${arLabel}%'
+        </if>
+        <if test="arTitle != null and arTitle != ''">
+            AND  ar_title LIKE  '%${arTitle}%'
+        </if>
+        <if test="arDesc != null and arDesc != ''">
+            AND  ar_desc LIKE  '%${arDesc}%'
+        </if>
     </select>
+    <select id="queryPageByCid" parameterType="string" resultMap="articleMap">
+        SELECT a.* FROM blog_article a LEFT JOIN rl_article_category r ON a.id = r.article_id WHERE r.cate_id = #{0}
+    </select>
+
     <select id="selectById" parameterType="String" resultMap="articleMap">
         SELECT
         <include refid="field"/>

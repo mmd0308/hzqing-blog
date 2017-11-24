@@ -10,6 +10,15 @@ public class CateGory {
     private String enabled;
     private int sort;
     private String note;
+    private String artNumber;
+
+    public String getArtNumber() {
+        return artNumber;
+    }
+
+    public void setArtNumber(String artNumber) {
+        this.artNumber = artNumber;
+    }
 
     public String getNote() {
         return note;

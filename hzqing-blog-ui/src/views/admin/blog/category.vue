@@ -29,7 +29,12 @@
                    <el-table-column
                     label="是否显示">
                         <template scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.enabled }}</span>
+                            <span style="margin-left: 10px" v-if="scope.row.enabled == 'Y'">
+                                <el-tag type="success">显示</el-tag>
+                            </span>
+                            <span style="margin-left: 10px" v-else>
+                                <el-tag type="error">隐藏</el-tag>
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -50,16 +55,6 @@
                                 size="mini"
                                 type="success"
                                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button
-                                v-if="scope.row.show == 'show'"
-                                size="mini"
-                                type="info"
-                                @click="handleEdit(scope.$index, scope.row)">显示</el-button>
-                            <el-button
-                                v-if="scope.row.show == 'hide'"
-                                size="mini"
-                                type="warning"
-                                @click="handleEdit(scope.$index, scope.row)">隐藏</el-button>
                             <el-button
                                 size="mini"
                                 type="danger"
@@ -242,10 +237,12 @@
         })
       },
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.listQuery.pageSize = val
+        this.getList();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.listQuery.page = val
+        this.getList();
       }
     }
   }

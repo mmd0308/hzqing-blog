@@ -1,5 +1,7 @@
 package hzqing.com.blogadmin.service.blog.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.entity.sys.User;
 import hzqing.com.blogadmin.service.blog.IArticleService;
@@ -51,6 +53,19 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     @Override
     public List<String> getCateByAid(String id) {
         return (List<String>) baseDao.findForList(mapper+".getCateByAid",id);
+    }
+
+    @Override
+    public PageInfo<Article> queryPageByCid(Integer start, Integer pageSize, Article article) {
+        if (null == start){
+            start = 1;
+        }
+        if (null == pageSize){
+            pageSize = 10;
+        }
+        PageHelper.startPage(start,pageSize);
+        String cid = article.getCateId().get(0);
+        return new PageInfo<Article>((List<Article>) baseDao.findForList(mapper+".queryPageByCid",cid));
     }
 
     /**

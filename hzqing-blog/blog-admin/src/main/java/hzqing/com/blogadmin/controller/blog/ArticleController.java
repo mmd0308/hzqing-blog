@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.controller.blog;
 
+import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.service.blog.IArticleService;
 import hzqing.com.hzqingcommon.controller.BaseController;
@@ -65,5 +66,10 @@ public class ArticleController extends BaseController<Article,IArticleService> {
     public ResponseMessage<List<String>> getCateByAid(@PathVariable String id) {
         List<String> cates = baseService.getCateByAid(id);
         return  new ResponseMessage<>().success(cates);
+    }
+    @GetMapping("/pageByCid")
+    public ResponseMessage<PageInfo<Article>> pageByCid(Integer page, Integer pageSize, Article article) {
+        PageInfo<Article> res = baseService.queryPageByCid(page,pageSize,article);
+        return new ResponseMessage<>().success(res);
     }
 }
