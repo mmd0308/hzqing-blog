@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.entity.sys.User;
 import hzqing.com.blogadmin.service.blog.IArticleService;
+import hzqing.com.blogadmin.service.blog.IVisitService;
 import hzqing.com.blogadmin.service.sys.IUserService;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
@@ -22,8 +23,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     }
     @Autowired
     private IUserService userService;
-
-
+    @Autowired
+    private IVisitService visitService;
 
     @Override
     public void saveOrUpdate(Article article,String username) {
@@ -87,4 +88,5 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     private void deleRlCateByArtId(String id){
         baseDao.delete(mapper+".deleRlCateByArtId",id);
     }
+
 }

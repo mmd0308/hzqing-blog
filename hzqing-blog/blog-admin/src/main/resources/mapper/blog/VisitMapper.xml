@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="VisitMapper" >
+    <resultMap id="visitMap" type="visit">
+        <id column="id" property="id"/>
+        <result column="v_time" property="vTime"/>
+        <result column="v_ip" property="vIp"/>
+        <result column="user_id" property="userId"/>
+        <result column="v_clicks" property="vClicks"/>
+        <result column="v_support" property="vSupport"/>
+        <result column="article_id" property="articleId"/>
+    </resultMap>
+    <sql id="table">
+        blog_visit
+    </sql>
+    <sql id="field">
+        id,
+        v_time,
+        v_ip,
+        user_id,
+        v_clicks,
+        v_support,
+        article_id
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{vTime},
+        #{vIp},
+        #{userId},
+        #{vClicks},
+        #{vSupport},
+        #{articleId}
+    </sql>
+    <insert id="save" parameterType="visit">
+        INSERT  INTO
+        <include refid="table"/>
+        (
+        <include refid="field"/>
+        )
+        VALUES
+        (
+        <choose>
+            <when test="id == null || id == ''">
+                (SELECT replace((SELECT  uuid()),"-","")),
+            </when>
+            <otherwise>
+                #{id},
+            </otherwise>
+        </choose>
+        #{vTime},
+        #{vIp},
+        #{userId},
+        #{vClicks},
+        #{vSupport},
+        #{articleId}
+        )
+    </insert>
+    <select id="query" parameterType="visit" resultMap="visitMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where 1 = 1
+        <if test="id != null and id != ''">
+            id = ${id}
+        </if>
+    </select>
+</mapper>

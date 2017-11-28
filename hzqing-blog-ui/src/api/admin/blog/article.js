@@ -41,14 +41,14 @@ export function getCateByAid(id) {
 
 export function delObj(id) {
   return fetch({
-    url: '/admin/blog/categroy/delete/' + id,
+    url: '/admin/blog/article/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return fetch({
-    url: '/admin/blog/categroy/put/' + id,
+    url: '/admin/blog/article/put/' + id,
     method: 'put',
     data: obj
   })
@@ -56,7 +56,7 @@ export function putObj(id, obj) {
 
 export function saveUserRole(obj) {
   return fetch({
-    url: '/admin/blog/categroy/saveUserRole',
+    url: '/admin/blog/article/saveUserRole',
     method: 'post',
     data: obj
   })

@@ -15,13 +15,14 @@
             style="height: 100%"
             ref="mavonEditor"
             placeholder="请开始你的表演..."
+            :code_style="code_style"
             @save="$save"
             @change="$change"
             @imgAdd="$imgAdd"
             @imgDel="$imgDel"
             :value="mavonDate"
         ></mavon-editor>
-        <el-dialog title="发布博客" :visible.sync="dialogFormVisible" width="30%" @open="openDialog">
+        <el-dialog title="发布博客" :visible.sync="dialogFormVisible" width="30%">
             <el-form :model="form"  :rules="rule" ref="form">
                 <el-form-item label="文章类型" :label-width="formLabelWidth" prop="arType">
                     <el-select v-model="form.arType"  placeholder="请选择活动区域"  >
@@ -48,7 +49,7 @@
                 <el-form-item label="描述" :label-width="formLabelWidth" prop="arDesc">
                     <el-input  type="textarea" ref="textAreaSize" :maxlength = "textMaxSize" @change="textArea" v-model="form.arDesc" auto-complete="off" class="dialog-element-width" :autosize="{ minRows: 3, maxRows: 6}" >
                     </el-input>
-                    <div style="width:90%;text-align:right;">
+                    <div style="width:90%;text-align:right;" hidden>
                         字数:{{this.textSize}}
                     </div>
                 </el-form-item>
@@ -84,7 +85,8 @@ export default {
                 arDesc: {  required: true,  message: '请写摘要',  trigger: 'blur'    }
             },
             textSize: 200,
-            textMaxSize: 200
+            textMaxSize: 200,
+            code_style: 'solarized-dark'
         }
     },
     components: {
@@ -135,6 +137,9 @@ export default {
         },
         saveBlog(formName) {
             this.form.arState = 'FB'
+            this.form.arTitle = this.title;
+            this.form.arContent = this.$refs.mavonEditor.d_value;
+            this.form.arContentHtml = this.$refs.mavonEditor.d_render;
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     addObj(this.form).then(response => {
@@ -217,11 +222,7 @@ export default {
         textArea(){
             var size = this.$refs.textAreaSize.value.length;
             this.textSize = (200 - size ) > 0 ? size: 0;
-        },
-        openDialog(){
-            debugger
         }
-        
     }
 }
 </script>

@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import {  page, getObj } from '@/api/admin/blog/article'
+import {  page, getObj, delObj } from '@/api/admin/blog/article'
 import { formatDate} from '@/utils/date'
 export default {
     filters: {
@@ -138,7 +138,21 @@ export default {
             console.log(index, row);
         },
         handleDelete(index, row) {
-            console.log(index, row);
+            this.$confirm('是否刪除该记录？', '记录', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+            }).then(() => {
+                delObj(row.id).then(() => {
+                    this.$notify({
+                        title: '成功',
+                        message: '删除成功',
+                        type: 'success',
+                        duration: 2000
+                    })
+                    this.getList();
+                })
+            })
         },
         getList() {
             page(this.listQuery).then(response => {

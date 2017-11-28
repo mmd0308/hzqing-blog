@@ -22,6 +22,7 @@
 <script>
 import {  addObj, getObj } from '@/api/admin/blog/article'
 import detailsFoot from '@/views/show/blog/DetailsFoot'
+import 'mavon-editor/dist/css/index.css'
 export default{
     components:{
         detailsFoot
