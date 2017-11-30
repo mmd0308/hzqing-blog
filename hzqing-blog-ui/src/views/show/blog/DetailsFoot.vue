@@ -3,34 +3,93 @@
         <div class="support-author">
                 <p>喜欢就告诉我~</p> 
                 <div class="btn-pay">赞赏支持</div> 
-                <div class="supporter">
+                <div class="supporter" hidden>
                     <ul class="support-list">
                         <li>
                             <a target="_blank" href="/u/de2100caeda2" class="avatar">
                                 <img src="//upload.jianshu.io/users/upload_avatars/8584695/8970ec75-a5e0-4420-b414-7b6fe925c806?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120">
                             </a>
                         </li>
-                    </ul> <!---->
-                </div> <!----> <!---->
+                    </ul> 
+                </div>
         </div>
         <div class="meta-bottom">
-            <div class="like">
-                <div class="like-group">
+            <div class="like" >
+                <div class="like" id="noLike" @click="deleSupport" v-if="showLike">
+                    <div class="no-like-group no-font-like"> 
+                        <div class="btn-like">
+                            <i class="iconfont ic-like">喜欢</i>
+                        </div> 
+                        <div class="modal-wrap no-modal-wrap" >
+                            <span v-if="vSupport == null" > 0</span>
+                            <span v-else>{{ vSupport }}</span>
+                        </div>
+                    </div> <!---->
+                </div>
+                <div class="like-group font-like" v-else @click="saveSupport"> 
                     <div class="btn-like">
-                        <a href="/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-like-button">
-                        <i class="iconfont ic-like"></i>喜欢</a>
+                        <i class="iconfont ic-like">喜欢</i>
                     </div> 
-                    <div class="modal-wrap"><a>93</a></div>
+                    <div class="modal-wrap" >
+                        <span v-if="vSupport == null" > 0</span>
+                        <span v-else>{{ vSupport }}</span>
+                    </div>
                 </div> <!---->
             </div>
+
             <div class="share-group">
-                <a class="share-circle" >
-                    分享
-                </a>
+                <li class="share-circle" >
+                </li>
+                <li class="share-circle" >
+                </li>
+                <li class="share-circle" >
+                </li>
             </div>
         </div>
     </div>
 </template>
+<script >
+import {  saveSupport, deleSupport, getSupportNumByAId } from '@/api/admin/blog/visit'
+export default {
+    props:['blogId'],
+    data() {
+        return{
+            vSupport: null,
+            showLike: false,
+            from : this.initObj()
+        }
+    },
+    created() {
+        this.getSupportNumByAId();
+    },
+    methods:{
+        initObj(){
+            return{
+                id: ''
+            }
+        },
+        saveSupport(){
+            saveSupport(this.blogId).then(response => {
+                this.showLike = true
+                this.from = response.data;
+                this.getSupportNumByAId();
+            })
+        },
+        deleSupport(){
+            deleSupport(this.from.id).then(() =>{
+                this.showLike = false;
+                this.getSupportNumByAId();
+            })
+        },
+        getSupportNumByAId(){
+            getSupportNumByAId(this.blogId).then(response => {
+                this.vSupport = response.data
+            })
+        }
+    }
+}
+</script>
+
 <style>
 .support-author{
     padding: 30px 0 20px;
@@ -89,32 +148,38 @@
     border: 1px solid #ea6f5a;
     border-radius: 40px;
 }
+.no-like-group{
+    padding: 13px 0 10px;
+    font-size: 0;
+    border: 1px solid #ea6f5a;
+    border-radius: 40px;
+    background-color: #ea6f5a;
+}
 .btn-like{
     font-size: 19px;
     display: inline-block;    
 }
-.btn-like a{
-    color: #ea6f5a;
+
+.btn-like  i{
+    margin-right: 5px;
+    font-size: 21px;
     padding: 18px 15px 18px 30px;
     margin-right: 5px;
     font-size: 21px;
 }
-.btn-like a i{
-    margin-right: 5px;
-    font-size: 21px;
+.no-modal-wrap{
+    border-left: 1px solid white !important;
 }
 .modal-wrap{
     font-size: 18px;
     border-left: 1px solid rgba(236,97,73,.4);
     display: inline-block;
 }
-.modal-wrap a{
-    color: #ea6f5a;
+.modal-wrap span{
     padding: 18px 30px 18px 17px;
 }
 .share-group{
-    float: right;
-    margin-top: 6px;    
+    float: right; 
 }
 .share-circle{
     width: 50px;
@@ -126,5 +191,12 @@
     vertical-align: middle;
     display: inline-block;
 }
+.font-like{
+     color: #ea6f5a;
+}
+.no-font-like{
+     color:white;
+}
+
 </style>
 

@@ -2,6 +2,7 @@ package hzqing.com.blogadmin.service.blog;
 
 import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.entity.blog.Article;
+import hzqing.com.blogadmin.vo.blog.ArticleVO;
 import hzqing.com.hzqingcommon.service.IBaseService;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface IArticleService extends IBaseService<Article>{
     List<String> getCateByAid(String id);
 
     PageInfo<Article> queryPageByCid(Integer page, Integer pageSize, Article article);
+
+    PageInfo<Article> queryPageIndex(Integer page, Integer pageSize, Article t);
 }

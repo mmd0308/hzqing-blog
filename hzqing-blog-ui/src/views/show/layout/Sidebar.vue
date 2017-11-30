@@ -4,14 +4,12 @@
             <ul class="sidebar-panel_head"><span>个人简介</span></ul>
             <ul class="profile">    
                 <div id="blog_userface">
-                    <a href="http://my.csdn.net/mmd0308" target="_blank">
-                    <img src="http://avatar.csdn.net/C/4/C/1_mmd0308.jpg" title="访问我的空间" style="max-width:90%">
-                    </a>
+                    <img src="/static/img/tx.jpg" title="访问我的空间" style="max-width:90%">
                     <br>
-                    <span><a href="http://my.csdn.net/mmd0308" class="user_name" target="_blank">mmd0308</a></span>
+                    <span>mmd0308</span>
                 </div>
                 <ul id="blog_rank">
-                    <li>访问：<span>22297 次</span></li>
+                    <li>访问：<span>{{ this.visitNum }} 次</span></li>
                     <li>邮箱：<span>mmd0308@126.com</span> </li>    
                     <li>gitHub：<a href='https://github.com/mmd0308'><span style="color:#20a0ff;">『mmd0308』</span></a> </li>    
                     <li>码云：<a href='https://gitee.com/hszj'><span style="color:#20a0ff;">『奋斗吧趁我们还年轻』</span></a> </li>    
@@ -33,10 +31,10 @@
             <ul class="sidebar-panel_body">    
                 <li v-for="(cate,index) in categorys" :key="index" @click="getArticleByCId(cate.id)" class="category_span">
                     <span>{{cate.cateName}} 
-                            <span  class="category_number" v-if="cate.artNumber == '' || cate.artNumber == null">
+                            <span hidden  class="category_number" v-if="cate.artNumber == '' || cate.artNumber == null">
                                (0)
                             </span>
-                            <span  class="category_number" v-else>
+                            <span hidden class="category_number" v-else>
                                ({{cate.artNumber}})
                             </span>
                     </span>
@@ -47,15 +45,18 @@
 </template>
 <script>
 import {  getAll} from '@/api/admin/blog/category'
+import {  getVisitNum} from '@/api/admin/blog/visit'
 export default {
     data() {
         return{
             categorys: null,
-            queryArticle: ''
+            queryArticle: '',
+            visitNum: null
         }
     },
     created() {
         this.getCategory();
+        this.getVisitNum();
     },
     methods: {
         getCategory(){
@@ -71,6 +72,11 @@ export default {
             this.$parent.$parent.$parent.$refs.blog_index.listQuery.arContent = this.queryArticle;
             this.$parent.$parent.$parent.$refs.blog_index.listQuery.arDesc = this.queryArticle;
             this.$parent.$parent.$parent.$refs.blog_index.getList();
+        },
+        getVisitNum() {
+            getVisitNum().then(response => {
+                this.visitNum = response.data
+            })
         }
     }
   
@@ -123,7 +129,6 @@ export default {
     color: #20a0ff;
 }
 
-
 .sidebar-panel_head{
     background: #f5f5f5;
     height: 29px;
@@ -138,7 +143,7 @@ export default {
     background-color: #fff;
 }
 .category_span{
-    font-size: 17px;
+    font-size: 14px;
     color: #20a0ff;
     margin: 3px 0px;
 }

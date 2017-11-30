@@ -65,4 +65,31 @@
             id = ${id}
         </if>
     </select>
+
+    <select id="getVisitNumByAId" parameterType="string"  resultType="int">
+        SELECT count(id)
+        FROM  blog_visit
+        WHERE
+          v_clicks = 1 AND article_id = #{0}
+    </select>
+
+    <select id="getSupportNumByAId" parameterType="string"  resultType="int">
+        SELECT count(id)
+        FROM  blog_visit
+        WHERE
+        v_support = 1 AND article_id = #{0}
+    </select>
+
+    <select id="getVisitNum"  resultType="int">
+        SELECT count(id)
+        FROM  blog_visit
+        WHERE
+        v_clicks = 1
+    </select>
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
 </mapper>

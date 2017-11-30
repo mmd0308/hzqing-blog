@@ -10,11 +10,16 @@
             <span class="wordage">字数 2042</span>
             <span class="views-count">阅读 1340</span><span class="comments-count">评论 49</span><span class="likes-count">喜欢 133</span><span class="rewards-count ">赞赏 1</span></div>
         </div>
-        <div id="content" v-html="form.arContentHtml">
-                {{ form.arContentHtml }}
+        <div id="content"> 
+        <mavon-editor 
+            :toolbarsFlag = "toolbarsFlag" 
+            :subfield= "false"
+            default_open = "preview"
+            :value="form.arContentHtml"
+        ></mavon-editor>
         </div>
         <div id="detailsFoot">
-            <details-foot></details-foot>
+            <details-foot :blogId="form.id"></details-foot>
         </div>
        
     </div>
@@ -22,14 +27,17 @@
 <script>
 import {  addObj, getObj } from '@/api/admin/blog/article'
 import detailsFoot from '@/views/show/blog/DetailsFoot'
-import 'mavon-editor/dist/css/index.css'
+
 export default{
     components:{
         detailsFoot
     },
     data(){
         return {
-            form: this.initObj()
+            form: this.initObj(),
+            toolbarsFlag: false,
+            default_open: "preview",
+            subfield: false
         }
     },
     created() {
@@ -59,7 +67,7 @@ export default{
 </script>
 <style>
 #details{
-    margin: 30px 290px 2px 290px;
+   
     padding: 12px 30px 1px 30px;
 }
 .meta{
@@ -87,10 +95,10 @@ export default{
 }
 
 #content{
-    margin: 0px 20px;
+    margin: 0px;
 }
 
-#content img{
+.img-GZQ{
     width : 100% ;
     display : block ;
 }

@@ -3,6 +3,7 @@ package hzqing.com.blogadmin.controller.blog;
 import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.service.blog.IArticleService;
+import hzqing.com.blogadmin.vo.blog.ArticleVO;
 import hzqing.com.hzqingcommon.controller.BaseController;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
@@ -70,6 +71,12 @@ public class ArticleController extends BaseController<Article,IArticleService> {
     @GetMapping("/pageByCid")
     public ResponseMessage<PageInfo<Article>> pageByCid(Integer page, Integer pageSize, Article article) {
         PageInfo<Article> res = baseService.queryPageByCid(page,pageSize,article);
+        return new ResponseMessage<>().success(res);
+    }
+
+    @GetMapping("/pageIndex")
+    public ResponseMessage<PageInfo<Article>> pageIndex(Integer page,Integer pageSize,Article t){
+        PageInfo<Article> res = baseService.queryPageIndex(page,pageSize,t);
         return new ResponseMessage<>().success(res);
     }
 }

@@ -7,6 +7,7 @@ import hzqing.com.blogadmin.entity.sys.User;
 import hzqing.com.blogadmin.service.blog.IArticleService;
 import hzqing.com.blogadmin.service.blog.IVisitService;
 import hzqing.com.blogadmin.service.sys.IUserService;
+import hzqing.com.blogadmin.vo.blog.ArticleVO;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
@@ -30,12 +31,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     public void saveOrUpdate(Article article,String username) {
         //获取用户信息
         User user = userService.getUserByUName(username);
+        article.setArEtime(new Date());
         //表示第一次保存
         if (null == article.getId() || article.getId() == ""){
             String uuid = UUIDUtils.get32UUID();
             article.setId(uuid);
             article.setArCtime(new Date());
-            article.setArEtime(new Date());
             article.setUserId(user.getId());
             this.save(article);
             if (null != article.getCateId() && article.getCateId().size()>0){
@@ -67,6 +68,18 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
         PageHelper.startPage(start,pageSize);
         String cid = article.getCateId().get(0);
         return new PageInfo<Article>((List<Article>) baseDao.findForList(mapper+".queryPageByCid",cid));
+    }
+
+    @Override
+    public PageInfo<Article> queryPageIndex(Integer start, Integer pageSize, Article t) {
+        if (null == start){
+            start = 1;
+        }
+        if (null == pageSize){
+            pageSize = 10;
+        }
+        PageHelper.startPage(start,pageSize);
+        return new PageInfo<Article>((List<Article>) baseDao.findForList(mapper+".queryIndex",t));
     }
 
     /**

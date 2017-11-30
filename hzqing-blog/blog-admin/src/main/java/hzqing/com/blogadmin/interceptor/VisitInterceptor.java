@@ -3,6 +3,7 @@ package hzqing.com.blogadmin.interceptor;
 import hzqing.com.blogadmin.entity.blog.Visit;
 import hzqing.com.blogadmin.service.blog.IVisitService;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
+import hzqing.com.hzqingcommon.util.HostUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,7 +24,7 @@ public class VisitInterceptor implements HandlerInterceptor {
         Visit v = new Visit();
         v.setvTime(new Date());
         v.setArticleId(str);
-        v.setvIp(getRemoteHost(request));
+        v.setvIp(HostUtil.getRemoteHost(request));
         v.setvClicks(1);
         v.setvSupport(0);
         visitService.save(v);
@@ -40,17 +41,5 @@ public class VisitInterceptor implements HandlerInterceptor {
 
     }
 
-    public String getRemoteHost(HttpServletRequest request){
-        String ip = request.getHeader("x-forwarded-for");
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-            ip = request.getRemoteAddr();
-        }
-        return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
-    }
+
 }

@@ -21,7 +21,10 @@ public class Article {
     private String arState;
     private String arUp;
     private String arSupport;
+    private String arCarousel;
 
+
+    private String clickNum;
 
     private List<String> cateId;
     @Override
@@ -43,6 +46,22 @@ public class Article {
                 ", arUp='" + arUp + '\'' +
                 ", arSupport='" + arSupport + '\'' +
                 '}';
+    }
+
+    public String getArCarousel() {
+        return arCarousel;
+    }
+
+    public void setArCarousel(String arCarousel) {
+        this.arCarousel = arCarousel;
+    }
+
+    public String getClickNum() {
+        return clickNum;
+    }
+
+    public void setClickNum(String clickNum) {
+        this.clickNum = clickNum;
     }
 
     public String getId() {

@@ -83,6 +83,7 @@
         <if test="id != null and id != ''">
             id = ${id}
         </if>
+
     </select>
     <select id="getMenuByPId" parameterType="string" resultMap="menuMap">
         SELECT

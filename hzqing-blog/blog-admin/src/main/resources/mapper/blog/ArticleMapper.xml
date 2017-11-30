@@ -16,6 +16,9 @@
         <result column="ar_state" property="arState"/>
         <result column="ar_up" property="arUp"/>
         <result column="ar_support" property="arSupport"/>
+        <result column="ar_carousel" property="arCarousel"/>
+
+        <result column="clickNum" property="clickNum"/>
     </resultMap>
     <sql id="table">
         blog_article
@@ -34,7 +37,8 @@
         ar_etime,
         ar_state,
         ar_up,
-        ar_support
+        ar_support,
+        ar_carousel
     </sql>
     <sql id="fieldValue">
         #{id},
@@ -50,7 +54,8 @@
         #{arEtime},
         #{arState},
         #{arUp},
-        #{arSupport}
+        #{arSupport},
+        #{arCarousel}
     </sql>
 
     <insert id="save" parameterType="article">
@@ -81,7 +86,8 @@
         #{arEtime},
         #{arState},
         #{arUp},
-        #{arSupport}
+        #{arSupport},
+        #{arCarousel}
         )
     </insert>
     <select id="query" parameterType="article" resultMap="articleMap">
@@ -108,6 +114,32 @@
         <if test="arDesc != null and arDesc != ''">
             AND  ar_desc LIKE  '%${arDesc}%'
         </if>
+        ORDER  BY ar_etime
+    </select>
+    <select id="queryIndex" parameterType="article" resultMap="articleMap">
+        SELECT  a.*,v.clickNum from blog_article a LEFT JOIN (
+            SELECT count(id) clickNum,article_id
+            FROM blog_visit
+            WHERE
+            v_clicks = 1 GROUP BY  article_id
+        ) v ON  v.article_id = a.id
+        WHERE  1 = 1
+        <if test="arState != null and arState != ''">
+            AND a.ar_state = #{arState}
+        </if>
+        <if test="arContent != null and arContent != ''">
+            AND  a.ar_content LIKE  '%${arContent}%'
+        </if>
+        <if test="arLabel != null and arLabel != ''">
+            AND  a.ar_label LIKE  '%${arLabel}%'
+        </if>
+        <if test="arTitle != null and arTitle != ''">
+            AND  a.ar_title LIKE  '%${arTitle}%'
+        </if>
+        <if test="arDesc != null and arDesc != ''">
+            AND  a.ar_desc LIKE  '%${arDesc}%'
+        </if>
+        ORDER  BY a.ar_etime
     </select>
     <select id="queryPageByCid" parameterType="string" resultMap="articleMap">
         SELECT a.* FROM blog_article a LEFT JOIN rl_article_category r ON a.id = r.article_id WHERE r.cate_id = #{0}
@@ -158,6 +190,9 @@
         <if test="arSupport != null and arSupport !=''">
             , ar_support = #{arSupport}
         </if>
+        <if test="arCarousel != null and arCarousel != ''">
+            , ar_carousel = #{arCarousel}
+        </if>
         WHERE
         id = #{id}
     </update>
@@ -168,8 +203,7 @@
         WHERE
         id = #{0}
     </delete>
-    <insert id="saveRlCateOrArt" parameterType="list">
-        INSERT  INTO rl_article_category (id, cate_id, article_id) VALUES
+    <insert id="saveRlCateOrArt" parameterType="list">        INSERT  INTO rl_article_category (id, cate_id, article_id) VALUES
         <foreach collection="list"  item="item" separator=",">
             (
             (SELECT replace((SELECT uuid()),"-","")),

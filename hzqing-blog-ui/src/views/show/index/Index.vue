@@ -29,7 +29,14 @@
                 </span>
                 <span class="link_comments" title="待开发...">
                     <i class="iconfont hzqing-blog-yuedu"></i>
-                    <span class="yuedu_tubiao">阅读</span>(143)
+                    <span class="yuedu_tubiao">阅读</span>
+                    <span v-if="o.clickNum != ''">
+                    ( {{ o.clickNum }} )
+                    </span>
+                    <span v-else>
+                    ( 0 )
+                    </span>
+                    
                 </span>
                 <span class="link_comments" title="待开发...">
                     <i class="iconfont hzqing-blog-tubiao"></i>
@@ -50,7 +57,7 @@
     </div>
 </template>
 <script>
-import {  page, getObj, pageByCid } from '@/api/admin/blog/article'
+import {  pageIndex, getObj, pageByCid } from '@/api/admin/blog/article'
 import detailsFoot from '@/views/show/blog/DetailsFoot'
 import { formatDate} from '@/utils/date'
 export default {
@@ -92,7 +99,8 @@ export default {
                 arContentHtml: '',
                 arDesc: '',
                 arUp: '',
-                arState: ''
+                arState: '',
+                clickNum: ''
             }
         },
         findById() {
@@ -102,7 +110,7 @@ export default {
             })
         },
         getList() {
-            page(this.listQuery).then(response => {
+            pageIndex(this.listQuery).then(response => {
                 this.list = response.data.list
                 this.total = response.data.total
             })
@@ -129,7 +137,8 @@ export default {
                 this.list = response.data.list
                 this.total = response.data.total
             })
-        }
+        },
+
 
     }
 

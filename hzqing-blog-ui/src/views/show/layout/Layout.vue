@@ -5,7 +5,7 @@
           <navbar ref="index_navbar"></navbar>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row class="index_left_right">
        <router-view ref="index_router_view"></router-view>
     </el-row>
   </div>
@@ -20,10 +20,10 @@
 </script>
 <style>
 .index-left{
-    margin: 17px 10px 0px 260px;
+    margin: 0px 15px;
 }
-.index-right{
-    margin: 17px 260px 0px 10px;
+.index_left_right{
+    margin: 17px 18% 0px 18%;
 }
 .app-wrapper{
     font: 14px/24px 'microsoft yahei';

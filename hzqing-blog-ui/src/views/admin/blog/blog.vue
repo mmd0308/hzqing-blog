@@ -64,14 +64,12 @@
 <script>
 import {  addObj, getObj ,getCateByAid } from '@/api/admin/blog/article'
 import {  getAll } from '@/api/admin/blog/category'
-import { mavonEditor } from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 import axios from 'axios'
 export default {
     data(){
         return {
             img_file: {},
-            title: '',
+            title: '请输入标题',
             form: this.initObj(),
             blodId: '',
             mavonDate: '',
@@ -88,9 +86,6 @@ export default {
             textMaxSize: 200,
             code_style: 'solarized-dark'
         }
-    },
-    components: {
-        mavonEditor
     },
     created() {
         this.blodId = this.$route.query.blodId;
@@ -230,7 +225,8 @@ export default {
 #blog {
     margin: auto;
     width: 100%;
-    height: 540px;
+    min-height: 540px;
+    height: 800px;
 }
 .title-div{
     padding: 15px 0px;

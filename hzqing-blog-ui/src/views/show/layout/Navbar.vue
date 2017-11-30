@@ -50,14 +50,14 @@
       },
       toIndex() {
           this.$router.push("/")
-          this.$parent.$parent.$parent.$refs.index_router_view.$refs.blog_index.getList();
+        //  this.$parent.$parent.$parent.$refs.index_router_view.$refs.blog_index.getList();
       }
     }
   }
 </script>
 <style>
 .show-navbar-menu{
-    background: white;
+    background: #fbfbfba8;
 }
 .show-navbar-title{
     text-align: right;
