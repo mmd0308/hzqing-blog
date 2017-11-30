@@ -2,7 +2,7 @@
     <div id="detailsFoot">
         <div class="support-author">
                 <p>喜欢就告诉我~</p> 
-                <div class="btn-pay">赞赏支持</div> 
+                <div class="btn-pay" @click="supportMoney">赞赏支持</div> 
                 <div class="supporter" hidden>
                     <ul class="support-list">
                         <li>
@@ -85,6 +85,14 @@ export default {
             getSupportNumByAId(this.blogId).then(response => {
                 this.vSupport = response.data
             })
+        },
+        supportMoney(){
+              this.$notify({
+                    title: '开发中...',
+                    message: '请耐心等待...',
+                    type: 'info',
+                    duration: 2000
+                })
         }
     }
 }

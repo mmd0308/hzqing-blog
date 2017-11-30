@@ -163,6 +163,7 @@ export default {
             this.form.arContent = value;
             this.form.arContentHtml = render;
             this.form.arTitle = this.title;
+            this.form.arState = 'CG';
             addObj(this.form).then(response => {
                 this.form.id = response.data.id
                 this.$notify({
