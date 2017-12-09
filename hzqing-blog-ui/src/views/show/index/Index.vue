@@ -1,6 +1,6 @@
 <template>
     <div id="sIndex">
-        <el-carousel indicator-position="outside" ref="index_carousel">
+<!--        <el-carousel indicator-position="outside" ref="index_carousel">
             <el-carousel-item>
             <h3>待开发...</h3>
             </el-carousel-item>
@@ -8,6 +8,7 @@
             <h3>待开发...</h3>
             </el-carousel-item>
         </el-carousel>
+-->
         <div class="list-div-item" v-for="(o,index) in list" :key="index" >
             <div class="list-div-item-title">
                 <i class="iconfont hzqing-blog-yuan"></i>
