@@ -1,6 +1,6 @@
 FROM java:8-jre-alpine
 VOLUME /tmp
-VOLUME /home/hblog/
+VOLUME /home/hzq/hblog/
 ADD target/*.jar app.jar
 RUN sh -c 'touch /app.jar'
 RUN echo $(date) > /image_built_at
