@@ -1,7 +1,11 @@
+logging:
+  level:
+    tk.mybatis: DEBUG
+    hzqing.com.blogadmin: DEBUG
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://172.17.105.39:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://hzqing_mysql:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     # 使用druid数据源
@@ -22,7 +26,7 @@ spring:
     maxOpenPreparedStatements: 20
   redis:
       database: 0
-      host: 172.17.105.39
+      host: hzqing_redis
       pool:
         max-active: 20
 mybatis:
