@@ -1,13 +1,5 @@
 <template>
     <div id="showAppMain" class="showAppMain">
-    <!--    <el-row>
-             <el-col :xs="0" :sm="24" :md="24" :lg="24" :xl="24">
-                <web-index></web-index>
-             </el-col>
-             <el-col :xs="24" :sm="0" :md="0" :lg="0" :xl="0">
-                <phone-index></phone-index>
-             </el-col>
-        </el-row> -->
         <el-row>
             <el-col :lg="19" :xl="19" >
                 <web-index></web-index>
@@ -23,7 +15,7 @@
 
 <script>
 import WebIndex from '@/views/show/index/Index'
-import Sidebar from '@/views/show/layout/Sidebar'
+import Sidebar from '@/views/show/indexLayout/Sidebar'
 export default {
   components: {
     WebIndex,
@@ -62,9 +54,6 @@ export default {
 }
 .user-detail {
     font-size: 15px;
-}
-.user-detail .author{
-    color: #0593d3;
 }
 .appmain-footer .el-tag{
     color: #fff;

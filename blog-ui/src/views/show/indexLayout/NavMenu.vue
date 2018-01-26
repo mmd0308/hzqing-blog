@@ -11,7 +11,7 @@
             <el-col :xs="15" :sm="6" :md="6" :lg="6" :xl="4">
                 <div class="show-navbar-title">
                     <span>
-                         衡钊清的博客
+                         <router-link to="/" >衡钊清的博客</router-link>
                     </span>
                 </div>
             </el-col>

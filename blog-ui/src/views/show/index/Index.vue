@@ -3,7 +3,9 @@
         <div class="show-appMain-left">
             <el-card class="box-card" v-for="o in 5" :key="o">
                 <div class="appMain-card-header">
-                    <h3>最适合入门的Laravel初级教程(七)</h3>
+                    <router-link to="/detail">
+                        <h3>最适合入门的Laravel初级教程(七)</h3>
+                    </router-link>
                 </div>
                 <div>
                     <el-row>

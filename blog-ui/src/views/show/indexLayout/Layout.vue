@@ -14,8 +14,8 @@
   </div>
 </template>
 <script>
-  import NavMenu from '@/views/show/layout/NavMenu'
-  import Footer from '@/views/show/layout/Footer'
+  import NavMenu from '@/views/show/indexLayout/NavMenu'
+  import Footer from '@/views/show/indexLayout/Footer'
   export default {
     components: {
       NavMenu,

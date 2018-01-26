@@ -8,7 +8,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
-import ShowIndexLayout from '../views/show/layout/Layout'
+import ShowIndexLayout from '../views/show/indexLayout/Layout'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -32,10 +32,16 @@ export const constantRouterMap = [
     redirect: '/index',
     name: 'Index',
     hidden: true,
-    children: [{
-      path: 'index',
-      component: () => import('@/views/show/layout/AppMain')
-    }]
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/show/indexLayout/AppMain')
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/show/detail/Index')
+      }
+    ]
   },
 
   {

@@ -1,6 +1,6 @@
 <template>
     <div id="showIndexSidebar">
-        <el-card class="sidebar-box-card">
+        <el-card class="sidebar-box-card detail-card">
             <el-input placeholder="请输入内容" v-model="input4">
                 <template slot="append">搜 索</template>
             </el-input>
