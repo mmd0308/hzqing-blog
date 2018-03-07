@@ -23,9 +23,6 @@ import ShowIndexLayout from '../views/show/indexLayout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/admin/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-
   {
     path: '/',
     component: ShowIndexLayout,
@@ -43,7 +40,19 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  { path: '/login', component: () => import('@/views/admin/login/index'), hidden: true },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/index',
+    name: 'Index',
+    hidden: true,
+    children: [{
+      path: 'index',
+      component: () => import('@/views/dashboard/index')
+    }]
+  },
   {
     path: '/example',
     component: Layout,
@@ -65,8 +74,7 @@ export const constantRouterMap = [
       }
     ]
   },
-
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/index', hidden: true }
 ]
 
 export default new Router({

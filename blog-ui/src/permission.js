@@ -5,15 +5,16 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
 
-const whiteList = ['/login', '/', '/index', '/detail'] // 不重定向白名单
+const whiteList = ['/index', '/login', '/', '/detail'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) { // 如果token存在
+    console.log(getToken())
     if (to.path === '/login') {
       next({ path: '/admin' })
     } else {
       if (store.getters.roles.length === 0) { // 如果没有角色，获取用户信息
-        store.dispatch('GetInfo').then(res => { // 拉取用户信息
+        store.dispatch('GetUserInfo').then(res => { // 拉取用户信息
           next()
         }).catch(() => {
           store.dispatch('FedLogOut').then(() => {

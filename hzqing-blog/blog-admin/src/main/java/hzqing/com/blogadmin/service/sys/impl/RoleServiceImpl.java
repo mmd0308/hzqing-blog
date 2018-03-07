@@ -1,8 +1,8 @@
 package hzqing.com.blogadmin.service.sys.impl;
 
+import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.entity.sys.Role;
 import hzqing.com.blogadmin.service.sys.IRoleService;
-import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

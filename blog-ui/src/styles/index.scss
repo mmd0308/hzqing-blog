@@ -67,14 +67,13 @@ a:hover {
 
 .el-menu--horizontal .el-menu-item {
   height: 45px;
-  line-height: 45px;
 }
 .el-menu--horizontal .el-submenu .el-submenu__icon-arrow {
   display: none;
 }
 
 .el-main{
-  padding: 20px 0px;
+  padding: 30px 0px;
 }
 
 .show-index-detail-text{
@@ -82,4 +81,17 @@ a:hover {
 }
 .author{
   color: #0593d3;
+}
+.detail-comment-pic{
+  width: 32px;
+  height: 32px;
+  display: block;
+  cursor: pointer;
+  margin: auto;
+  display: inline-block;
+}
+.detail-comment-pic img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }

@@ -1,7 +1,7 @@
 package hzqing.com.blogadmin.service.sys;
 
+import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.entity.sys.Role;
-import hzqing.com.hzqingcommon.service.IBaseService;
 
 import java.util.HashMap;
 import java.util.List;

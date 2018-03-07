@@ -1,7 +1,7 @@
 <template>
     <div id="showIndexSidebar">
         <el-card class="sidebar-box-card detail-card">
-            <el-input placeholder="请输入内容" v-model="input4">
+            <el-input placeholder="请输入内容" v-model="queryAll">
                 <template slot="append">搜 索</template>
             </el-input>
         </el-card>
@@ -46,12 +46,32 @@
                 <span>邮箱：mmd0308@126.com</span>
             </div>
         </el-card>
+        <el-card class="sidebar-box-card">
+            <div slot="header" class="clearfix">
+                <span>友情链接</span>
+            </div>
+            <div class="sidebar-text">
+                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >ff</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <el-tag v-for="o in 5" :key="o" class="sidebar-item-tag" size="medium" color="#F25E45">小型标签</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >Java</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+            </div>
+        </el-card>        
     </div>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      queryAll: ''
+    }
+  }
 }
 </script>
 

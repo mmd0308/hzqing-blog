@@ -3,12 +3,8 @@ package hzqing.com.hzqingcommon.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.data.redis.core.RedisTemplate;
-
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class JwtTokenUtil {
 

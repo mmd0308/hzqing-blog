@@ -1,10 +1,10 @@
 package hzqing.com.blogadmin.controller.blog;
 
 import com.github.pagehelper.PageInfo;
+import hzqing.com.blogadmin.base.controller.BaseController;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.service.blog.IArticleService;
 import hzqing.com.blogadmin.vo.blog.ArticleVO;
-import hzqing.com.hzqingcommon.controller.BaseController;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
 import hzqing.com.hzqingcommon.util.DateUtils;

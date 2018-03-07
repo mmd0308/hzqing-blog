@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
       class="card-box login-form">
-      <h3 class="title">vue-element-admin</h3>
+      <h3 class="title">登录</h3>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
@@ -17,16 +17,18 @@
           placeholder="password"></el-input>
           <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          Sign in
-        </el-button>
-      </el-form-item>
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
+        <span style="margin-right:20px;">用户名: guest</span>
+        <span> 密码: guest</span>
+      </div>
+      <el-button type="primary" style="width:100%; border-radius: 25px;" :loading="loading" @click.native.prevent="handleLogin">
+        登 录
+      </el-button>
+      <div class="more-sign">
+        <h6>社交帐号登录</h6>
       </div>
     </el-form>
+    
   </div>
 </template>
 
@@ -77,7 +79,8 @@ export default {
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
-            this.$router.push({ path: '/' })
+            // 判断，根据用户不同，返回不同的界面
+            this.$router.push({ path: '/admin/index' }) // 登录成功返回的页面
           }).catch(() => {
             this.loading = false
           })
@@ -94,13 +97,13 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
-  $light_gray:#eee;
+  $light_gray:#969696;
 
   .login-container {
     position: fixed;
     height: 100%;
     width:100%;
-    background-color: $bg;
+    background-color: #f1f1f1;
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
       -webkit-text-fill-color: #fff !important;
@@ -121,8 +124,9 @@ export default {
     }
     .tips {
       font-size: 14px;
-      color: #fff;
-      margin-bottom: 10px;
+      color: $light_gray;
+      margin: 20px 0px;
+      text-align: center;
     }
     .svg-container {
       padding: 6px 5px 6px 15px;
@@ -149,6 +153,8 @@ export default {
       width: 400px;
       padding: 35px 35px 15px 35px;
       margin: 120px auto;
+      background: #fff;
+      border-radius: 4px;
     }
     .el-form-item {
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -169,6 +175,35 @@ export default {
       position: absolute;
       right: 35px;
       bottom: 28px;
+    }
+    .more-sign{
+      margin-top: 20px;
+      text-align: center;
+    }
+    .more-sign h6{
+      position: relative;
+      margin: 0 0 20px;
+      font-size: 11px;
+      color: #b5b5b5;
+      font-weight: 500;
+    }
+    .more-sign h6:before{
+      content: "";
+      border-top: 1px solid #b5b5b5;
+      display: block;
+      position: absolute;
+      width: 60px;
+      top: 5px;
+      left: 30px;
+    }
+    .more-sign h6:after{
+      content: "";
+      border-top: 1px solid #b5b5b5;
+      display: block;
+      position: absolute;
+      width: 60px;
+      top: 5px;
+      right: 30px;
     }
   }
 </style>

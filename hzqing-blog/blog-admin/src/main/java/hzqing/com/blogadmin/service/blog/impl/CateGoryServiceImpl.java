@@ -1,8 +1,8 @@
 package hzqing.com.blogadmin.service.blog.impl;
 
+import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.entity.blog.CateGory;
 import hzqing.com.blogadmin.service.blog.ICateGoryService;
-import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service

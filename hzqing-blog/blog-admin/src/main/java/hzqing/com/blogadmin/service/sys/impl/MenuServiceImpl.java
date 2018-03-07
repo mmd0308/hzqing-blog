@@ -1,8 +1,8 @@
 package hzqing.com.blogadmin.service.sys.impl;
 
+import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.entity.sys.Menu;
 import hzqing.com.blogadmin.service.sys.IMenuService;
-import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import hzqing.com.hzqingcommon.util.LevelCodeUtil;
 import org.springframework.stereotype.Service;
 

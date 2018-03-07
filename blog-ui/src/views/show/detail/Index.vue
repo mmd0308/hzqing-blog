@@ -114,19 +114,7 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #ebeef5;
 }
-.detail-comment-pic{
-    width: 32px;
-    height: 32px;
-    display: block;
-    cursor: pointer;
-    margin: auto;
-    display: inline-block;
-}
-.detail-comment-pic img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
+
 .detail-card .el-card__body{
     padding: 0px;
 }

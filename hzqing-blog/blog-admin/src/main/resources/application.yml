@@ -5,7 +5,7 @@ logging:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://hzqing_mysql:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     # 使用druid数据源
@@ -26,12 +26,12 @@ spring:
     maxOpenPreparedStatements: 20
   redis:
       database: 0
-      host: hzqing_redis
+      host: localhost
       pool:
         max-active: 20
 mybatis:
   mapper-locations: classpath:mapper/*/*.xml
-  type-aliases-package: hzqing.com.blogadmin.entity
+  type-aliases-package: hzqing.com.blogadmin
 server:
   port: 8899
 pagehelper:
@@ -41,10 +41,10 @@ pagehelper:
   params: count=countSql
 blog:
   images:
-    path: /home/hzq/hblog/
+    path: ${CFG_BLOG_IMG_PATH:/home/hzq/hblog/}
   access:
-    token: 'access-token'
+    token: 'ACCESS-TOKEN'
 admin:
   jwt:
-    secret: 'hzqing'
+    secret: 'HZQING'
     expiration: 6000

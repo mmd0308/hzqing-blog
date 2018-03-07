@@ -1,8 +1,8 @@
 package hzqing.com.blogadmin.controller.sys;
 
+import hzqing.com.blogadmin.base.controller.BaseController;
 import hzqing.com.blogadmin.entity.sys.Role;
 import hzqing.com.blogadmin.service.sys.IRoleService;
-import hzqing.com.hzqingcommon.controller.BaseController;
 import hzqing.com.hzqingcommon.response.ResponseMessage;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/role")
-public class RoleController extends BaseController<Role,IRoleService>{
+public class RoleController extends BaseController<Role,IRoleService> {
     /**
      * 获取所有的启用角色
      * @return

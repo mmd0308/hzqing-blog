@@ -1,7 +1,7 @@
 package hzqing.com.blogadmin.service.sys;
 
+import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.entity.sys.Menu;
-import hzqing.com.hzqingcommon.service.IBaseService;
 
 import java.util.List;
 import java.util.Map;

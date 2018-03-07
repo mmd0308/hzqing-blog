@@ -2,14 +2,14 @@ package hzqing.com.blogadmin.service.blog.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import hzqing.com.blogadmin.admin.user.service.IUserService;
+import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.entity.blog.Article;
 import hzqing.com.blogadmin.entity.sys.User;
 import hzqing.com.blogadmin.service.blog.IArticleService;
 import hzqing.com.blogadmin.service.blog.IVisitService;
-import hzqing.com.blogadmin.service.sys.IUserService;
 import hzqing.com.blogadmin.vo.blog.ArticleVO;
 import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
-import hzqing.com.hzqingcommon.service.impl.BaseServiceImpl;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
