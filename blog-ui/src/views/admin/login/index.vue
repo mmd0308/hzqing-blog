@@ -80,7 +80,7 @@ export default {
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
             // 判断，根据用户不同，返回不同的界面
-            this.$router.push({ path: '/admin/index' }) // 登录成功返回的页面
+            this.$router.push({ path: '/index' }) // 登录成功返回的页面
           }).catch(() => {
             this.loading = false
           })
@@ -93,7 +93,6 @@ export default {
   }
 }
 </script>
-
 <style rel="stylesheet/scss" lang="scss">
   $bg:#2d3a4b;
   $dark_gray:#889aa4;

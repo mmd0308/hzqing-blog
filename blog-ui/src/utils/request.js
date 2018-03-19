@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
@@ -13,6 +13,7 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   if (store.getters.token) {
     config.headers['ACCESS-TOKEN'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    console.log('发送数据请求携带的token:' + getToken())
   }
   return config
 }, error => {
@@ -25,8 +26,9 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     const res = response.data
+    console.log('请求返回信息：' + res)
     if (response.status === 200) { // 请求成功
-      if (res.status === 40101 || res.status === 40301) {
+      if (res === '') { // 表示请求被拦截
         MessageBox.confirm('会话超时，请重新登录，或者取消继续留在该页面', '确定退出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
@@ -34,22 +36,21 @@ service.interceptors.response.use(
         }).then(() => {
           store.dispatch('FedLogOut').then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
+            location.href = '/#/login'
           })
         })
-        return Promise.reject('error')
-      } else if (res.status === 40302) {
+        // return Promise.reject('error')
+      } else if (res.status === 308001) { // 登录失败  登录名或者密码错误
         // router.push({path: '/error/401'})
         Message({
           message: res.data,
           type: 'error',
           duration: 5 * 1000
         })
-      } else if (res.status === 404) {
-        Message({
-          message: res.data,
-          type: 'error',
-          duration: 5 * 1000
-        })
+      } else if (res.status === 308100) { // 更新token
+        setToken(res.token)
+        console.log('更新token' + res.token)
+        return res
       }
     }
     // 请求状态不是200 操作错误信息

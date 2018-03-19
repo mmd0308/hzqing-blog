@@ -2,7 +2,7 @@ package hzqing.com.blogadmin.base.controller;
 
 import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.base.service.IBaseService;
-import hzqing.com.hzqingcommon.response.ResponseMessage;
+import hzqing.com.blogadmin.utils.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,6 @@ import java.util.List;
 public class BaseController<T,M extends IBaseService<T>> {
     @Autowired
     protected M baseService;
-    @Value("${admin.jwt.secret}")
-    protected String secret;
 
     /**
      * 新增
@@ -49,7 +47,7 @@ public class BaseController<T,M extends IBaseService<T>> {
 
     /**
      * 按照条件查询，默认查询所有 带分页
-     * @param
+     * @param t 根据条件获取所有数据,带分页
      * @return
      */
     @GetMapping("/page")
@@ -59,12 +57,13 @@ public class BaseController<T,M extends IBaseService<T>> {
     }
 
     /**
-     * 获取所有数据
+     * 默认获取所有数据
+     * @param t 根据条件获取所有数据,没有分页
      * @return
      */
     @GetMapping("/all")
-    public ResponseMessage<List<T>> all(){
-        return new ResponseMessage<List<T>>().success(baseService.findAll());
+    public ResponseMessage<List<T>> all(T t){
+        return new ResponseMessage<List<T>>().success(baseService.findAll(t));
     }
 
     @DeleteMapping("/delete/{id}")

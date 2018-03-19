@@ -26,11 +26,9 @@ export default {
 
 <style>
 .showAppMain{
-    margin-left: 4%;
-    margin-right: 4%;
 }
 .show-appMain-left{
-    margin: 0 2%;
+    margin: 0 2% 0 0;
 }
 .show-appMain-left .el-card{
     margin-bottom: 18px;

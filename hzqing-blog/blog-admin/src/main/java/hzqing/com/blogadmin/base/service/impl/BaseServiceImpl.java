@@ -14,9 +14,6 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     @Autowired
     protected IBaseDao baseDao;
 
-    @Value("${admin.jwt.secret}")
-    protected String secret;
-
     public String mapper;
 
     @Override
@@ -38,12 +35,12 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
             pageSize = 10;
         }
         PageHelper.startPage(start,pageSize);
-        return new PageInfo<T>((List<T>) baseDao.findForList(mapper+".query",t));
+        return new PageInfo<T>(findAll(t));
     }
 
     @Override
-    public List<T> findAll() {
-        return (List<T>) baseDao.findForList(mapper+".all",null);
+    public List<T> findAll(T t) {
+        return (List<T>) baseDao.findForList(mapper+".query",t);
     }
 
     @Override

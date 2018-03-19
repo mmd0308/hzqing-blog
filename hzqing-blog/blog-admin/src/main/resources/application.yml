@@ -42,9 +42,4 @@ pagehelper:
 blog:
   images:
     path: ${CFG_BLOG_IMG_PATH:/home/hzq/hblog/}
-  access:
-    token: 'ACCESS-TOKEN'
-admin:
-  jwt:
-    secret: 'HZQING'
-    expiration: 6000
+debug: true

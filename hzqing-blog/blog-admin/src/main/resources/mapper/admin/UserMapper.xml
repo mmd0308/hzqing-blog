@@ -53,9 +53,13 @@
         FROM
         <include refid="table"/>
         where 1 = 1
-        <if test="id != null and id != ''">
-            id = ${id}
+        <if test="username != null and username != ''">
+            AND username LIKE '%${username}%'
+            <if test="email != null and email != ''">
+                OR email LIKE '%${email}%'
+            </if>
         </if>
+
     </select>
     <select id="selectById" parameterType="String" resultMap="userMap">
         SELECT

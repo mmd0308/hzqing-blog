@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '../views/layout/Layout'
+import Layout from '../views/admin/layout/Layout'
 import ShowIndexLayout from '../views/show/indexLayout/Layout'
 
 /**
@@ -37,9 +37,18 @@ export const constantRouterMap = [
       {
         path: 'detail',
         component: () => import('@/views/show/detail/Index')
+      },
+      {
+        path: 'about',
+        component: () => import('@/views/show/about/Index')
+      },
+      {
+        path: 'message',
+        component: () => import('@/views/show/message/Index')
       }
     ]
   },
+  { path: '/write', component: () => import('@/views/admin/blog/write/Index'), hidden: true },
   { path: '/login', component: () => import('@/views/admin/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
@@ -47,30 +56,84 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/admin/index',
     name: 'Index',
-    hidden: true,
     children: [{
       path: 'index',
-      component: () => import('@/views/dashboard/index')
+      meta: { title: 'Weclome', icon: 'example' },
+      component: () => import('@/views/admin/dashboard/index')
     }]
   },
   {
-    path: '/example',
+    path: '/blog',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/blog/article',
+    name: 'Blog',
+    meta: { title: '博客管理', icon: 'admin-blog' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'write',
+        name: 'Write',
+        redirect: '/write',
+        meta: { title: '写文章', icon: 'admin-blog-write' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'article',
+        name: 'Article',
+        component: () => import('@/views/admin/blog/article/Index'),
+        meta: { title: '文章管理', icon: 'table' }
+      },
+      {
+        path: 'tag',
+        name: 'Tag',
+        component: () => import('@/views/admin/blog/tag/index'),
+        meta: { title: '标签管理', icon: 'admin-blog-tag' }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/user',
+    name: 'System',
+    meta: { title: '系统管理', icon: 'admin-system' },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/admin/system/user/index'),
+        meta: { title: '用户管理', icon: 'user' }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/admin/system/role/index'),
+        meta: { title: '角色管理', icon: 'tree' }
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/admin/system/menu/index'),
+        meta: { title: '资源管理', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/comment',
+    component: Layout,
+    redirect: '/comment/user',
+    name: 'Comment',
+    meta: { title: '评论管理', icon: 'admin-comment' },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/admin/system/user/index'),
+        meta: { title: '用户管理', icon: 'table' }
+      },
+      {
+        path: 'role',
+        name: 'Role',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: '角色管理', icon: 'tree' }
       }
     ]
   },

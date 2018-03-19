@@ -13,7 +13,7 @@ public interface IBaseService<T> {
 
      PageInfo<T> queryPage(Integer start, Integer pageSize, T t);
 
-     List<T> findAll();
+     List<T> findAll(T t);
 
     int update(T t);
 

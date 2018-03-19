@@ -5,9 +5,6 @@
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="ar_title" property="arTitle"/>
-        <result column="ar_type" property="arType"/>
-        <result column="ar_url" property="arUrl"/>
-        <result column="ar_label" property="arLabel"/>
         <result column="ar_desc" property="arDesc"/>
         <result column="ar_content" property="arContent"/>
         <result column="ar_content_html" property="arContentHtml"/>
@@ -15,10 +12,6 @@
         <result column="ar_etime" property="arEtime"/>
         <result column="ar_state" property="arState"/>
         <result column="ar_up" property="arUp"/>
-        <result column="ar_support" property="arSupport"/>
-        <result column="ar_carousel" property="arCarousel"/>
-
-        <result column="clickNum" property="clickNum"/>
     </resultMap>
     <sql id="table">
         blog_article
@@ -27,35 +20,25 @@
         id,
         user_id,
         ar_title,
-        ar_type,
-        ar_url,
-        ar_label,
         ar_desc,
         ar_content,
         ar_content_html,
         ar_ctime,
         ar_etime,
         ar_state,
-        ar_up,
-        ar_support,
-        ar_carousel
+        ar_up
     </sql>
     <sql id="fieldValue">
         #{id},
         #{userId},
         #{arTitle},
-        #{arType},
-        #{arUrl},
-        #{arLabel},
         #{arDesc},
         #{arContent},
         #{arContentHtml},
         #{arCtime},
         #{arEtime},
         #{arState},
-        #{arUp},
-        #{arSupport},
-        #{arCarousel}
+        #{arUp}
     </sql>
 
     <insert id="save" parameterType="article">
@@ -76,18 +59,13 @@
         </choose>
         #{userId},
         #{arTitle},
-        #{arType},
-        #{arUrl},
-        #{arLabel},
         #{arDesc},
         #{arContent},
         #{arContentHtml},
         #{arCtime},
         #{arEtime},
         #{arState},
-        #{arUp},
-        #{arSupport},
-        #{arCarousel}
+        #{arUp}
         )
     </insert>
     <select id="query" parameterType="article" resultMap="articleMap">
@@ -105,9 +83,6 @@
         <if test="arContent != null and arContent != ''">
             AND  ar_content LIKE  '%${arContent}%'
         </if>
-        <if test="arLabel != null and arLabel != ''">
-            AND  ar_label LIKE  '%${arLabel}%'
-        </if>
         <if test="arTitle != null and arTitle != ''">
             AND  ar_title LIKE  '%${arTitle}%'
         </if>
@@ -116,33 +91,9 @@
         </if>
         ORDER  BY ar_etime
     </select>
-    <select id="queryIndex" parameterType="article" resultMap="articleMap">
-        SELECT  a.*,v.clickNum from blog_article a LEFT JOIN (
-            SELECT count(id) clickNum,article_id
-            FROM blog_visit
-            WHERE
-            v_clicks = 1 GROUP BY  article_id
-        ) v ON  v.article_id = a.id
-        WHERE  1 = 1
-        <if test="arState != null and arState != ''">
-            AND a.ar_state = #{arState}
-        </if>
-        <if test="arContent != null and arContent != ''">
-            AND  a.ar_content LIKE  '%${arContent}%'
-        </if>
-        <if test="arLabel != null and arLabel != ''">
-            AND  a.ar_label LIKE  '%${arLabel}%'
-        </if>
-        <if test="arTitle != null and arTitle != ''">
-            AND  a.ar_title LIKE  '%${arTitle}%'
-        </if>
-        <if test="arDesc != null and arDesc != ''">
-            AND  a.ar_desc LIKE  '%${arDesc}%'
-        </if>
-        ORDER  BY a.ar_etime
-    </select>
-    <select id="queryPageByCid" parameterType="string" resultMap="articleMap">
-        SELECT a.* FROM blog_article a LEFT JOIN rl_article_category r ON a.id = r.article_id WHERE r.cate_id = #{0}
+    <select id="getAllByTagId" parameterType="string" resultMap="articleMap">
+        SELECT a.* FROM blog_article a LEFT JOIN rl_article_tag r ON a.id = r.article_id WHERE r.tag_id = #{0}
+        ORDER BY a.ar_ctime DESC
     </select>
 
     <select id="selectById" parameterType="String" resultMap="articleMap">
@@ -159,15 +110,6 @@
         id = #{id}
         <if test="arTitle != null and arTitle !=''">
             , ar_title = #{arTitle}
-        </if>
-        <if test="arType != null and arType !=''">
-            , ar_type = #{arType}
-        </if>
-        <if test="arUrl != null and arUrl !=''">
-            , ar_url = #{arUrl}
-        </if>
-        <if test="arLabel != null and arLabel !=''">
-            , ar_label = #{arLabel}
         </if>
         <if test="arDesc != null and arDesc !=''">
             , ar_desc = #{arDesc}
@@ -187,35 +129,40 @@
         <if test="arUp != null and arUp !=''">
             , ar_up = #{arUp}
         </if>
-        <if test="arSupport != null and arSupport !=''">
-            , ar_support = #{arSupport}
-        </if>
-        <if test="arCarousel != null and arCarousel != ''">
-            , ar_carousel = #{arCarousel}
-        </if>
         WHERE
         id = #{id}
     </update>
-
     <delete id="deletedById" parameterType="String">
         DELETE FROM
         <include refid="table"/>
         WHERE
         id = #{0}
     </delete>
-    <insert id="saveRlCateOrArt" parameterType="list">        INSERT  INTO rl_article_category (id, cate_id, article_id) VALUES
-        <foreach collection="list"  item="item" separator=",">
-            (
-            (SELECT replace((SELECT uuid()),"-","")),
-            #{item.cateId},
-            #{item.articleId}
-            )
-        </foreach>
+    <insert id="saverlAT" parameterType="map">
+        INSERT INTO rl_article_tag
+          (id, tag_id, article_id)
+        VALUES
+        <choose>
+            <when test="tagId != null and tagId != ''">
+                ( #{id},
+                #{tagId},
+                #{articleId})
+            </when>
+            <otherwise>
+                <foreach collection="list" separator="," item="lables" open="(" close=")">
+                    <choose>
+                        <when test="id == null || id == ''">
+                            (SELECT replace((SELECT  uuid()),"-","")),
+                        </when>
+                        <otherwise>
+                            #{id},
+                        </otherwise>
+                    </choose>
+                    #{lables},
+                    #{articleId}
+                </foreach>
+            </otherwise>
+        </choose>
+
     </insert>
-    <delete id="deleRlCateByArtId" parameterType="string">
-        DELETE  FROM  rl_article_category WHERE  article_id = #{0}
-    </delete>
-    <select id="getCateByAid" parameterType="string" resultType="string">
-        SELECT cate_id from rl_article_category WHERE  article_id = #{0}
-    </select>
 </mapper>

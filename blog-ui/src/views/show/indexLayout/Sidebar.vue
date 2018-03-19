@@ -2,7 +2,8 @@
     <div id="showIndexSidebar">
         <el-card class="sidebar-box-card detail-card">
             <el-input placeholder="请输入内容" v-model="queryAll">
-                <template slot="append">搜 索</template>
+                <!-- <template slot="append">搜 索</template> -->
+                 <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
         </el-card>
         <el-card class="sidebar-box-card">

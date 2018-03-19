@@ -1,9 +1,9 @@
 {
-  "name": "vue-admin-template",
+  "name": "blog-ui",
   "version": "3.0.0",
   "license": "MIT",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "衡钊清博客项目前端页面",
+  "author": "mmd0308@126.com",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -16,9 +16,11 @@
     "axios": "0.17.1",
     "element-ui": "2.0.8",
     "js-cookie": "2.2.0",
+    "mavon-editor": "^2.5.1",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "vue": "2.5.10",
+    "vue-cute-timeline": "^1.2.4",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"
   },

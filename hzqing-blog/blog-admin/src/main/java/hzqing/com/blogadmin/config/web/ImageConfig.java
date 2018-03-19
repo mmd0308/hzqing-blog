@@ -27,12 +27,16 @@ public class ImageConfig extends WebMvcConfigurerAdapter {
     VisitInterceptor visitInterceptor(){
         return new VisitInterceptor();
     }
+    @Bean
+    TokenInterceptor tokenInterceptor() { return  new TokenInterceptor();}
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(visitInterceptor()).addPathPatterns("/admin/blog/article/get/**");
+        registry.addInterceptor(tokenInterceptor()).addPathPatterns("/**").excludePathPatterns("/admin/user/login");
+        //registry.addInterceptor(visitInterceptor()).addPathPatterns("/admin/blog/article/get/**");
         super.addInterceptors(registry);
     }
+
 
 
 }

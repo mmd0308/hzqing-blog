@@ -1,7 +1,7 @@
 package hzqing.com.blogadmin.vo.sys;
 
-import hzqing.com.blogadmin.entity.sys.Menu;
-import hzqing.com.blogadmin.entity.sys.User;
+import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
+import hzqing.com.blogadmin.admin.system.user.entity.User;
 
 import java.io.Serializable;
 import java.util.List;
