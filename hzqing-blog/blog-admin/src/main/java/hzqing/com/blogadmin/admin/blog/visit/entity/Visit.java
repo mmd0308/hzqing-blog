@@ -1,4 +1,4 @@
-package hzqing.com.blogadmin.entity.blog;
+package hzqing.com.blogadmin.admin.blog.visit.entity;
 
 import org.apache.ibatis.type.Alias;
 

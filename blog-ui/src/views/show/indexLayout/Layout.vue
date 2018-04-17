@@ -29,10 +29,10 @@
       background-color: #222;
       height: 52px !important;
       color: #fff;
-      padding: 0% 14%;
+      padding: 0% 18%;
     }
     .el-main{
-      margin: 0% 14%;
+      margin: 0% 18%;
     }
     @media screen and (max-width:1400px){
       .el-header{

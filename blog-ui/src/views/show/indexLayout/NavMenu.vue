@@ -5,13 +5,26 @@
                 </h1>
                 <ul class="nav">
                     <li>
-                        <router-link to="/" >
-                            技术杂谈
+                        <el-dropdown placement="bottom" trigger="hover" @command="handleCommand">
+                            <div style="width:110px;">
+                                <router-link to="/blog">
+                                学无止境
+                                </router-link>
+                            </div>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="java">Java</el-dropdown-item>
+                                <el-dropdown-item divided command="admin">Hadoop</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                    <li>
+                        <router-link to="/works" >
+                            作品展示
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/about" >
-                            关于我
+                        <router-link to="/diary" >
+                            个人日记
                         </router-link>
                     </li>
                     <li>
@@ -80,13 +93,13 @@ export default {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     },
-    handleCommand(command) { // web 
+    handleCommand(command) { // web
       if (command === 'write') {
-        this.$router.push({ path: '/write' }) 
+        this.$router.push({ path: '/write' })
       } else if (command === 'admin') {
-        this.$router.push({ path: '/admin' }) 
+        this.$router.push({ path: '/admin' })
       } else if (command === 'loyout') {
-          this.logout()
+        this.logout()
       }
     },
     mobileHandleCommand(command) { // mobile

@@ -1,8 +1,8 @@
-package hzqing.com.blogadmin.controller.blog;
+package hzqing.com.blogadmin.admin.blog.visit.controller;
 
 import hzqing.com.blogadmin.base.controller.BaseController;
-import hzqing.com.blogadmin.entity.blog.Visit;
-import hzqing.com.blogadmin.service.blog.IVisitService;
+import hzqing.com.blogadmin.admin.blog.visit.entity.Visit;
+import hzqing.com.blogadmin.admin.blog.visit.service.IVisitService;
 import hzqing.com.blogadmin.utils.ResponseMessage;
 import hzqing.com.hzqingcommon.util.HostUtil;
 import hzqing.com.hzqingcommon.util.UUIDUtils;

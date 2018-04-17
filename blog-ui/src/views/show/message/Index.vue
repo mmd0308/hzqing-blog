@@ -14,15 +14,15 @@ export default {
     Comment
   },
   data() {
-      return {
-          msg: '留言板'
-      }
+    return {
+      msg: '留言板'
+    }
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
     #message{
-
+        border-radius: 10px;
     }
 </style>

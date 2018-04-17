@@ -1,6 +1,8 @@
 package hzqing.com.blogadmin.admin.blog.article.vo;
 
 import hzqing.com.blogadmin.admin.blog.article.entity.Article;
+import hzqing.com.blogadmin.admin.blog.tag.entity.Tag;
+import hzqing.com.blogadmin.admin.system.user.entity.User;
 import org.apache.ibatis.type.Alias;
 
 import java.util.List;
@@ -14,6 +16,54 @@ public class ArticleVO extends Article{
      * 标签的id
      */
     private List<String> lables;
+    /**
+     * 类别
+     */
+    private Tag tag;
+    /**
+     * 标签
+     */
+    private List<Tag> listLables;
+    /**
+     * 用户全名
+     */
+    private String fullName;
+    /**
+     * 文章访问数量
+     */
+    private String countNum;
+
+    public String getCountNum() {
+        return countNum;
+    }
+
+    public void setCountNum(String countNum) {
+        this.countNum = countNum;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public List<Tag> getListLables() {
+        return listLables;
+    }
+
+    public void setListLables(List<Tag> listLables) {
+        this.listLables = listLables;
+    }
 
     public String getTagId() {
         return tagId;

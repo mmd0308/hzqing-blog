@@ -39,12 +39,24 @@ export const constantRouterMap = [
         component: () => import('@/views/show/detail/Index')
       },
       {
+        path: 'works',
+        component: () => import('@/views/show/works/Index')
+      },,
+      {
         path: 'about',
         component: () => import('@/views/show/about/Index')
       },
       {
+        path: 'diary',
+        component: () => import('@/views/show/diary/Index')
+      },
+      {
         path: 'message',
         component: () => import('@/views/show/message/Index')
+      },
+      {
+        path: 'blog',
+        component: () => import('@/views/show/blog/index')
       }
     ]
   },
@@ -134,6 +146,48 @@ export const constantRouterMap = [
         name: 'Role',
         component: () => import('@/views/tree/index'),
         meta: { title: '角色管理', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/blogger',
+    component: Layout,
+    redirect: '/blogger/me',
+    name: 'Blogger',
+    meta: { title: '博主管理', icon: 'admin-comment' },
+    children: [
+      {
+        path: 'diary',
+        name: 'Diary',
+        component: () => import('@/views/admin/blogger/diary/index'),
+        meta: { title: '个人日记', icon: 'admin-comment' }
+      },
+      {
+        path: 'me',
+        name: 'me',
+        component: () => import('@/views/admin/system/user/index'),
+        meta: { title: '关于我', icon: 'admin-comment' }
+      }
+    ]
+  },
+  {
+    path: '/bus',
+    component: Layout,
+    redirect: '/bus/link',
+    name: 'Bus',
+    meta: { title: '博客管理', icon: 'admin-comment' },
+    children: [
+      {
+        path: 'works',
+        name: 'Works',
+        component: () => import('@/views/admin/bus/works/index'),
+        meta: { title: '作品管理', icon: 'admin-comment' }
+      },
+      {
+        path: 'link',
+        name: 'Link',
+        component: () => import('@/views/admin/bus/link/index'),
+        meta: { title: '友情链接', icon: 'admin-comment' }
       }
     ]
   },

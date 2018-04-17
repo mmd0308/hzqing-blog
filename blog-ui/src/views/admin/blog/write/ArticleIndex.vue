@@ -45,8 +45,8 @@ export default {
       tagId: '',
       form: this.initObj(),
       releaseForm: {
-         id: '',
-         arState: ''
+        id: '',
+        arState: ''
       }
     }
   },
@@ -67,7 +67,7 @@ export default {
         arState: 'CG',
         arUp: '0',
         tagId: ''
-      } 
+      }
     },
     toAddArticle() {
       // 创建 博客
@@ -85,11 +85,11 @@ export default {
       })
     },
     getAllArticleByTagId(tagId) {
-      getAllByTagId(tagId, null).then( response => {
+      getAllByTagId(tagId, null).then(response => {
         this.blogList = response.data.list
-        if (this.blogList.length != 0 ) {
-            this.articleId =  this.blogList[0].id
-            this.bus.$emit('getWriteArticle', this.blogList[0])
+        if (this.blogList.length !== 0) {
+          this.articleId = this.blogList[0].id
+          this.bus.$emit('getWriteArticle', this.blogList[0])
         }
       })
     },
@@ -99,18 +99,18 @@ export default {
       this.form = row
     },
     handleCommand(command) {
-      if ('release' == command) {
+      if (command === 'release') {
         this.releaseForm.id = this.form.id
         this.releaseForm.arState = 'FB'
         putObj(this.form.id, this.releaseForm).then(() => {
           this.$notify({
-              title: '成功',
-              message: '发布成功',
-              type: 'success',
-              duration: 2000
+            title: '成功',
+            message: '发布成功',
+            type: 'success',
+            duration: 2000
           })
         })
-      }else if ('deleted' == command) {
+      } else if (command === 'deleted') {
         this.$confirm('是否刪除该博客？', '删除博客', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -129,11 +129,11 @@ export default {
       }
     }
   },
-  mounted: function(){
+  mounted: function() {
     const that = this
-    that.bus.$on('getTagId',function(tagId){
+    that.bus.$on('getTagId', function(tagId) {
       that.tagId = tagId
-      that.$nextTick(()=> {
+      that.$nextTick(() => {
         that.getAllArticleByTagId(tagId)
       })
     })

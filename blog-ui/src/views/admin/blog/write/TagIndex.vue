@@ -54,7 +54,6 @@
         </el-dialog>
   </div>
 </template>
-
 <script>
 import { getAll, addObj, putObj, delObj } from '@/api/admin/blog/tag/index'
 export default {
@@ -85,14 +84,14 @@ export default {
         sort: 1,
         note: '',
         tagType: 'C' // 分类
-      } 
+      }
     },
     tagToAdd() {
-      this.tagFormBL = true;
+      this.tagFormBL = true
       this.formTag = this.initTag()
     },
     tagCancel() {
-      this.tagFormBL = false;
+      this.tagFormBL = false
     },
     tagSave() {
       addObj(this.formTag).then(response => {
@@ -113,9 +112,9 @@ export default {
     tagClick(key, item) {
       this.tagCancel()
       this.checkTag = key // 替换颜色
-      if(null != item) {
-         this.formTag = item
-         this.bus.$emit('getTagId',item.id)
+      if(item != null) {
+        this.formTag = item
+        this.bus.$emit('getTagId', item.id)
       }
     },
     handleCommand(command) {
@@ -144,8 +143,8 @@ export default {
     },
     update() { // 更新分类
       this.formTag.tagName = this.tagName
-      putObj(this.formTag.id, this.formTag).then( response => {
-        this.tagEditDialog = false  // 取消对话框
+      putObj(this.formTag.id, this.formTag).then(response => {
+        this.tagEditDialog = false // 取消对话框
         this.$notify({
           title: '成功',
           message: '修改成功',

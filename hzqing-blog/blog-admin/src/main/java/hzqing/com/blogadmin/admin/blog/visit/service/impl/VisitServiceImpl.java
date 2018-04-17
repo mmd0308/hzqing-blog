@@ -1,11 +1,9 @@
-package hzqing.com.blogadmin.service.blog.impl;
+package hzqing.com.blogadmin.admin.blog.visit.service.impl;
 
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
-import hzqing.com.blogadmin.entity.blog.Visit;
-import hzqing.com.blogadmin.service.blog.IVisitService;
+import hzqing.com.blogadmin.admin.blog.visit.entity.Visit;
+import hzqing.com.blogadmin.admin.blog.visit.service.IVisitService;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class VisitServiceImpl extends BaseServiceImpl<Visit> implements IVisitService {

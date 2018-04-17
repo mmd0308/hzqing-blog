@@ -22,7 +22,10 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 
-Vue.prototype.bus = new Vue()  // 在Vue的prototype上绑一个总线,用来进行组建之间传递值 this.bus.$emit this.bus.$on
+import hzqingVueTimeline from 'hzqing-vue-timeline'
+Vue.use(hzqingVueTimeline)
+
+Vue.prototype.bus = new Vue() // 在Vue的prototype上绑一个总线,用来进行组建之间传递值 this.bus.$emit this.bus.$on
 Vue.config.productionTip = false
 
 new Vue({

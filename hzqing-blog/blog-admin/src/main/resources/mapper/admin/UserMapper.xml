@@ -7,6 +7,7 @@
         <result column="password" property="password"/>
         <result column="note" property="note"/>
         <result column="email" property="email"/>
+        <result column="full_name" property="fullName" />
     </resultMap>
     <sql id="table">
         sys_user
@@ -16,14 +17,16 @@
         username,
         password,
         note,
-        email
+        email,
+        full_name
     </sql>
     <sql id="fieldValue">
         #{id},
         #{username},
         #{password},
         #{note},
-        #{email}
+        #{email},
+        #{fullName}
     </sql>
     <insert id="save" parameterType="user">
         INSERT  INTO
@@ -44,7 +47,8 @@
         #{username},
         #{password},
         #{note},
-        #{email}
+        #{email},
+        #{fullName}
         )
     </insert>
     <select id="query" parameterType="user" resultMap="userMap">
@@ -81,6 +85,9 @@
         </if>
         <if test="note != null and note !=''">
             , note = #{note}
+        </if>
+        <if test="fullName != null and fullName ！= ''">
+            , full_name = #{fullName}
         </if>
         WHERE
         id = #{id}

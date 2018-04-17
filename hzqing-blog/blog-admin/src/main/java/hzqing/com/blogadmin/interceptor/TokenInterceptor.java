@@ -29,7 +29,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (res == -1) { // jwt过期,生成新的jwt
             return false;
         }
-        if (res <= 180){ // 校验token过期时间是否接近临界值 默认是3分钟
+        if (res <= 600){ // 校验token过期时间是否接近临界值 默认是3分钟
             request.setAttribute(Constant.REPLACE_TOKEN_KEY,true);
         }
         // 校验token信息是否准确。在多终端登录时候密码修改需要全部重新登录

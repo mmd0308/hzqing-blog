@@ -89,7 +89,7 @@
   export default {
     filters: {
       formatDate(time) {
-        return parseTime(time, '{y}-{m}-{d} {h}:{i}');
+        return parseTime(time, '{y}-{m}-{d} {h}:{i}')
       }
     },
     data() {
@@ -100,7 +100,7 @@
         listQuery: {
           page: 1,
           pageSize: 10,
-          arTitle: '',
+          arTitle: ''
         },
         form: this.initObj()
       }
@@ -142,10 +142,10 @@
         this.form.arState = 'FB'
         putObj(row.id, this.form).then(() => {
           this.$notify({
-              title: '成功',
-              message: '发布成功',
-              type: 'success',
-              duration: 2000
+            title: '成功',
+            message: '发布成功',
+            type: 'success',
+            duration: 2000
           })
           this.getList()
         })

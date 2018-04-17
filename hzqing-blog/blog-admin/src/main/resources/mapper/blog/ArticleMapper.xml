@@ -13,6 +13,31 @@
         <result column="ar_state" property="arState"/>
         <result column="ar_up" property="arUp"/>
     </resultMap>
+    <resultMap id="articleMapVO" type="articleVO">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="ar_title" property="arTitle"/>
+        <result column="ar_desc" property="arDesc"/>
+        <result column="ar_content" property="arContent"/>
+        <result column="ar_ctime" property="arCtime"/>
+        <result column="ar_etime" property="arEtime"/>
+        <result column="ar_state" property="arState"/>
+        <result column="ar_up" property="arUp"/>
+        <result column="tagC" />
+        <result column="tagL" />
+        <result column="full_name" property="fullName" />
+        <result column="count_num" property="countNum" />
+        <!--<association property="tag" column="{id=id,tagType=tagC}" select="selectTagByBlogId" />-->
+        <!--<association property="listLables" column="{id=id,tagType=tagL}" select="selectTagByBlogId" />-->
+    </resultMap>
+    <resultMap id="tagMap" type="tag">
+        <id column="id" property="id"/>
+        <result column="tag_name" property="tagName"/>
+        <result column="enabled" property="enabled"/>
+        <result column="sort" property="sort"/>
+        <result column="note" property="note"/>
+        <result column="tag_type" property="tagType"/>
+    </resultMap>
     <sql id="table">
         blog_article
     </sql>
@@ -68,6 +93,37 @@
         #{arUp}
         )
     </insert>
+    <select id="selectTagByBlogId" resultMap="tagMap" parameterType="map">
+        SELECT id,tag_name,enabled,sort,note,tag_type FROM blog_tag WHERE id IN (SELECT tag_id FROM rl_article_tag WHERE article_id = #{id}) AND tag_type = #{tagType}
+    </select>
+    <select id="showAllPage" parameterType="articleVO" resultMap="articleMapVO">
+        SELECT
+            b.id,
+            b.user_id,
+            b.ar_title,
+            b.ar_desc,
+            b.ar_ctime,
+            b.ar_etime,
+            b.ar_state,
+            b.ar_up,
+            'C' as tagC,
+            'L' as tagL,
+            u.full_name,
+            v.count_num
+        FROM
+          blog_article b
+        LEFT JOIN sys_user u ON u.id = b.user_id
+        LEFT JOIN (SELECT count(*) AS count_num,article_id FROM  blog_visit GROUP BY article_id) v ON  b.id = v.article_id
+        WHERE
+          b.ar_state = 'FB'
+        <if test="arTitle != null and arTitle != ''">
+            AND  b.ar_title LIKE  '%${arTitle}%'
+        </if>
+        <if test="arUp != null and arUp != ''" >
+            AND  b.ar_up = #{arUp}
+        </if>
+        ORDER  BY b.ar_etime DESC
+    </select>
     <select id="query" parameterType="article" resultMap="articleMap">
         SELECT
         <include refid="field"/>

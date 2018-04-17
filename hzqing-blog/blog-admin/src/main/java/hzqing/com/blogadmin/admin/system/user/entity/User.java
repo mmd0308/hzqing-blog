@@ -9,6 +9,15 @@ public class User {
     private String password;
     private String email;
     private String note;
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public String getId() {
         return id;

@@ -23,39 +23,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/blog/article")
 public class ArticleController extends BaseController<Article,IArticleService> {
-
-    @Value("${blog.images.path}")
-    private String filePath;
-
-
     /**
-     * 上传图片，返回图片路径
-     * @param file
+     * 博客展示页面
+     * @param page
+     * @param pageSize
+     * @param t
      * @return
      */
-    @PostMapping("/uploadImages")
-    public ResponseMessage<String> uploadImages(MultipartFile file){
-        String dataPaths =  DateUtils.getYearAndMonth() + "/";
-        String fPath = filePath + dataPaths;
-        String fileName = UUIDUtils.get32UUID() +file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        try {
-            FileUtil.uploadFile(file.getBytes(),fPath,fileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseMessage<>().success("/images/"+dataPaths+fileName);
+    @GetMapping("/show/page")
+    public ResponseMessage<PageInfo<ArticleVO>> page(Integer page,Integer pageSize,ArticleVO t){
+        PageInfo<ArticleVO> res = baseService.showAllPage(page,pageSize,t);
+        return new ResponseMessage<>().success(res);
     }
 
 
     /**
-     * 根据文章id，获取分类id,或者标签id
+     * 根据id获取信息
      * @param id
      * @return
      */
-    @GetMapping("/getCateByAid/{id}")
-    public ResponseMessage<List<String>> getCateByAid(@PathVariable String id) {
-        List<String> cates = baseService.getCateByAid(id);
-        return  new ResponseMessage<>().success(cates);
+    @GetMapping("/show/get/{id}")
+    public ResponseMessage<Article> get(@PathVariable String id){
+        Article t = baseService.getById(id);
+        return new ResponseMessage<Article>().success(t);
     }
 
     /**

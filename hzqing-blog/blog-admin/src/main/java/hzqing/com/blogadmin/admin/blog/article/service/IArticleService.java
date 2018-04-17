@@ -9,9 +9,10 @@ import java.util.List;
 
 public interface IArticleService extends IBaseService<Article> {
 
-    List<String> getCateByAid(String id);
 
     PageInfo<Article> getAllByTagId(Integer page, Integer pageSize, String id);
 
     void saveVo(ArticleVO t);
+
+    PageInfo<ArticleVO> showAllPage(Integer page, Integer pageSize, ArticleVO t);
 }

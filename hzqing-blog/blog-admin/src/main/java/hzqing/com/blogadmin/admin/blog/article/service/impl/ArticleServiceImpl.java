@@ -6,9 +6,8 @@ import hzqing.com.blogadmin.admin.blog.article.vo.ArticleVO;
 import hzqing.com.blogadmin.admin.system.user.service.IUserService;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.admin.blog.article.entity.Article;
-import hzqing.com.blogadmin.admin.system.user.entity.User;
 import hzqing.com.blogadmin.admin.blog.article.service.IArticleService;
-import hzqing.com.blogadmin.service.blog.IVisitService;
+import hzqing.com.blogadmin.admin.blog.visit.service.IVisitService;
 import hzqing.com.hzqingcommon.util.ReplaceStrUtil;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     private IVisitService visitService;
 
 
-    @Override
-    public List<String> getCateByAid(String id) {
-        return (List<String>) baseDao.findForList(mapper+".getCateByAid",id);
-    }
 
     @Override
     public PageInfo<Article> getAllByTagId(Integer page, Integer pageSize, String id) {
@@ -52,6 +47,19 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
         rlTagArt.put("tagId",t.getTagId());
         rlTagArt.put("articleId",aId);
         this.saveRLAT(rlTagArt);
+    }
+
+    @Override
+    public PageInfo<ArticleVO> showAllPage(Integer start, Integer pageSize, ArticleVO t) {
+        if (null == start){
+            start = 1;
+        }
+        if (null == pageSize){
+            pageSize = 10;
+        }
+        PageHelper.startPage(start,pageSize);
+        PageInfo<ArticleVO> pageInfo = new PageInfo<ArticleVO>((List<ArticleVO>) baseDao.findForList(mapper+".showAllPage",t));
+        return pageInfo;
     }
 
     @Override

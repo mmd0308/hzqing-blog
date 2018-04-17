@@ -38,3 +38,18 @@ export function putObj(id, obj) {
     data: obj
   })
 }
+
+export function showPage(query) {
+  return request({
+    url: '/admin/blog/article/show/page',
+    method: 'get',
+    params: query
+  })
+}
+
+export function getObj(id) {
+  return request({
+    url: '/admin/blog/article/show/get/' + id,
+    method: 'get'
+  })
+}

@@ -3,15 +3,22 @@ package hzqing.com.blogadmin.base.controller;
 import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.utils.ResponseMessage;
+import hzqing.com.hzqingcommon.util.DateUtils;
+import hzqing.com.hzqingcommon.util.FileUtil;
+import hzqing.com.hzqingcommon.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public class BaseController<T,M extends IBaseService<T>> {
     @Autowired
     protected M baseService;
+
+    @Value("${blog.images.path}")
+    protected String filePath;
 
     /**
      * 新增
@@ -76,6 +83,22 @@ public class BaseController<T,M extends IBaseService<T>> {
         return new ResponseMessage<Boolean>().success(bool);
     }
 
-
+    /**
+     * 上传图片，返回图片路径
+     * @param file
+     * @return
+     */
+    @PostMapping("/uploadImages")
+    public ResponseMessage<String> uploadImages(MultipartFile file){
+        String dataPaths =  DateUtils.getYearAndMonth() + "/";
+        String fPath = filePath + dataPaths;
+        String fileName = UUIDUtils.get32UUID() +file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        try {
+            FileUtil.uploadFile(file.getBytes(),fPath,fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseMessage<>().success("/images/"+dataPaths+fileName);
+    }
 
 }

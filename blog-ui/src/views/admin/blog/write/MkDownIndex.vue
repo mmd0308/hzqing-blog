@@ -83,60 +83,59 @@ export default {
     }
   },
   created() {
-    if (this.formArticle.id != '') {
+    if (this.formArticle.id !== '') {
       this.changeSave = true
     }
   },
   methods: {
     initTag() {
       return {
-      } 
+      }
     },
-    $save(value,render){
+    $save(value, render) {
       this.blogEditState = '保存中...'
-      this.formArticle.arContent = value;
-      this.formArticle.arContentHtml = render;
-      this.formArticle.arEtime = new Date();
+      this.formArticle.arContent = value
+      this.formArticle.arContentHtml = render
+      this.formArticle.arEtime = new Date()
       this.formArticle.arState = 'CG'
       putObj(this.formArticle.id, this.formArticle).then(response => {
         this.blogEditState = '已保存'
         this.changeSave = true
       })
     },
-    $change(value,render){ // 编辑区发生变化的回调事件
+    $change(value, render){ // 编辑区发生变化的回调事件
       this.blogEditState = '未保存'
       // if (this.changeSave) {
       //   this.blogEditState = '保存中...'
-      //   this.formArticle.arContent = value;
-      //   this.formArticle.arContentHtml = render;
-      //   this.formArticle.arEtime = new Date();
+      //   this.formArticle.arContent = value
+      //   this.formArticle.arContentHtml = render
+      //   this.formArticle.arEtime = new Date()
       //   putObj(this.formArticle.id, this.formArticle).then(response => {
       //     this.blogEditState = '已保存'
       //   })
       // }
     },
-    $imgAdd(pos, $file){
+    $imgAdd(pos, $file) {
       this.changeSave = false
-      let param = new FormData()  // 创建form对象
-      param.append('file', $file)  // 通过append向form对象添加数据
-    //  console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
-      let config = {
-          headers:  {'Content-Type': 'multipart/form-data' ,'ACCESS-TOKEN': getToken()}
+      const param = new FormData() // 创建form对象
+      param.append('file', $file) // 通过append向form对象添加数据
+      // console.log(param.get('file')) // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+      const config = {
+        headers: { 'Content-Type': 'multipart/form-data', 'ACCESS-TOKEN': getToken() }
       }
-      var that = this;
+      var that = this
       // 添加请求头
-      axios.post('/admin/blog/article/uploadImages', param, config)
-          .then(response => {
-              // that.$refs.mavonEditor.$imgUpdateByUrl(pos,process.env.BASE_API+response.data.data)
-          that.$refs.mavonEditor.$img2Url(pos,process.env.BASE_API+response.data.data)
-          this.$refs.mavonEditor.$refs.toolbar_left.$imgDelByFilename(pos);
+      axios.post('/admin/blog/article/uploadImages', param, config).then(response => {
+        // that.$refs.mavonEditor.$imgUpdateByUrl(pos,process.env.BASE_API+response.data.data)
+        that.$refs.mavonEditor.$img2Url(pos, process.env.BASE_API + response.data.data)
+        this.$refs.mavonEditor.$refs.toolbar_left.$imgDelByFilename(pos)
       })
     }
   },
-  mounted: function(){
+  mounted: function() {
     const that = this
-    that.bus.$on('getWriteArticle', function(item){
-      that.formArticle = item;
+    that.bus.$on('getWriteArticle', function(item) {
+      that.formArticle = item
     })
   }
 }

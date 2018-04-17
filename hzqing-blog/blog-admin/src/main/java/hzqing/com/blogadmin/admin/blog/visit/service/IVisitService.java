@@ -1,7 +1,7 @@
-package hzqing.com.blogadmin.service.blog;
+package hzqing.com.blogadmin.admin.blog.visit.service;
 
 import hzqing.com.blogadmin.base.service.IBaseService;
-import hzqing.com.blogadmin.entity.blog.Visit;
+import hzqing.com.blogadmin.admin.blog.visit.entity.Visit;
 
 
 public interface IVisitService extends IBaseService<Visit> {

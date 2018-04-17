@@ -13,7 +13,7 @@ public class Constant {
     /**
      * jwt的过期时间  单位秒
      */
-    public static final int JWT_EXPIRATION = 600;
+    public static final int JWT_EXPIRATION = 1800;
     /**
      * AES对称加密密钥
      */

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WorksMapper" >
+    <resultMap id="worksMap" type="works">
+        <id column="id" property="id"/>
+        <result column="work_name" property="workName"/>
+        <result column="ctime" property="ctime"/>
+        <result column="exhibition" property="exhibition"/>
+        <result column="enabled" property="enabled"/>
+        <result column="work_img" property="workImg"/>
+        <result column="user_id" property="userId"/>
+        <result column="article_id" property="articleId"/>
+        <result column="tag_id" property="tagId"/>
+    </resultMap>
+    <sql id="table">
+        bus_works
+    </sql>
+    <sql id="field">
+        id,
+        work_name,
+        ctime,
+        exhibition,
+        enabled,
+        work_img,
+        user_id,
+        article_id,
+        tag_id
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{workName},
+        #{ctime},
+        #{exhibition},
+        #{enabled},
+        #{workImg},
+        #{userId},
+        #{articleId},
+        #{tagId}
+    </sql>
+    <insert id="save" parameterType="works">
+        INSERT  INTO
+        <include refid="table"/>
+        (
+        <include refid="field"/>
+        )
+        VALUES
+        (
+        <choose>
+            <when test="id == null || id == ''">
+                (SELECT replace((SELECT  uuid()),"-","")),
+            </when>
+            <otherwise>
+                #{id},
+            </otherwise>
+        </choose>
+        #{workName},
+        #{ctime},
+        #{exhibition},
+        #{enabled},
+        #{workImg},
+        #{userId},
+        #{articleId},
+        #{tagId}
+        )
+    </insert>
+    <select id="query" parameterType="works" resultMap="worksMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where 1 = 1
+        <if test="enabled != null and enabled != '' ">
+            enabled = #{enabled}
+        </if>
+    </select>
+    <select id="selectById" parameterType="String" resultMap="worksMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{0}
+    </select>
+    <update id="update" parameterType="works" >
+        UPDATE
+        <include refid="table"/>
+        SET
+        id = #{id}
+        <if test="workName != null and workName !=''">
+            , work_name = #{workName}
+        </if>
+        <if test="enabled != null and enabled !=''">
+            , enabled = #{enabled}
+        </if>
+        <if test="exhibition != null and exhibition !=''">
+            , exhibition = #{exhibition}
+        </if>
+        <if test="workImg != null and workImg !=''">
+            , work_img = #{workImg}
+        </if>
+        <if test="articleId != null and articleId !=''">
+            , article_id = #{articleId}
+        </if>
+        <if test="tagId != null and tagId !=''">
+            , tag_id = #{tagId}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
+</mapper>

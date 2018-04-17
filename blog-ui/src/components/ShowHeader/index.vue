@@ -11,13 +11,13 @@
 
 <script>
 export default {
-    props: ['message']
+  props: ['message']
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
     .header{
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         .svg-icon[data-v-c8a70580]{
             width: 1.5em;
             height: 1.5em;

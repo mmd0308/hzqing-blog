@@ -1,11 +1,9 @@
 package hzqing.com.blogadmin.interceptor;
 
-import hzqing.com.blogadmin.entity.blog.Visit;
-import hzqing.com.blogadmin.service.blog.IVisitService;
-import hzqing.com.hzqingcommon.jwt.JwtTokenUtil;
+import hzqing.com.blogadmin.admin.blog.visit.entity.Visit;
+import hzqing.com.blogadmin.admin.blog.visit.service.IVisitService;
 import hzqing.com.hzqingcommon.util.HostUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

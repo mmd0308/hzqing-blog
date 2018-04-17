@@ -1,18 +1,11 @@
 <template>
     <div id="showIndexSidebar">
-        <el-card class="sidebar-box-card detail-card">
-            <el-input placeholder="请输入内容" v-model="queryAll">
-                <!-- <template slot="append">搜 索</template> -->
-                 <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-        </el-card>
         <el-card class="sidebar-box-card">
             <div slot="header" class="clearfix">
-                <span>文章分类</span>
+                <span>博主</span>
             </div>
             <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item show-index-detail-text">
-                <span>填坑系列 --- spring-boot</span>
-                <span style="float:right;">2篇</span>
+                <span>博主@的简介</span>
             </div>
         </el-card>
         <el-card class="sidebar-box-card">
@@ -20,57 +13,71 @@
                 <span>热门标签</span>
             </div>
             <div class="sidebar-text">
-                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >ff</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag v-for="o in 5" :key="o" class="sidebar-item-tag" size="medium" color="#F25E45">小型标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >Java</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
+                <wordcloud
+                :data="words"
+                nameKey="name"
+                valueKey="value">
+                </wordcloud>
+
             </div>
         </el-card>
         <el-card class="sidebar-box-card">
             <div slot="header" class="clearfix">
-                <span>置顶推荐</span>
+                <span>推荐文章</span>
             </div>
             <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item show-index-detail-text">
                 <span>填坑系列 --- 在SElinux启动情况下docker数据管理</span>
             </div>
-        </el-card>
-        <el-card class="sidebar-box-card">
-            <div slot="header" class="clearfix">
-                <span>加入组织</span>
-            </div>
-            <div class="sidebar-text sidebar-item show-index-detail-text">
-                <span>邮箱：mmd0308@126.com</span>
-            </div>
-        </el-card>
-        <el-card class="sidebar-box-card">
-            <div slot="header" class="clearfix">
-                <span>友情链接</span>
-            </div>
-            <div class="sidebar-text">
-                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >ff</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag v-for="o in 5" :key="o" class="sidebar-item-tag" size="medium" color="#F25E45">小型标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#F3A557" >Java</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-                <el-tag class="sidebar-item-tag" size="medium" color="#34AFD8" >中等标签</el-tag>
-            </div>
-        </el-card>        
+        </el-card>     
     </div>
 </template>
 
 <script>
+import wordcloud from 'vue-wordcloud'
 export default {
+  components: {
+    wordcloud
+  },
   data() {
     return {
-      queryAll: ''
+      queryAll: '',
+      words: [{
+          "name": "Cat",
+          "value": 26
+        },
+        {
+          "name": "暂时",
+          "value": 19
+        },
+        {
+          "name": "things",
+          "value": 18
+        },
+        {
+          "name": "look",
+          "value": 16
+        },
+        {
+          "name": "two",
+          "value": 15
+        },
+        {
+          "name": "fun",
+          "value": 9
+        },
+        {
+          "name": "know",
+          "value": 9
+        },
+        {
+          "name": "good",
+          "value": 9
+        },
+        {
+          "name": "play",
+          "value": 6
+        }
+      ]
     }
   }
 }
