@@ -23,6 +23,7 @@
     "vue": "2.5.10",
     "vue-cute-timeline": "^1.2.4",
     "vue-router": "3.0.1",
+    "vue-wordcloud": "^1.0.2",
     "vuex": "3.0.1"
   },
   "devDependencies": {

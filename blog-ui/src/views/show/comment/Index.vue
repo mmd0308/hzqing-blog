@@ -2,25 +2,21 @@
   <div class="comment">
         <div class="detail-comment-topic" >
             <div  class="detail-comment ">
-                <el-row>
-                    <el-col :xs="0" :sm="2" :md="2" :lg="1" :xl="1" style="text-align:center;">
-                        <div class="detail-comment-pic">
-                            <img src="static/img/touxiang.jpeg"/>
-                        </div>
-                    </el-col>
-                    <el-col :xs="24" :sm="22" :md="22" :lg="23" :xl="23">
-                            <el-input
-                                type="textarea"
-                                :autosize="{ minRows: 3, maxRows: 5}"
-                                placeholder="写下你的评论..."
-                                v-model="textarea3">
-                                </el-input>
-                        <div class="detail-comment-submit">
-                            <el-button type="success" style="float:right;padding:9px 23px;" round>提交</el-button>
-                            <el-button style="float:right;padding:9px 23px; margin-right:10px;" round>取消</el-button>
-                        </div>
-                    </el-col>
-                </el-row>
+                <div class="detail-comment-pic">
+                    <img src="static/img/touxiang.jpeg"/>
+                </div>
+                <div class="detail-comment-textarea">
+                    <el-input
+                        type="textarea"
+                        :autosize="{ minRows: 3, maxRows: 5}"
+                        placeholder="写下你的评论..."
+                        v-model="textarea3">
+                        </el-input>
+                </div>
+                <div class="detail-comment-submit">
+                    <el-button type="success" style="float:right;padding:9px 23px;" round>提交</el-button>
+                    <el-button style="float:right;padding:9px 23px; margin-right:10px;" round>取消</el-button>
+                </div>
             </div>
             <div>
                 <span>最新评论</span>
@@ -87,8 +83,28 @@
 </template>
 
 <script>
+import { page, getObj, putObj, delObj, addObj } from '@/api/admin/blogger/comments/index'
 export default {
-
+  data() {
+    return {
+      form: this.initObj()
+    }
+  },
+  methods: {
+    initObj() {
+      return {
+        id: '',
+        coCtime: new Date(),
+        coContent: null,
+        articleId: null,
+        coId: null,
+        userId: null
+      }
+    },
+    resetTemp() {
+      this.form = this.initObj() 
+    }
+  }
 }
 </script>
 
@@ -105,6 +121,12 @@ export default {
     .detail-comment-topic{
         padding-bottom: 10px;
         border-bottom: 1px solid #ebeef5;
+    }
+    .detail-comment-textarea{
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+        width: 94%;
     }
 
     .detail-card .el-card__body{
