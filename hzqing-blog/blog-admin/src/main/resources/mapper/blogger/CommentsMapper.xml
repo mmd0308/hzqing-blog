@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CommentsMapper" >
+    <resultMap id="commentsMap" type="comments">
+        <id column="id" property="id"/>
+        <result column="article_id" property="articleId"/>
+        <result column="co_id" property="coId"/>
+        <result column="user_id" property="userId"/>
+        <result column="co_content" property="coContent"/>
+        <result column="co_ctime" property="coCtime"/>
+        <result column="super_id" property="superId"/>
+        <result column="co_type" property="coType"/>
+    </resultMap>
+    <resultMap id="commentsMapVo" type="commentsvo">
+        <id column="id" property="id"/>
+        <result column="article_id" property="articleId"/>
+        <result column="co_id" property="coId"/>
+        <result column="user_id" property="userId"/>
+        <result column="co_content" property="coContent"/>
+        <result column="co_ctime" property="coCtime"/>
+        <result column="super_id" property="superId"/>
+        <result column="full_name" property="userFullName" />
+        <result column="co_type" property="coType"/>
+    </resultMap>
+
+    <sql id="table">
+        blogger_comments
+    </sql>
+    <sql id="field">
+        id,
+        article_id,
+        co_id,
+        user_id,
+        co_content,
+        co_ctime,
+        super_id,
+        co_type
+    </sql>
+    <sql id="fieldValue">
+        #{id},
+        #{articleId},
+        #{coId},
+        #{userId},
+        #{coContent},
+        #{coCtime},
+        #{superId},
+        #{coType}
+    </sql>
+    <insert id="save" parameterType="diary">
+        INSERT  INTO
+        <include refid="table"/>
+        (
+        <include refid="field"/>
+        )
+        VALUES
+        (
+        <choose>
+            <when test="id == null || id == ''">
+                (SELECT replace((SELECT  uuid()),"-","")),
+            </when>
+            <otherwise>
+                #{id},
+            </otherwise>
+        </choose>
+        #{articleId},
+        #{coId},
+        #{userId},
+        #{coContent},
+        #{coCtime},
+        #{superId},
+        #{coType}
+        )
+    </insert>
+    <select id="query" parameterType="comments" resultMap="commentsMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE  1 = 1
+        ORDER  BY co_ctime DESC
+    </select>
+    <select id="showPage" parameterType="commentsvo" resultMap="commentsMapVo">
+        SELECT
+            b.id,
+            b.user_id,
+            b.co_ctime,
+            b.article_Id,
+            b.co_content,
+            b.co_id,
+            b.super_id,
+            u.full_name
+        FROM blogger_comments b
+        LEFT JOIN sys_user u  ON b.user_id = u.id
+        WHERE 1 = 1
+        <if test="coId != null and coId != ''">
+            AND co_id = #{coId}
+        </if>
+        <if test="articleId != null and articleId != ''">
+            AND article_Id = #{articleId}
+        </if>
+        <if test="coType != null and coType != ''">
+            AND co_type = #{coType}
+        </if>
+        <if test="superId != null and superId != ''" >
+            AND super_id = #{superId}
+            AND co_id != '-1'
+        </if>
+        ORDER BY b.co_ctime DESC
+    </select>
+
+    <select id="selectById" parameterType="String" resultMap="commentsMap">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        WHERE id = #{0}
+    </select>
+    <update id="update" parameterType="comments" >
+        UPDATE
+        <include refid="table"/>
+        SET
+        id = #{id}
+        <if test="coContent != null and coContent !=''">
+            , co_content = #{coContent}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+    <delete id="deletedById" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{0}
+    </delete>
+</mapper>

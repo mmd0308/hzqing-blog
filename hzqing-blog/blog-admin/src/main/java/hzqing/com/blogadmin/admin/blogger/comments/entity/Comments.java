@@ -14,6 +14,24 @@ public class Comments {
     private String userId;
     private String coContent;
     private Date coCtime;
+    private String superId;
+    private String coType;
+
+    public String getCoType() {
+        return coType;
+    }
+
+    public void setCoType(String coType) {
+        this.coType = coType;
+    }
+
+    public String getSuperId() {
+        return superId;
+    }
+
+    public void setSuperId(String superId) {
+        this.superId = superId;
+    }
 
     public String getId() {
         return id;

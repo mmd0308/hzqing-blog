@@ -10,7 +10,7 @@
                     本文作者：南昌seo　最后编辑：2018-03-29 15:07:37　分类：网站运营   标签：hadoop分布式 /分布式
                 </div>
             </div>
-            <div class="sidebar-text sidebar-item show-index-detail-text">
+            <div class="sidebar-text sidebar-item  ">
                 <mavon-editor 
                 v-model="form.arContent" 
                 style="height: 93%"
@@ -28,15 +28,19 @@
                 </mavon-editor>
             </div>
         </el-card>
+        <comments-index :articleId="form.id">
+        </comments-index>
     </div>
 </template>
 <script>
   import { getObj } from '@/api/admin/blog/article/index'
   import { parseTime } from '@/utils/index'
   import ShowHeader from '@/components/ShowHeader/index'
+  import CommentsIndex from '@/views/show/comment/Index'
 export default {
   components: {
-    ShowHeader
+    ShowHeader,
+    CommentsIndex
   },
   filters: {
     formatDate(time) {

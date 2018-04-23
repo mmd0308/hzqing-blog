@@ -4,7 +4,7 @@
             <div slot="header" class="clearfix">
                 <span>博主</span>
             </div>
-            <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item show-index-detail-text">
+            <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item">
                 <span>博主@的简介</span>
             </div>
         </el-card>
@@ -25,7 +25,7 @@
             <div slot="header" class="clearfix">
                 <span>推荐文章</span>
             </div>
-            <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item show-index-detail-text">
+            <div v-for="o in 4" :key="o" class="sidebar-text sidebar-item">
                 <span>填坑系列 --- 在SElinux启动情况下docker数据管理</span>
             </div>
         </el-card>     

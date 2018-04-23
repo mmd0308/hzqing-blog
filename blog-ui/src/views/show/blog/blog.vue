@@ -13,11 +13,11 @@
                         <div class="appMain-card-header"  @click="toDetail(item.id)">
                             <h3>{{ item.arTitle }}</h3>
                         </div>
-                        <div class="show-index-blog-abstract show-index-detail-text">
+                        <div class="show-index-blog-abstract">
                             {{ item.arDesc }}
                         </div>
                         <div style="height:20px;">
-                            <div class="see_time_text">
+                            <div class="see_time_text see-font">
                                 <span>
                                     <svg-icon icon-class="show-blog-user"></svg-icon> {{ item.fullName }}
                                 </span>

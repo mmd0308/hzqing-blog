@@ -8,6 +8,14 @@ export function page(query) {
   })
 }
 
+export function showPage(query) {
+  return request({
+    url: '/admin/blogger/comments/show/pageTree',
+    method: 'get',
+    params: query
+  })
+}
+
 export function showAll(query) {
   return request({
     url: '/admin/blogger/comments/show/all',

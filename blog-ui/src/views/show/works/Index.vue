@@ -12,7 +12,7 @@
                             <h2>
                                 衡钊清个人博客（hzqing-blog）个人博客
                             </h2>
-                            <div class="item-other fl"> 
+                            <div class="see-font fl"> 
                                 <span>
                                     2018-03-20
                                 </span>
@@ -68,10 +68,6 @@ export default {
                     h2{
                         font-weight: normal;
                         margin: 0px 0px 12px;
-                    }
-                    .item-other{
-                        color: #787878;
-                        font-size: 13px;
                     }
                 }
             }
