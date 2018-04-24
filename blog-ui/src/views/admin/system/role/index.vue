@@ -82,12 +82,12 @@
                     <el-row>
                     <el-col :span="12">
                         <el-form-item label="角色名称" prop="roleName" >
-                        <el-input v-model="form.roleName" placeholder="请输入姓名" class="input-selects-width"></el-input>
+                        <el-input v-model="form.roleName" placeholder="请输入姓名" ></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="角色编码" prop="roleCode">
-                        <el-input  v-model="form.roleCode" placeholder="请输入账户" class="input-selects-width"></el-input>
+                        <el-input  v-model="form.roleCode" placeholder="请输入账户"></el-input>
                         </el-form-item>
                     </el-col>
                     </el-row>
@@ -99,7 +99,7 @@
                       </el-col>
                       <el-col :span="12">
                         <el-form-item label="备注" prop="note">
-                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" class="input-selects-width" placeholder="请输入备注"
+                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入备注"
                                     v-model="form.note"></el-input>
                         </el-form-item>
                     </el-col>

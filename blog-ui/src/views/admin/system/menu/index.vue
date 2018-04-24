@@ -1,7 +1,7 @@
 <template>
     <div id="menu">
       <el-row  v-loading.body="listLoading">
-        <el-col :span="6">
+        <el-col :span="5">
             <el-input placeholder="输入关键字进行过滤" v-model="filterText">
             </el-input>
             <el-tree class="filter-tree" style="margin-top:10px;"  :data="menuTreeDate" 
@@ -10,7 +10,7 @@
              @node-click="clickTree" @node-expand="expandTree">
             </el-tree>
         </el-col>
-        <el-col :span="18">
+        <el-col :span="19">
              <div class="right-layout-from">
                 <div v-if="this.state == 'see'" class="top-button">
                     <el-button-group>
@@ -72,7 +72,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="是否可用" prop="enabled">
-                                    <el-switch on-text="可用" off-text="禁用" on-value='1'  off-value='0' v-model="form.enabled"></el-switch>
+                                    <el-switch active-value = 1  inactive-value = 0 v-model="form.enabled"></el-switch>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
@@ -94,6 +94,12 @@
                         </el-form-item>
                         </el-form>
                 </el-card>
+                <el-card>
+                  <div slot="header" class="clearfix">
+                    <span>按钮管理</span>
+                  </div>
+                  <button-view :menuId="form.id" ref="button"></button-view>
+                </el-card>
              </div>
         </el-col>
       </el-row>
@@ -102,7 +108,11 @@
 
 <script>
   import { tree, addObj, getNextLevelCode, putObj, delObj } from '@/api/admin/system/menu/index'
+  import ButtonView from '@/views/admin/system/button/index'
   export default {
+    components: {
+      ButtonView
+    },
     watch: {
       filterText(val) {
         this.$refs.menuTree.filter(val)
@@ -150,11 +160,13 @@
           this.menuTreeDate = response.data
           this.form = response.data[0]
           this.state = 'see'
+          this.$refs.button.getList()
         })
       },
       clickTree(date) {
         this.form = date
         this.state = 'see'
+        this.$refs.button.getList()
       },
       expandTree(date) {
         console.log('expand')

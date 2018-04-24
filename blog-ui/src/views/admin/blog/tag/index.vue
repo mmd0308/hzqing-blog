@@ -89,13 +89,13 @@
             <el-dialog  :visible.sync="dialogFormVisible" :before-close="handleClose" width="40%" :title="title">
                 <el-form :model="form" :inline="true" :rules="rules" ref="form" label-width="90px">
                     <el-form-item label="标签名称" prop="tagName" >
-                        <el-input v-model="form.tagName" placeholder="请输入姓名" class="input-selects-width"></el-input>
+                        <el-input v-model="form.tagName" placeholder="请输入姓名" ></el-input>
                     </el-form-item>
                     <el-form-item label="是否启用" prop="enabled">
                         <el-switch active-value = 1  inactive-value = 0 v-model="form.enabled"></el-switch>
                     </el-form-item>
                     <el-form-item  label="排序" prop="sort">
-                        <el-input v-model="form.sort" class="input-selects-width"></el-input>
+                        <el-input v-model="form.sort"></el-input>
                     </el-form-item>
                     <el-form-item  label="类别" prop="tagType">
                          <el-select v-model="form.tagType" placeholder="请选择类型">
@@ -108,7 +108,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="备注" prop="note">
-                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" class="input-selects-width" placeholder="请输入备注"
+                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入备注"
                                 v-model="form.note"></el-input>
                     </el-form-item>
                 </el-form>
