@@ -149,7 +149,7 @@
 
     <select id="getMenusByRids" parameterType="list" resultMap="menuMap">
         SELECT  m.* FROM sys_menu m
-        where m.id IN (SELECT  resource_id FROM  rl_role_resource where role_id in (
+        where m.id IN (SELECT  resource_id FROM  rl_role_menu where role_id in (
             <foreach collection="list" item="item" separator="," >
                #{item}
             </foreach>
@@ -157,7 +157,7 @@
 
     </select>
     <select id="getMenusByUid" parameterType="string" resultMap="menuMap">
-    SELECT m.* FROM  sys_menu m LEFT JOIN  rl_role_resource r ON  m.id = r.resource_id
+    SELECT m.* FROM  sys_menu m LEFT JOIN  rl_role_menu r ON  m.id = r.resource_id
     LEFT JOIN rl_user_role u ON  r.role_id = u.role_id
     where u.user_id = #{0} AND  m.menu_type = 'menu'
     </select>

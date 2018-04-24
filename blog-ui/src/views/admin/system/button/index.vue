@@ -89,12 +89,12 @@
 
 <script>
   import { page, getObj, addObj, putObj, delObj  } from '@/api/admin/system/button/index'
-  import roleMenu from '@/views/admin/system/role/roleMenu'
+  // import roleMenu from '@/views/admin/system/role/roleMenu'
   export default {
     props:[ 'menuId'],
-    components: {
-      roleMenu: roleMenu
-    },
+    // components: {
+    //   roleMenu: roleMenu
+    // },
     data() {
       return {
         list: null,
@@ -142,8 +142,11 @@
         this.listQuery.name = this.query
         this.getList()
       },
-      getList() {
+      getList(id) {
         this.listQuery.menuId = this.menuId
+        if (id != undefined && id != null) {
+          this.listQuery.menuId = id
+        }
         page(this.listQuery).then(response => {
           this.list = response.data.list
           this.total = response.data.total
@@ -225,12 +228,6 @@
             return false
           }
         })
-      },
-      menuDialogOpen() {
-        this.$refs.roleMenuCom.getTree()
-      },
-      roleMenuCancle() {
-        this.dialogMenuVisible = false
       },
       handleSizeChange(val) {
       },

@@ -160,13 +160,13 @@
           this.menuTreeDate = response.data
           this.form = response.data[0]
           this.state = 'see'
-          this.$refs.button.getList()
+          this.$refs.button.getList(this.form.id)
         })
       },
       clickTree(date) {
         this.form = date
         this.state = 'see'
-        this.$refs.button.getList()
+        this.$refs.button.getList(date.id)
       },
       expandTree(date) {
         console.log('expand')

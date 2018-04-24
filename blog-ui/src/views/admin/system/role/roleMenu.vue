@@ -1,5 +1,6 @@
 <template>
     <div id="roleMenu" v-loading="menuTreeLoading">
+        <el-card>
         <el-tree
             :data="menuTree"
             ref="roleMenuTree"
@@ -8,6 +9,10 @@
             :default-expand-all="true"
             :props="defaultProps">
             </el-tree>
+        </el-card>
+        <el-card>
+          按钮
+        </el-card>
         <div slot="footer" class="dialog-footer">
             <el-button @click="cancel()">取 消</el-button>
             <el-button type="primary" @click="addRoleMenu()">确 定</el-button>
