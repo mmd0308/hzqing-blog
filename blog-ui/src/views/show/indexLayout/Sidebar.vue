@@ -10,11 +10,14 @@
         </el-card>
         <el-card class="sidebar-box-card">
             <div slot="header" class="clearfix">
-                <span>热门标签</span>
+                <span>热门标签1</span>
             </div>
             <div class="sidebar-text">
                 <wordcloud
+                fontScale="log"
                 :data="words"
+                wordPadding="0"
+                rotate="rotate"
                 nameKey="name"
                 valueKey="value">
                 </wordcloud>
@@ -41,24 +44,29 @@ export default {
   data() {
     return {
       queryAll: '',
+      rotate:{
+          from: -60,
+          to: 60,
+          numOfOrientation: 10 
+      },
       words: [{
           "name": "Cat",
           "value": 26
         },
         {
-          "name": "暂时",
+          "name": "fish",
           "value": 19
         },
         {
-          "name": "things",
+          "name": "测试",
           "value": 18
         },
         {
-          "name": "look",
+          "name": "Java",
           "value": 16
         },
         {
-          "name": "two",
+          "name": "错误",
           "value": 15
         },
         {
@@ -66,7 +74,7 @@ export default {
           "value": 9
         },
         {
-          "name": "know",
+          "name": "Hadoop",
           "value": 9
         },
         {

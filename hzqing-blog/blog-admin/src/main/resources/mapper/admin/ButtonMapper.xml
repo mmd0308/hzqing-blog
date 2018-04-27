@@ -47,12 +47,12 @@
         #{enabled}
         )
     </insert>
-    <select id="getButtonByMenuId" parameterType="string" resultMap="buttonMap">
+    <select id="getButtonByMenuIdOrRoleId" parameterType="buttonvo" resultMap="buttonMap">
         SELECT
         <include refid="field"/>
         FROM
         <include refid="table"/>
-        WHERE menu_id = #{0}
+        where menu_id = #{menuId}
     </select>
     <select id="query" parameterType="button" resultMap="buttonMap">
         SELECT

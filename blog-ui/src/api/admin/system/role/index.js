@@ -57,17 +57,17 @@ export function getRoleByUserId(id) {
   })
 }
 
-export function addRoleMenu(roleId, menu) {
+export function addRoleRes(roleId, menu) {
   return request({
-    url: '/admin/role/addRoleMenu/' + roleId,
+    url: '/admin/role/addRoleRes/' + roleId,
     data: menu,
     method: 'post'
   })
 }
 
-export function getMenuIdByRoleId(roleId) {
+export function getResIdByRoleId(roleId) {
   return request({
-    url: '/admin/role/getMenuIdByRoleId/' + roleId,
+    url: '/admin/role/getResIdByRoleId/' + roleId,
     method: 'get'
   })
 }

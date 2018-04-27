@@ -60,7 +60,7 @@
                             </div>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="write">写文章</el-dropdown-item>
-                                <el-dropdown-item divided>我的主页</el-dropdown-item>
+                                <el-dropdown-item command="set">设置</el-dropdown-item>
                                 <el-dropdown-item command="admin">平台管理</el-dropdown-item>
                                 <el-dropdown-item divided command="loyout">退出</el-dropdown-item>
                             </el-dropdown-menu>
@@ -114,6 +114,8 @@ export default {
         this.$router.push({ path: '/admin' })
       } else if (command === 'loyout') {
         this.logout()
+      } else if (command === 'set') {
+        this.$router.push({ path: '/setting' })
       }
     },
     mobileHandleCommand(command) { // mobile

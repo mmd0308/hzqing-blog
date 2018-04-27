@@ -46,7 +46,7 @@
                             <svg-icon icon-class="comment-star"></svg-icon>
                             1人赞
                         </span>
-                        <span class="svg-container svg-comment" @click="toReply(item.id, null, null)">
+                        <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1"  @click="toReply(item.id, null, null)">
                             <svg-icon icon-class="user-reply"></svg-icon>
                               回复
                         </span>
@@ -69,7 +69,7 @@
                                 <span>
                                     {{ it.coCtime | formatDate}}
                                 </span>
-                                <span class="svg-container svg-comment" @click="toReply(item.id, it.userFullName, it.id)">
+                                <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1" @click="toReply(item.id, it.userFullName, it.id)">
                                     <svg-icon icon-class="user-reply"></svg-icon>
                                     回复
                                 </span>
@@ -104,7 +104,13 @@
 <script>
 import { showPage, getObj, putObj, delObj, addObj } from '@/api/admin/blogger/comments/index'
 import { parseTime } from '@/utils/index'
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters([
+      'resCode'
+    ])
+  },
   props: {
     articleId: {
       type: String,

@@ -5,7 +5,7 @@ logging:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://192.168.1.35:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/blog_admin?useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
     # 使用druid数据源
@@ -41,5 +41,5 @@ pagehelper:
   params: count=countSql
 blog:
   images:
-    path: ${CFG_BLOG_IMG_PATH:/home/hzq/hblog/}
+    path: ${CFG_BLOG_IMG_PATH:/Users/hzq/Pictures/blog/}
 debug: true

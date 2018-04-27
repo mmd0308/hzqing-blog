@@ -16,10 +16,11 @@ export function addObj(obj) {
   })
 }
 
-export function getButtonByMenuId(id) {
+export function getButtonByMenuIdOrRoleId(id, obj) {
   return request({
-    url: '/admin/button/getButtonByMenuId/' + id,
-    method: 'get'
+    url: '/admin/button/getButtonByMenuIdOrRoleId/' + id,
+    method: 'get',
+    params:  obj
   })
 }
 

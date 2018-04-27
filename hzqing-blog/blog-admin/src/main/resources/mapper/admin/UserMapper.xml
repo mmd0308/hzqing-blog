@@ -129,7 +129,19 @@
           username = #{0}
     </select>
 
-    <select id="getRoleCodeByUid" resultType="string" parameterType="string">
-        SELECT DISTINCT s.role_code FROM  sys_role s LEFT  JOIN rl_user_role r ON  s.id = r.role_id  WHERE  user_id = #{0}
+    <select id="getRoleByUid" resultType="role" parameterType="string">
+        SELECT DISTINCT s.* FROM  sys_role s LEFT  JOIN rl_user_role r ON  s.id = r.role_id  WHERE  user_id = #{0}
+    </select>
+    <select id="getResCodeByRoleIds" resultType="string" parameterType="list">
+        SELECT b.code
+        FROM sys_button b
+          LEFT JOIN rl_role_resource r ON b.id = r.resource_id
+        WHERE r.resource_type = 'button'
+              AND b.enabled = '1'
+              AND find_in_set(r.role_id ,
+              <foreach collection="list" item="item" separator="," >
+                  #{item}
+              </foreach>
+              )
     </select>
 </mapper>

@@ -9,7 +9,7 @@ import java.util.HashMap;
 public interface IUserService extends IBaseService<User> {
     String login(String username, String password);
 
-    UserVo getUserinfo(String token);
+    UserVo getUserinfo(String userId);
 
     void saveUserRole(HashMap<String, Object> map);
 

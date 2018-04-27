@@ -3,6 +3,7 @@ package hzqing.com.blogadmin.admin.system.user.controller;
 import hzqing.com.blogadmin.admin.system.user.service.IUserService;
 import hzqing.com.blogadmin.base.controller.BaseController;
 import hzqing.com.blogadmin.admin.system.user.entity.User;
+import hzqing.com.blogadmin.constant.Constant;
 import hzqing.com.blogadmin.vo.sys.UserVo;
 import hzqing.com.blogadmin.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,14 @@ public class UserController extends BaseController<User,IUserService> {
     }
 
     /**
-     * 获取用户信息
-     * @param token
+     * 获取用户的信心，根据用户id
+     * @param request
      * @return
      */
     @GetMapping("/getUserinfo")
-    public ResponseMessage<UserVo> getUserinfo(String token){
-        UserVo user = baseService.getUserinfo(token);
+    public ResponseMessage<UserVo> getUserinfo(HttpServletRequest request){
+        String userId = (String) request.getAttribute(Constant.USER_ID);
+        UserVo user = baseService.getUserinfo(userId);
         return  new ResponseMessage<UserVo>().success(user);
     }
     /**

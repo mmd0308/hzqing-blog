@@ -114,7 +114,7 @@
 
                 <el-dialog  
                 :visible.sync="dialogMenuVisible" 
-                width='15%'
+                width='50%'
                 title="选择资源"
                 @open="menuDialogOpen"
                 >

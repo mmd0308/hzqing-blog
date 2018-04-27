@@ -57,6 +57,10 @@ export const constantRouterMap = [
       {
         path: 'blog',
         component: () => import('@/views/show/blog/index')
+      },
+      {
+        path: 'setting',
+        component: () => import('@/views/show/set/index')
       }
     ]
   },

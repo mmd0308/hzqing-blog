@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.admin.system.role.service.impl;
 
+import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
@@ -32,27 +33,44 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
 
     @Transactional
     @Override
-    public int addRoleMenu(HashMap<String, Object> resouce) {
+    public int addRoleRes(HashMap<String, Object> resouce) {
         String roleId = (String) resouce.get("roleId");
         String menuId = (String) resouce.get("menuId");
+        String buttons = (String) resouce.get("buttons");
+
+        return addBatchRoleResource(menuId,roleId,"menu") + addBatchRoleResource(buttons,roleId,"button");
+    }
+
+    @Override
+    public List<String> getResIdByRoleId(String roleId) {
+        return (List<String>) baseDao.findForList(mapper+".getResIdByRoleId",roleId);
+    }
+
+
+    /**
+     * 根据角色id，资源类型，更新资源
+     * @param resource
+     * @param roleId
+     * @param resType
+     * @return
+     */
+    private int addBatchRoleResource( String resource,String roleId, String resType) {
+        //首先删除角色绑定的资源和类型
+        HashMap<String,String> params = new HashMap<>();
+        params.put("roleId",roleId);
+        params.put("resourceType",resType);
+        baseDao.delete(mapper+".deleteRoleMenuButtonByRid",params);
+
+        String[] split = resource.split(",");
         List<Map<String,String>> lists = new ArrayList<>();
-        String[] split = menuId.split(",");
         for (String s : split) {
             Map<String,String> m = new HashMap();
             m.put("roleId",roleId);
             m.put("resId",s);
-            m.put("resType","menu");
+            m.put("resType",resType);
             lists.add(m);
         }
-        //首先删除角色绑定的菜单
-        baseDao.delete(mapper+".deleteRoleMenuByRid",roleId);
-
-        return (int) baseDao.batchSave(mapper+".addBatchRoleMenu",lists);
-    }
-
-    @Override
-    public List<String> getMenuIdByRoleId(String roleId) {
-        return (List<String>) baseDao.findForList(mapper+".getMenuIdByRoleId",roleId);
+        return (int) baseDao.batchSave(mapper+".addBatchRoleMenuButton",lists);
     }
 }
 

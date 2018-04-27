@@ -88,10 +88,20 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-form-item label="机构说明" prop="note">
-                            <el-input type="textarea" v-model="form.note" v-if="this.state == 'see'" disabled="disabled"></el-input>
-                            <el-input type="textarea" v-model="form.note" v-else></el-input>
-                        </el-form-item>
+                        <el-row>
+                          <el-col :span="8">
+                            <el-form-item label="排序" prop="sort">
+                              <el-input v-if="this.state == 'see'" v-model="form.sort" disabled="disabled"></el-input>
+                              <el-input v-else v-model="form.sort" ></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :span="16">
+                            <el-form-item label="机构说明" prop="note">
+                              <el-input type="textarea" v-model="form.note" v-if="this.state == 'see'" disabled="disabled"></el-input>
+                              <el-input type="textarea" v-model="form.note" v-else></el-input>
+                            </el-form-item>
+                          </el-col>
+                        </el-row>
                         </el-form>
                 </el-card>
                 <el-card>
@@ -148,7 +158,8 @@
           icon: '',
           menuType: '',
           enabled: '0',
-          note: ''
+          note: '',
+          sort: null
         }
       },
       filterNode(value, data) {

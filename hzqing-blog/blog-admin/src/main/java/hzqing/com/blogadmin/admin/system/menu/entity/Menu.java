@@ -17,9 +17,18 @@ public class Menu {
     private String menuType;
     private String note;
     private String enabled;
+    private int sort;
 
     private List<Menu> menus;
     private String parentName;
+
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
 
     public String getParentName() {
         return parentName;
@@ -124,6 +133,7 @@ public class Menu {
     public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
+
 
     @Override
     public String toString() {

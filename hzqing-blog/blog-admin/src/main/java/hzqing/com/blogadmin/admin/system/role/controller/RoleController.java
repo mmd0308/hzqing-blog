@@ -38,14 +38,20 @@ public class RoleController extends BaseController<Role,IRoleService> {
      * @param resouce
      * @return
      */
-    @PostMapping("/addRoleMenu/{roleId}")
+    @PostMapping("/addRoleRes/{roleId}")
     public ResponseMessage<String> addRoleMenu(@RequestBody HashMap<String,Object> resouce){
-        baseService.addRoleMenu(resouce);
+        baseService.addRoleRes(resouce);
         return  new ResponseMessage<>().success("success");
     }
-    @GetMapping("/getMenuIdByRoleId/{roleId}")
-    public ResponseMessage<List<String>> getMenuIdByRoleId(@PathVariable String roleId){
-        List<String> mIds = baseService.getMenuIdByRoleId(roleId);
+
+    /**
+     * 根据角色获取所有资源id
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/getResIdByRoleId/{roleId}")
+    public ResponseMessage<List<String>> getResIdByRoleId(@PathVariable String roleId){
+        List<String> mIds = baseService.getResIdByRoleId(roleId);
         return  new ResponseMessage<>().success(mIds);
     }
 }

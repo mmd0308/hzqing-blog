@@ -9,6 +9,9 @@
         <el-carousel-item>
             <img src="static/img/banner_3.jpg"/>
         </el-carousel-item>
+        <el-carousel-item>
+            <img src="static/img/banner_4.jpg"/>
+        </el-carousel-item>
     </el-carousel>
 </template>
 

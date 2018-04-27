@@ -11,7 +11,8 @@ public interface IRoleService extends IBaseService<Role> {
 
     List<Role> getRoleByUserId(String id);
 
-    int addRoleMenu(HashMap<String, Object> resouce);
+    int addRoleRes(HashMap<String, Object> resouce);
 
-    List<String> getMenuIdByRoleId(String roleId);
+    List<String> getResIdByRoleId(String roleId);
+
 }

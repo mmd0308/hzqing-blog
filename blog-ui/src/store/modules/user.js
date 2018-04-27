@@ -6,7 +6,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    resCode: []
   },
 
   mutations: {
@@ -21,6 +22,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_RESCODE: (state, code) => {
+      state.resCode = code
     }
   },
 
@@ -48,6 +52,7 @@ const user = {
           const data = response.data
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
+          commit('SET_RESCODE',data.resCode)
           // commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {

@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.admin.system.user.service.impl;
 
+import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.user.service.IUserService;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.constant.Constant;
@@ -49,23 +50,39 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
 
     /**
      * 根据token获取用户信息
-     * @param token
+     * @param userId
      * @return
      */
     @Override
-    public UserVo getUserinfo(String token) {
-       /* String username = JwtTokenUtil.getUsernameFromToken(token,secret);
-        if (username == null)
-            return null;*/
-        User user = this.getUserByUName("admin");
+    public UserVo getUserinfo(String userId) {
+        User user = this.getById(userId);
         UserVo uservo = new UserVo();
         BeanUtils.copyProperties(user,uservo);
+        List<Role> rols = this.getRoleByUid(uservo.getId());
         //设置用户的角色
-        uservo.setRoles(this.getRoleCodeByUid(uservo.getId()));
-        //设置菜单 根据角色id获取菜单
-        List<Menu> menus = menuService.getMenusByUid(uservo.getId());
-        uservo.setMenus(menus);
+        uservo.setRoles(rols);
+        List<String> roleIds = new ArrayList<>();
+        rols.forEach(role -> {
+            roleIds.add(role.getId());
+        });
+
+        //TODO 设置菜单 根据角色id获取菜单
+        //List<Menu> menus = menuService.getMenusByUid(uservo.getId());
+        //uservo.setMenus(menus);
+
+        // 设置所有的按钮资源编码根据角色id
+        uservo.setResCode(this.getResCodeByRoleIds(roleIds));
+
         return uservo;
+    }
+
+    /**
+     * 根据角色id，获取按钮资源编码
+     * @param ids
+     * @return
+     */
+    private List<String> getResCodeByRoleIds(List<String> ids){
+        return (List<String>) baseDao.findForList(mapper+".getResCodeByRoleIds",ids);
     }
 
     /**
@@ -73,8 +90,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
      * @param id
      * @return
      */
-    private List<String> getRoleCodeByUid(String id){
-        return (List<String>) baseDao.findForList(mapper+".getRoleCodeByUid",id);
+    private List<Role> getRoleByUid(String id){
+        return (List<Role>) baseDao.findForList(mapper+".getRoleByUid",id);
     }
 
     /**
