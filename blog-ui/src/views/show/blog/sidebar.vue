@@ -45,105 +45,17 @@ export default {
   data() {
     return {
       queryAll: '',
-      rotate:{
-          from: -60,
-          to: 90,
-          numOfOrientation: 10 
+      rotate: {
+        from: -60,
+        to: 90,
+        numOfOrientation: 10 
       },
-      words: [{
-          "name": "Cat",
-          "value": 26
-        },
-        {
-          "name": "暂时",
-          "value": 19
-        },
-        {
-          "name": "things",
-          "value": 18
-        },
-        {
-          "name": "look",
-          "value": 16
-        },
-        {
-          "name": "two",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "know",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        },
-        {
-          "name": "fish",
-          "value": 19
-        },
-        {
-          "name": "测试",
-          "value": 18
-        },
-        {
-          "name": "Java",
-          "value": 16
-        },
-        {
-          "name": "错误",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "Hadoop",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        },
-        {
-          "name": "hzqing-a",
-          "value": 6
-        },
-        {
-          "name": "hzqing-b",
-          "value": 6
-        },
-        {
-          "name": "hzqing-c",
-          "value": 6
-        },
-        {
-          "name": "hzqing-d",
-          "value": 6
-        },
-        {
-          "name": "hzqing-f",
-          "value": 6
-        }
+      words: [
       ]
     }
   }
 }
 </script>
-
 <style>
 #showIndexSidebar{
     margin-left: 15px;

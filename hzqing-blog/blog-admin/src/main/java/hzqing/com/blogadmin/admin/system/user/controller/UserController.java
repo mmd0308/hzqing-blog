@@ -15,6 +15,18 @@ import java.util.HashMap;
 @RequestMapping("/admin/user")
 public class UserController extends BaseController<User,IUserService> {
 
+    @PostMapping("/show/register")
+    public ResponseMessage<Integer> register(@RequestBody User t){
+        return  new ResponseMessage<Integer>().success(baseService.save(t));
+    }
+
+    @GetMapping("/getUserById")
+    public ResponseMessage<User> get(HttpServletRequest request){
+        String id = (String) request.getAttribute(Constant.USER_ID);
+        User user = baseService.getById(id);
+        return new ResponseMessage<User>().success(user);
+    }
+
     /**
      * 登陆
      * @param username
@@ -31,6 +43,8 @@ public class UserController extends BaseController<User,IUserService> {
             return message;
         }
     }
+
+
 
     /**
      * 获取用户的信心，根据用户id

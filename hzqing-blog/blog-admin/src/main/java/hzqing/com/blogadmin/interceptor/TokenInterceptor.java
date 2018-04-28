@@ -28,6 +28,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         long res = JwtTokenUtil.checkJwtExpired(tokens,Constant.JWT_SECRET);
         // 校验token是否正确
         if (res == -1) { // jwt过期,生成新的jwt
+            response.sendError(500); //进行测试 代表token存在，但是已经过期
             return false;
         }
         if (res <= 600){ // 校验token过期时间是否接近临界值 默认是10分钟
@@ -39,12 +40,12 @@ public class TokenInterceptor implements HandlerInterceptor {
         String[] split = iss.split(",");
         if (split.length == 3 ){
             request.setAttribute(Constant.USER_ID,split[0]); //存储用户id到request请求中
-            String username = split[1];
             String password = split[2];
-            User user = userService.getUserByUName(username);
+            User user = userService.getById(split[0]);
             if (null != user && user.getPassword().equals(password)){ //用户名和密码正确，校验通过
                 return true;
             }
+
         }
         return false;
     }

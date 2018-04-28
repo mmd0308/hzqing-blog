@@ -46,6 +46,11 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
         return (List<String>) baseDao.findForList(mapper+".getResIdByRoleId",roleId);
     }
 
+    @Override
+    public List<Role> getDefautsRole() {
+        return (List<Role>) baseDao.findForList(mapper+".getRoleByType", "G");
+    }
+
 
     /**
      * 根据角色id，资源类型，更新资源

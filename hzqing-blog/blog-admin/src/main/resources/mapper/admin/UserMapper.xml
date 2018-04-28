@@ -8,6 +8,9 @@
         <result column="note" property="note"/>
         <result column="email" property="email"/>
         <result column="full_name" property="fullName" />
+        <result column="avatar" property="avatar" />
+        <result column="phone" property="phone" />
+        <result column="nick_name" property="nickName" />
     </resultMap>
     <sql id="table">
         sys_user
@@ -18,7 +21,10 @@
         password,
         note,
         email,
-        full_name
+        full_name,
+        avatar,
+        phone,
+        nick_name
     </sql>
     <sql id="fieldValue">
         #{id},
@@ -26,7 +32,10 @@
         #{password},
         #{note},
         #{email},
-        #{fullName}
+        #{fullName},
+        #{avatar},
+        #{phone},
+        #{nickName}
     </sql>
     <insert id="save" parameterType="user">
         INSERT  INTO
@@ -48,7 +57,10 @@
         #{password},
         #{note},
         #{email},
-        #{fullName}
+        #{fullName},
+        #{avatar},
+        #{phone},
+        #{nickName}
         )
     </insert>
     <select id="query" parameterType="user" resultMap="userMap">
@@ -64,6 +76,19 @@
             </if>
         </if>
 
+    </select>
+    <select id="getLoginUser" parameterType="user" resultMap="userMap" >
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where 1 = 1
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone = #{phone}
+        </if>
     </select>
     <select id="selectById" parameterType="String" resultMap="userMap">
         SELECT
@@ -86,8 +111,17 @@
         <if test="note != null and note !=''">
             , note = #{note}
         </if>
-        <if test="fullName != null and fullName ！= ''">
+        <if test="fullName != null and fullName != ''">
             , full_name = #{fullName}
+        </if>
+        <if test="avatar != null and avatar != ''">
+            , avatar = #{avatar}
+        </if>
+        <if test="phone != null and phone != ''">
+            , phone = #{phone}
+        </if>
+        <if test="nickName != null and nickName != '' ">
+            , nick_name = #{nickName}
         </if>
         WHERE
         id = #{id}
@@ -129,19 +163,12 @@
           username = #{0}
     </select>
 
-    <select id="getRoleByUid" resultType="role" parameterType="string">
-        SELECT DISTINCT s.* FROM  sys_role s LEFT  JOIN rl_user_role r ON  s.id = r.role_id  WHERE  user_id = #{0}
-    </select>
-    <select id="getResCodeByRoleIds" resultType="string" parameterType="list">
+    <select id="getResCodeByRoleIds" resultType="string" parameterType="string">
         SELECT b.code
         FROM sys_button b
           LEFT JOIN rl_role_resource r ON b.id = r.resource_id
         WHERE r.resource_type = 'button'
               AND b.enabled = '1'
-              AND find_in_set(r.role_id ,
-              <foreach collection="list" item="item" separator="," >
-                  #{item}
-              </foreach>
-              )
+              AND find_in_set(r.role_id ,#{ids})
     </select>
 </mapper>

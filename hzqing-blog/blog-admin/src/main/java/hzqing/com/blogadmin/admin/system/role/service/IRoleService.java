@@ -15,4 +15,6 @@ public interface IRoleService extends IBaseService<Role> {
 
     List<String> getResIdByRoleId(String roleId);
 
+    List<Role> getDefautsRole();
+
 }

@@ -125,6 +125,6 @@ public class AESUtil {
 
     public static void main(String[] args) {
 
-        System.out.println(AESDncode("hzqing.com", "wAyW1/iO38Q0L0l2VoV8kejut8G/OFZ6DliRyTdgfXSsw93LGSwKAAWJYSAfdNRUd0BYyOKCN+jd\\noO4dYujHLkcU84f7t/5NXvSCa5RQomg="));
+        System.out.println(AESEncode("hzqing.com", "这是一个测试账号"));
     }
 }

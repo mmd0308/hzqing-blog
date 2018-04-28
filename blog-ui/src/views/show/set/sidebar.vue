@@ -7,7 +7,7 @@
         <li @click="clickSiberItem('person')" :class="{clickSiber:clickSidber === 'person'}">
             <span>个人资料</span>
         </li>
-        <li>
+        <li @click="clickSiberItem('weibo')" :class="{clickSiber:clickSidber === 'weibo'}">
             <span>微博认证</span>
         </li>
     </ul>
@@ -16,9 +16,15 @@
 
 <script>
 export default {
+  props: {
+    createBar: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return{
-      clickSidber: ''
+      clickSidber: this.createBar
     }
   },
   methods: {

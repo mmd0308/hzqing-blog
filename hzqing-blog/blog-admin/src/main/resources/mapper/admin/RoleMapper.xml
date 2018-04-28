@@ -122,4 +122,11 @@
     <select id="getResIdByRoleId" parameterType="string" resultType="string">
         SELECT resource_id FROM  rl_role_resource WHERE role_id  = #{0}
     </select>
+    <select id="getRoleByType" parameterType="string" resultMap="roleMap" >
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where role_type = #{0} AND enabled = '1'
+    </select>
 </mapper>

@@ -3,7 +3,7 @@
       <!-- <show-header :message='msg'></show-header> -->
       <el-row>
         <el-col :xs="0" :sm="6" :md="6" :lg="6" :xl="6">
-          <side-bar @getRightMsg="getRight" ></side-bar>
+          <side-bar @getRightMsg="getRight" :createBar="createBar" ></side-bar>
         </el-col>
         <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
           <basic-set v-if="checkRightCom === 'basic'"></basic-set>
@@ -25,8 +25,13 @@ export default {
   data() {
     return {
       msg: '设置',
-      checkRightCom: ''
+      checkRightCom: '',
+      createBar: ''
     }
+  },
+  created() {
+    this.checkRightCom = 'basic'
+    this.createBar = 'basic'
   },
   methods: {
     getRight(data) {

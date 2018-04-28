@@ -1,50 +1,111 @@
 <template>
   <div class="login-container">
-    <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
-      class="card-box login-form">
-      <h3 class="title">登录</h3>
-      <el-form-item prop="username">
-        <span class="svg-container svg-container_login">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
-      </el-form-item>
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password"></svg-icon>
-        </span>
-        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="password"></el-input>
-          <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
-      </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">用户名: guest</span>
-        <span> 密码: guest</span>
-      </div>
-      <el-button type="primary" style="width:100%; border-radius: 25px;" :loading="loading" @click.native.prevent="handleLogin">
-        登 录
-      </el-button>
-      <div class="more-sign">
-        <h6>社交帐号登录</h6>
-      </div>
-    </el-form>
-    
+    <div class="login-register">
+      <h3 class="title">
+        <div :class="{'check-item':formStates === 'login','title-item':true}" @click="checkForm('login')">登录</div>
+        <b>|</b>
+        <div :class="{'check-item':formStates === 'register','title-item':true}" @click="checkForm('register')"> 注册</div>
+      </h3>
+      <!-- 登录 -->
+      <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px" v-if="formStates === 'login'"
+        class="card-box login-form">
+        <el-form-item prop="username">
+          <span class="svg-container svg-container_login">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="邮箱或手机号" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password"></svg-icon>
+          </span>
+          <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
+            placeholder="密码"></el-input>
+            <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+        </el-form-item>
+        <div class="tips">
+          <span style="margin-right:20px;">用户名: guest</span>
+          <span> 密码: guest</span>
+        </div>
+        <el-button type="primary" style="width:100%; border-radius: 25px;" :loading="loading" @click.native.prevent="handleLogin">
+          登 录
+        </el-button>
+        <div class="more-sign">
+          <h6>社交帐号登录</h6>
+          <div>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="weibo"></svg-icon> 
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="weixin"></svg-icon> 
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="qq"></svg-icon> 
+            </el-tooltip>
+          </div>
+        </div>
+      </el-form>
+      <!-- 注册 -->
+      <el-form autoComplete="on" :model="regForm" :rules="regRules" ref="regForm" label-position="left" label-width="0px" v-if="formStates === 'register'"
+        class="card-box login-form">
+
+        <el-form-item prop="nickName">
+          <span class="svg-container svg-container_login">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input  type="text" v-model="regForm.nickName" autoComplete="on" placeholder="昵称" />
+        </el-form-item>
+
+        <el-form-item prop="email">
+          <span class="svg-container svg-container_login">
+            <svg-icon icon-class="reg-email" />
+          </span>
+          <el-input type="text" v-model="regForm.email" autoComplete="on" placeholder="邮箱" />
+        </el-form-item>
+
+        <el-form-item prop="phone">
+          <span class="svg-container svg-container_login">
+            <svg-icon icon-class="phone" />
+          </span>
+          <el-input type="text" v-model="regForm.phone" autoComplete="on" placeholder="手机号" />
+        </el-form-item>
+
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password"></svg-icon>
+          </span>
+          <el-input name="password" :type="pwdType" @keyup.enter.native="handleRegister" v-model="regForm.password" autoComplete="on"
+            placeholder="密码"></el-input>
+            <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+        </el-form-item>
+
+        <el-button type="primary" style="width:100%; border-radius: 25px;" :loading="loading" @click.native.prevent="handleRegister">
+          注 册
+        </el-button>
+        <div class="more-sign">
+          <h6>社交帐号注册</h6>
+          <div>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="weibo"></svg-icon> 
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="weixin"></svg-icon> 
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
+              <svg-icon class="login-icon" icon-class="qq"></svg-icon> 
+            </el-tooltip>
+          </div>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
-
+import { register } from '@/api/admin/system/user/login'
 export default {
   name: 'login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
-      } else {
-        callback()
-      }
-    }
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
         callback(new Error('密码不能小于5位'))
@@ -54,15 +115,25 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'hengzhaoqing@163.com',
         password: 'admin'
       },
+      regForm: {
+        nickName: '',
+        phone: '',
+        password: '',
+        email: ''
+      },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', message: '请输入邮箱或者手机号' }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
+      regRules: {
+        nickName: [{ required: true, trigger: 'blur', message: '请输入昵称' }]
+      },
       loading: false,
-      pwdType: 'password'
+      pwdType: 'password',
+      formStates: 'login'
     }
   },
   methods: {
@@ -85,10 +156,33 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log('登录校验错误')
           return false
         }
       })
+    },
+    handleRegister() {
+      this.$refs.regForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          register(this.regForm).then(() => {
+            this.$notify({
+              title: '成功',
+              message: '恭喜你！你已注册成功，请登录！',
+              type: 'success',
+              duration: 2000
+            })
+            this.loading = false
+            this.formStates = 'login'
+          })
+        } else {
+          console.log('注册校验错误')
+          return false
+        }
+      })
+    },
+    checkForm(item) {
+      this.formStates = item
     }
   }
 }
@@ -138,21 +232,32 @@ export default {
       }
     }
     .title {
-      font-size: 26px;
-      font-weight: 400;
+      font-size: 18px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: auto;
       text-align: center;
-      font-weight: bold;
+      font-weight: 400;
+      padding: 30px 0px 0px;
+      .title-item {
+        padding: 0px 0px  5px;
+        margin: 0px 15px;
+        display: inline;
+      }
+      .title-item:hover{
+        border-bottom: 2px solid #e05143;
+      }
+      .check-item{
+        color: #e05143;
+        border-bottom: 2px solid #e05143;
+      }
     }
-    .login-form {
-      position: absolute;
-      left: 0;
-      right: 0;
+    .login-register{
       width: 400px;
-      padding: 35px 35px 15px 35px;
       margin: 120px auto;
       background: #fff;
+    }
+    .login-form {
+      padding: 40px 35px 35px 35px;
       border-radius: 4px;
     }
     .el-form-item {
@@ -203,6 +308,11 @@ export default {
       width: 60px;
       top: 5px;
       right: 30px;
+    }
+    .login-icon{
+      width: 32px !important;
+      height: 32px !important;
+      margin: 0 15px;
     }
   }
 </style>

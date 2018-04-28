@@ -225,6 +225,7 @@ export default {
 .comment{
     background: #fff;
     padding: 35px;
+    border-radius: 10px;
     .detail-comment-submit{
         margin: 10px 0px;
     }

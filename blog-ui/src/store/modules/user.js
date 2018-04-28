@@ -52,7 +52,7 @@ const user = {
           const data = response.data
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
-          commit('SET_RESCODE',data.resCode)
+          commit('SET_RESCODE', data.resCode)
           // commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {

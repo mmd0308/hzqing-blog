@@ -28,8 +28,10 @@
                 </mavon-editor>
             </div>
         </el-card>
-        <comments-index :articleId="form.id">
-        </comments-index>
+        <div class="comments">
+          <comments-index :articleId="form.id">
+          </comments-index>
+        </div>
     </div>
 </template>
 <script>
@@ -121,6 +123,9 @@ export default {
             padding: 10px 0px 15px;
             font-size: 12px;
        }
+   }
+   .comments{
+     margin-top: 20px;
    }
 
 }

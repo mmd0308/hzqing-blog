@@ -23,6 +23,13 @@ export function getObj(id) {
   })
 }
 
+export function getUserById(id) {
+  return request({
+    url: '/admin/user/getUserById',
+    method: 'get'
+  })
+}
+
 export function delObj(id) {
   return request({
     url: '/admin/user/delete/' + id,

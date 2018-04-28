@@ -52,10 +52,9 @@
 
     </div>
 </template>
-
 <script>
-  import { showPage } from '@/api/admin/blog/article/index'
-  import { parseTime } from '@/utils/index'
+import { showPage } from '@/api/admin/blog/article/index'
+import { parseTime } from '@/utils/index'
 export default {
   filters: {
     formatDate(time) {

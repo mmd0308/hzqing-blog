@@ -11,6 +11,14 @@ export function login(username, password) {
   })
 }
 
+export function register(obj) {
+  return request({
+    url: '/admin/user/show/register',
+    method: 'post',
+    data: obj
+  })
+}
+
 export function getUserInfo(token) {
   return request({
     url: '/admin/user/getUserinfo',

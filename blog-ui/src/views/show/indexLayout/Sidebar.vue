@@ -45,52 +45,16 @@ export default {
     return {
       queryAll: '',
       rotate:{
-          from: -60,
-          to: 60,
-          numOfOrientation: 10 
+        from: -60,
+        to: 60,
+        numOfOrientation: 10 
       },
-      words: [{
-          "name": "Cat",
-          "value": 26
-        },
-        {
-          "name": "fish",
-          "value": 19
-        },
-        {
-          "name": "测试",
-          "value": 18
-        },
-        {
-          "name": "Java",
-          "value": 16
-        },
-        {
-          "name": "错误",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "Hadoop",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        }
+      words: [
       ]
     }
   }
 }
 </script>
-
 <style>
 .sidebar-box-card{
     margin-bottom: 18px;

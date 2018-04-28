@@ -22,6 +22,7 @@
     "nprogress": "0.2.0",
     "vue": "2.5.10",
     "vue-cute-timeline": "^1.2.4",
+    "vue-image-crop-upload": "^2.2.3",
     "vue-router": "3.0.1",
     "vue-wordcloud": "^1.0.2",
     "vuex": "3.0.1"
