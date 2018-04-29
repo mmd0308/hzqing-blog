@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import hzqing.com.blogadmin.admin.blogger.comments.entity.Comments;
 import hzqing.com.blogadmin.admin.system.user.entity.User;
 import org.apache.ibatis.type.Alias;
-import sun.plugin.dom.core.Comment;
 
 import java.util.Date;
 import java.util.List;
