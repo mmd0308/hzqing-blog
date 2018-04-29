@@ -115,8 +115,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'hengzhaoqing@163.com',
-        password: 'admin'
+        username: '',
+        password: ''
       },
       regForm: {
         nickName: '',
