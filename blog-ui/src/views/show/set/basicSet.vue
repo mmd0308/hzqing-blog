@@ -123,7 +123,7 @@ export default {
         line-height: 50px;
         padding: 20px;  
         .updateAct{
-            background: #02e7be;
+            background: #ff7d44;
             width: 100px;
             line-height: 30px;
             margin: auto 0px;
@@ -143,6 +143,14 @@ export default {
             width: 100%;
             height: 100%;
             border-radius: 50%;
+        }
+        .el-button--success{
+        	background: #ff7d44;
+        	border-color:#ff7d44;
+        }
+        .el-button--success:hover{
+        	background: #f98d5f;
+        	border-color:#f98d5f;
         }
     }
 }

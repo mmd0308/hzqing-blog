@@ -1,10 +1,13 @@
 <template>
     <div class="header">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-            <svg-icon icon-class="show-index" style="float:left"></svg-icon>
-        <el-breadcrumb-item :to="{ path: '/' }">
-        首页</el-breadcrumb-item>
-        <el-breadcrumb-item>{{ message }}</el-breadcrumb-item>
+            <svg-icon icon-class="show-index" style="float:left;padding-right: 6px;"></svg-icon>
+            <el-breadcrumb-item :to="{ path: '/' }">
+                首页
+            </el-breadcrumb-item>
+            <el-breadcrumb-item>
+                {{ message }}
+            </el-breadcrumb-item>
         </el-breadcrumb>
     </div>
 </template>
@@ -27,7 +30,7 @@ export default {
             line-height: 25px;
         }
         .el-breadcrumb__item{
-            padding-left: 6px;
+         
         }
         .el-breadcrumb__inner, .el-breadcrumb__inner a{
             font-weight: normal;

@@ -12,6 +12,9 @@ import hzqing.com.hzqingcommon.util.DateUtils;
 import hzqing.com.hzqingcommon.util.FileUtil;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,8 +46,8 @@ public class ArticleController extends BaseController<Article,IArticleService> {
      * @return
      */
     @GetMapping("/show/get/{id}")
-    public ResponseMessage<Article> get(@PathVariable String id){
-        Article t = baseService.getById(id);
+    public ResponseMessage<ArticleVO> getShowById(@PathVariable String id){
+        ArticleVO t = baseService.getShowById(id);
         return new ResponseMessage<Article>().success(t);
     }
 

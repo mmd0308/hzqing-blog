@@ -2,7 +2,7 @@
     <div id="diary">
         <show-header :message='msg'></show-header>
         <div class="dirary-body" style="background:#fff">
-             <hzqing-vue-timeline timelineColor="#fff" timeContentColor="#7FE4E1" :dataList="timeItemList"></hzqing-vue-timeline>
+             <hzqing-vue-timeline timelineColor="#fff" timeContentColor="#f1f1f1" :dataList="timeItemList"></hzqing-vue-timeline>
         </div>
     </div>
 </template>

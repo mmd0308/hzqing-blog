@@ -1,13 +1,33 @@
 <template>
     <div id="detail">
         <show-header :message='msg'></show-header>
-        <el-card class="detail-card">
+        <el-card class="detail-card" 
+            v-loading="listLoading" 
+            element-loading-text="拼命加载中..."
+            element-loading-spinner="el-icon-loading">
              <div slot="header" class="blogTiltle">
                 <h1>
                      {{ form.arTitle }}    
                 </h1>
                 <div class="title-mate">
-                    本文作者：南昌seo　最后编辑：2018-03-29 15:07:37　分类：网站运营   标签：hadoop分布式 /分布式
+                    <span class="item">
+                      本文作者: {{ form.fullName }} 
+                    </span>
+                    <span class="item">
+                    最后编辑: {{ form.arEtime | formatDate}}
+                    </span>
+                    <span class="item">
+                      分类: {{ form.tag.tagName}}
+                    </span>
+                    <span class="item" v-if="form.listLables.size > 0">
+                      标签：
+                        <span v-for="(item,index) in form.listLables" :key="index" >
+                          {{ item.tagName }} 
+                          <span v-if="index != form.listLables.size-1">
+                            /
+                          </span>
+                        </span>
+                    </span>
                 </div>
             </div>
             <div class="sidebar-text sidebar-item  ">
@@ -61,7 +81,8 @@ export default {
       form: this.initObj(),
       toolbarsFlag: false,
       subfield: false,
-      msg: '博客分类'
+      msg: '',
+      listLoading: false
     }
   },
   created() {
@@ -83,8 +104,11 @@ export default {
       }
     },
     findById() {
+      this.listLoading = true
       getObj(this.form.id).then(response => {
         this.form = response.data
+        this.listLoading = false
+        this.msg = response.data.tag.tagName
       })
     }
   }
@@ -122,6 +146,9 @@ export default {
             border-bottom: 1px solid #ebebeb;
             padding: 10px 0px 15px;
             font-size: 12px;
+            .item{
+              padding: 0px 5px;
+            }
        }
    }
    .comments{

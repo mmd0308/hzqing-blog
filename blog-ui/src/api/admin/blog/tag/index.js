@@ -16,6 +16,14 @@ export function getAll(query) {
   })
 }
 
+export function showAll(query) {
+  return request({
+    url: '/admin/blog/tag/show/all',
+    method: 'get',
+    params: query
+  })
+}
+
 export function addObj(obj) {
   return request({
     url: '/admin/blog/tag/add',

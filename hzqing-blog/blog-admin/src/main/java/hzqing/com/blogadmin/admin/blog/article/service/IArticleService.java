@@ -15,4 +15,6 @@ public interface IArticleService extends IBaseService<Article> {
     void saveVo(ArticleVO t);
 
     PageInfo<ArticleVO> showAllPage(Integer page, Integer pageSize, ArticleVO t);
+
+    ArticleVO getShowById(String id);
 }

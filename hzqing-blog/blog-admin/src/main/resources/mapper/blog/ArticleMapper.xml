@@ -12,6 +12,7 @@
         <result column="ar_etime" property="arEtime"/>
         <result column="ar_state" property="arState"/>
         <result column="ar_up" property="arUp"/>
+        <result column="ar_img" property="arImg" />
     </resultMap>
     <resultMap id="articleMapVO" type="articleVO">
         <id column="id" property="id"/>
@@ -27,8 +28,9 @@
         <result column="tagL" />
         <result column="full_name" property="fullName" />
         <result column="count_num" property="countNum" />
-        <!--<association property="tag" column="{id=id,tagType=tagC}" select="selectTagByBlogId" />-->
-        <!--<association property="listLables" column="{id=id,tagType=tagL}" select="selectTagByBlogId" />-->
+        <result column="ar_img" property="arImg" />
+        <association property="tag" column="{id=id,tagType=tagC}" select="selectTagByBlogId" />
+        <association property="listLables" column="{id=id,tagType=tagL}" select="selectTagByBlogId" />
     </resultMap>
     <resultMap id="tagMap" type="tag">
         <id column="id" property="id"/>
@@ -90,7 +92,8 @@
         #{arCtime},
         #{arEtime},
         #{arState},
-        #{arUp}
+        #{arUp},
+        #{arImg}
         )
     </insert>
     <select id="selectTagByBlogId" resultMap="tagMap" parameterType="map">
@@ -109,7 +112,8 @@
             'C' as tagC,
             'L' as tagL,
             u.full_name,
-            v.count_num
+            v.count_num,
+            b.ar_img
         FROM
           blog_article b
         LEFT JOIN sys_user u ON u.id = b.user_id
@@ -121,6 +125,9 @@
         </if>
         <if test="arUp != null and arUp != ''" >
             AND  b.ar_up = #{arUp}
+        </if>
+        <if test="tagId != null and tagId != ''">
+            AND find_in_set(b.id,(SELECT GROUP_CONCAT(a.article_id) FROM (SELECT article_id FROM rl_article_tag WHERE tag_id = #{tagId}) a))
         </if>
         ORDER  BY b.ar_etime DESC
     </select>
@@ -151,7 +158,28 @@
         SELECT a.* FROM blog_article a LEFT JOIN rl_article_tag r ON a.id = r.article_id WHERE r.tag_id = #{0}
         ORDER BY a.ar_ctime DESC
     </select>
-
+    <select id="getShowById" parameterType="string" resultMap="articleMapVO">
+        SELECT
+          b.id,
+          b.user_id,
+          b.ar_title,
+          b.ar_desc,
+          b.ar_ctime,
+          b.ar_etime,
+          b.ar_state,
+          b.ar_content,
+          b.ar_content_html,
+          b.ar_up,
+          'C' as tagC,
+          'L' as tagL,
+          u.full_name,
+          b.ar_img
+        FROM
+          blog_article b
+          LEFT JOIN sys_user u ON u.id = b.user_id
+        WHERE
+          b.id =#{0}
+    </select>
     <select id="selectById" parameterType="String" resultMap="articleMap">
         SELECT
         <include refid="field"/>
@@ -184,6 +212,9 @@
         </if>
         <if test="arUp != null and arUp !=''">
             , ar_up = #{arUp}
+        </if>
+        <if test="arImg != null and arImg != ''">
+            , ar_img = #{arImg}
         </if>
         WHERE
         id = #{id}

@@ -10,6 +10,9 @@ import hzqing.com.blogadmin.admin.blog.article.service.IArticleService;
 import hzqing.com.blogadmin.admin.blog.visit.service.IVisitService;
 import hzqing.com.hzqingcommon.util.ReplaceStrUtil;
 import hzqing.com.hzqingcommon.util.UUIDUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +66,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     }
 
     @Override
+    public ArticleVO getShowById(String id) {
+        ArticleVO res = (ArticleVO) baseDao.findForObject(mapper + ".getShowById", id);
+        return res;
+    }
+
+    @Override
     public int update(Article article) {
         if (null != article.getArContentHtml() && article.getArContentHtml() != "") {
             String desc = ReplaceStrUtil.delHtmlTag(article.getArContentHtml());
@@ -70,6 +79,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
                 article.setArDesc(desc.substring(0, 200));
             else
                 article.setArDesc(desc);
+            //获取博客图片
+            Document parse = Jsoup.parse(article.getArContentHtml());
+            Elements imgs = parse.select("img[src]");
+            if (imgs.size() > 0 ) {
+                article.setArImg(imgs.get(0).attributes().get("src"));
+            }
         }
         return super.update(article);
     }

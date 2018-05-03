@@ -44,7 +44,6 @@ export default {
     height: fit-content;
     margin-right: 20px;
     ul {
-        list-style: none;
         padding: 0px;
         margin: 0px;
         li{
@@ -54,10 +53,10 @@ export default {
             line-height: 50px;
         }
         li:hover{
-            background: #02e7be;
+            background: #ff7d44;
         }
         .clickSiber{
-            background: #02e7be;
+            background: #ff7d44;
         }
         span {
             padding: 0px 15px;

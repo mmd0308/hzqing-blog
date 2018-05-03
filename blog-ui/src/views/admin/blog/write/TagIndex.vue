@@ -5,10 +5,8 @@
                 <router-link to="/" ><span>回首页</span></router-link>
             </div>
             <div class="addClass" @click="tagToAdd">
-                <div>
                     <svg-icon icon-class="blog-write-tag-add"></svg-icon> 
                     <span> 新建分类</span>
-                </div>
             </div>
             <div class="tagForm" v-if="tagFormBL" >
                 <el-input v-model="formTag.tagName" placeholder="请输入分类名称..."></el-input>
@@ -39,10 +37,6 @@
                     </el-row>
                 </div> 
             </div>
-            <!-- <div class="button">
-                <i class="el-icon-delete"></i>
-                <span>设置</span>
-            </div> -->
         </div>
         <!-- 修改分类 -->
         <el-dialog  :visible.sync="tagEditDialog" width="20%" :title="title">

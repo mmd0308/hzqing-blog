@@ -17,6 +17,7 @@ public class Article {
     private Date arEtime;
     private String arState;
     private String arUp;
+    private String arImg;
 
 
 
@@ -36,6 +37,13 @@ public class Article {
                 '}';
     }
 
+    public String getArImg() {
+        return arImg;
+    }
+
+    public void setArImg(String arImg) {
+        this.arImg = arImg;
+    }
 
     public String getId() {
         return id;

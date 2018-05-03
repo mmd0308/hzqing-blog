@@ -2,14 +2,45 @@
     <div class="show-article">
         <el-card class="box-card"  >
             <div slot="header" class="clearfix">
-                <span>学无止境</span>
+                <span>{{navHeader}}</span>
             </div>
-            <div class="show-blog-list"  v-for="(item,index) in list" :key="item">
+            <div class="show-blog-list"  v-for="(item,index) in list" :key="index"
+            v-loading="listLoading" 
+            element-loading-text="拼命加载中..."
+            element-loading-spinner="el-icon-loading"
+            >
                 <el-row>
-                    <el-col class="hidden-md-and-down"  :lg="5" :xl="5">
-                        <img class="show-index-blog-topic-pic" width="100%" src="https://baijunyao.com/uploads/article/20180106/5a50792eeef57.jpg" alt="">
+                    <el-col class="hidden-sm-and-down" :md="5"  :lg="5" :xl="5" v-if="item.arImg != null && item.arImg != ''">
+                        <img class="show-index-blog-topic-pic" width="100%" :src="item.arImg" alt="">
                     </el-col>
-                    <el-col :lg="19" :xl="19">
+                    <el-col :md="19" :lg="19" :xl="19" v-if="item.arImg != null && item.arImg != ''">
+                        <div class="appMain-card-header"  @click="toDetail(item.id)">
+                            <h3>{{ item.arTitle }}</h3>
+                        </div>
+                        <div class="show-index-blog-abstract">
+                            {{ item.arDesc }}
+                        </div>
+                        <div style="height:20px;">
+                            <div class="see_time_text see-font">
+                                <span>
+                                    <svg-icon icon-class="show-blog-user"></svg-icon> {{ item.fullName }}
+                                </span>
+                                <span>
+                                    <svg-icon icon-class="show-blog-time"/> {{ item.arCtime | formatDate}}
+                                </span>
+                                <span v-if="item.countNum !== null">
+                                    <svg-icon icon-class="show-blog-see"/> {{ item.countNum}}
+                                </span>
+                                <span v-else>
+                                    <svg-icon icon-class="show-blog-see"/>  0
+                                </span>
+                                <!-- <span>
+                                    评论： 0
+                                </span> -->
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :md="24" :lg="24" :xl="24" v-else>
                         <div class="appMain-card-header"  @click="toDetail(item.id)">
                             <h3>{{ item.arTitle }}</h3>
                         </div>
@@ -42,6 +73,10 @@
         <div class="block" style="text-align: center;">
             <el-pagination
                 background
+                @size-change="handleSizeChange" 
+                @current-change="handleCurrentChange"
+                :current-page.sync="listQuery.page"
+                :page-size="listQuery.pageSize"
                 layout="prev, pager, next"
                 :total="total">
             </el-pagination>
@@ -63,22 +98,45 @@ export default {
       total: null,
       listQuery: {
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
         arTitle: '',
-        arUp: ''
+        arUp: '',
+        tagId: ''
       },
-      isItem: '0'
+      isItem: '0',
+      navHeader: '',
+      listLoading: false
     }
   },
   created() {
-    this.getList()
+    this.getListByRouter()
+  },
+  watch: {
+    '$route': 'getListByRouter' // 监听不同的路由query
   },
   methods: {
     getList() {
+      this.listLoading = true
       showPage(this.listQuery).then(response => {
         this.list = response.data.list
         this.total = response.data.total
+        this.listLoading = false
       })
+    },
+    getListByTagId(tag) {
+      this.navHeader = tag[1]
+      this.listQuery.tagId = tag[0]
+      this.getList()
+    },
+    getListByTitle(title) {
+      this.navHeader = title
+      this.listQuery.arTitle = title
+      this.getList()
+    },
+    getListByRouter() {
+      this.navHeader = this.$route.query.navHeader
+      this.listQuery.tagId = this.$route.query.tagId
+      this.getList()
     },
     toDetail(id) {
       this.$router.push({
@@ -99,7 +157,15 @@ export default {
           this.getList()
       }
 
-    }
+    },
+    handleSizeChange(val) {
+      this.listQuery.pageSize = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
+    },
   }
 }
 </script>

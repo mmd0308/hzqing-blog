@@ -6,7 +6,7 @@
     </div>
     <div class="work-body">
       <el-row>
-          <el-col :span="12" v-for="o in 2" :key="o">
+          <el-col :span="6" v-for="o in 4" :key="o">
             <div class="item">
               <img src="static/img/timeline.png"/>
             </div>

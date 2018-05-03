@@ -1,13 +1,13 @@
 <template>
   <div class="showBlog">
-      <show-header :message='msg'></show-header>
+      <!-- <show-header :message='msg'></show-header> -->
       <el-row>
             <el-col :lg="18" :xl="18">
-                  <web-blog></web-blog>
+                  <web-blog ref="blog"></web-blog>
             </el-col>
             <el-col  :lg="6" :xl="6">
                 <div>
-                    <web-sidebar></web-sidebar>
+                    <web-sidebar v-on:getArticleByLablesId="getArticleByTagId" v-on:getArticleByTitle="getArticleByTitle" ></web-sidebar>
                 </div>
             </el-col>
         </el-row>
@@ -26,7 +26,15 @@ export default {
   },
   data() {
     return {
-      msg: '关于我'
+      msg: '学无止境'
+    }
+  },
+  methods: {
+    getArticleByTagId(tagId) {
+      this.$refs.blog.getListByTagId(tagId)
+    },
+    getArticleByTitle(title) {
+      this.$refs.blog.getListByTitle(title)
     }
   }
 }

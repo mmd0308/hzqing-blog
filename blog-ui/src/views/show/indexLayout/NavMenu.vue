@@ -7,13 +7,13 @@
                     <li>
                         <el-dropdown placement="bottom" trigger="hover" @command="handleCommand">
                             <div style="width:110px;">
-                                <router-link to="/blog">
+                                <router-link to="/blog?navHeader=学无止境">
                                 学无止境
                                 </router-link>
                             </div>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="java">Java</el-dropdown-item>
-                                <el-dropdown-item divided command="admin">Hadoop</el-dropdown-item>
+                                <el-dropdown-item divided command="hadoop">Hadoop</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </li>
@@ -24,11 +24,11 @@
                                     Elastic Stack
                                 </router-link>
                             </div>
-                            <el-dropdown-menu slot="dropdown">
+                            <!-- <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="java">Logstash</el-dropdown-item>
                                 <el-dropdown-item divided command="admin">Elasticsearch</el-dropdown-item>
                                 <el-dropdown-item divided command="admin">Kibana</el-dropdown-item>
-                            </el-dropdown-menu>
+                            </el-dropdown-menu> -->
                         </el-dropdown>
                     </li>
                     <li>
@@ -116,6 +116,26 @@ export default {
         this.logout()
       } else if (command === 'set') {
         this.$router.push({ path: '/setting' })
+      } else if (command === 'java') {
+        this.$router.push(
+          { 
+            path: '/blog',
+            query: {
+              navHeader: 'JAVA',
+              tagId: '1'
+            }
+          }
+        )
+      } else if (command === 'hadoop') {
+         this.$router.push(
+          { 
+            path: '/blog',
+            query: {
+              navHeader: 'Hadoop',
+              tagId: '7f08cc6d356f11e8a5a50242ac110002'
+            }
+          }
+        ) 
       }
     },
     mobileHandleCommand(command) { // mobile

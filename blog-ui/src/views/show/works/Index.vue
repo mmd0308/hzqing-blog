@@ -3,7 +3,7 @@
         <show-header :message='msg'></show-header>
         <div class="works-body fl" style="background:#fff;">
             <el-row>
-                <el-col :span="12"v-for="o in 3" :key="o" >
+                <el-col :span="6" v-for="o in 4" :key="o" >
                     <div class="item fl" >
                         <div class="item-img fl">
                             <img src="static/img/timeline.png"/> 
@@ -68,6 +68,10 @@ export default {
                     h2{
                         font-weight: normal;
                         margin: 0px 0px 12px;
+                        font-size: 14px;
+                    }
+                    .see-font{
+                    	font-size: 12px;
                     }
                 }
             }
