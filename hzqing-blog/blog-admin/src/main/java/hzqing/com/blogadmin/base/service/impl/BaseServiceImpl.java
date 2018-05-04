@@ -57,4 +57,5 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     public List<T> list(T t){
         return  null;
     }
+
 }

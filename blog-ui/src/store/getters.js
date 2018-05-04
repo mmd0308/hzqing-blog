@@ -6,6 +6,7 @@ const getters = {
   // name : function(state){return state.user.name}
   name: state => state.user.name,
   roles: state => state.user.roles,
-  resCode: state => state.user.resCode
+  resCode: state => state.user.resCode,
+  showMenus: state => state.user.showMenus
 }
 export default getters

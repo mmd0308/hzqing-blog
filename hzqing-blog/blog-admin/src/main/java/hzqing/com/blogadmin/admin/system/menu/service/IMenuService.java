@@ -1,9 +1,12 @@
 package hzqing.com.blogadmin.admin.system.menu.service;
 
+import hzqing.com.blogadmin.admin.system.menu.vo.MenuVO;
+import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IMenuService extends IBaseService<Menu> {
     /**
@@ -22,10 +25,10 @@ public interface IMenuService extends IBaseService<Menu> {
 
     /**
      * 根据角色id,获取菜单信息
-     * @param roles
+     * @param role
      * @return
      */
-    List<Menu> getMenusByRids(List<String> roles);
+    List<MenuVO> getMenusByRids(Map<String,String> role);
 
     /**
      * 根据用户id，获取菜单
@@ -33,4 +36,8 @@ public interface IMenuService extends IBaseService<Menu> {
      * @return
      */
     List<Menu> getMenusByUid(String id);
+
+    List<MenuVO> getDefaultMenus();
+
+    List<MenuVO> getMenusVoTree(MenuVO menuVO);
 }

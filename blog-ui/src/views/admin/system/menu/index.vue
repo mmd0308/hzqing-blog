@@ -78,12 +78,18 @@
                             <el-col :span="8">
                                 <el-form-item label="请求资源类型" prop="menuType">
                                     <el-select v-model="form.menuType" placeholder="请选择机构类别" v-if="this.state == 'see'" disabled="disabled" >
-                                        <el-option label="link" value="link"></el-option>
-                                        <el-option label="menu" value="menu"></el-option>
+                                        <el-option label="链接" value="LK"></el-option>
+                                        <el-option label="默认菜单" value="NL"></el-option>
+                                        <el-option label="前台菜单" value="LQ"></el-option>
+                                        <el-option label="后端菜单" value="LH"></el-option>
+                                        <el-option label="其他" value="QT"></el-option>
                                     </el-select>
                                     <el-select v-model="form.menuType" placeholder="请选择机构类别" v-else >
-                                        <el-option label="link" value="link"></el-option>
-                                        <el-option label="menu" value="menu"></el-option>
+                                        <el-option label="链接" value="LK"></el-option>
+                                        <el-option label="默认菜单" value="NL"></el-option>
+                                        <el-option label="前台菜单" value="LQ"></el-option>
+                                        <el-option label="后端菜单" value="LH"></el-option>
+                                        <el-option label="其他" value="QT"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>

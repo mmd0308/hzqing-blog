@@ -47,8 +47,8 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
     }
 
     @Override
-    public List<Role> getDefautsRole() {
-        return (List<Role>) baseDao.findForList(mapper+".getRoleByType", "G");
+    public List<Role> getDefautsRole(String type) {
+        return (List<Role>) baseDao.findForList(mapper+".getRoleByType", type);
     }
 
 

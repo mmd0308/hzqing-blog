@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.admin.system.user.service.impl;
 
+import hzqing.com.blogadmin.admin.system.menu.vo.MenuVO;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
 import hzqing.com.blogadmin.admin.system.user.service.IUserService;
@@ -81,7 +82,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         // 根据用户的id获取角色
         List<Role> rols = roleService.getRoleByUserId(userId);
         // 获取系统默认角色
-        List<Role> defaults = roleService.getDefautsRole();
+        List<Role> defaults = roleService.getDefautsRole("G");
         rols.addAll(defaults);
         //设置用户的角色
         uservo.setRoles(rols);
@@ -91,14 +92,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
             buffer.append(",");
         });
         String roleIds = buffer.toString().substring(0,buffer.toString().length()-1);
-
-        //TODO 设置菜单 根据角色id获取菜单
-        //List<Menu> menus = menuService.getMenusByUid(uservo.getId());
-        //uservo.setMenus(menus);
-
+        Map<String,String> maps = new HashMap<>();
+        maps.put("roleId",roleIds);
+        maps.put("menuType","LQ");
+        //设置菜单 根据角色id获取菜单
+        List<MenuVO> menus = menuService.getMenusByRids(maps);
+        uservo.setMenus(menus);
         // 设置所有的按钮资源编码根据角色id
         uservo.setResCode(this.getResCodeByRoleIds(roleIds));
-
         return uservo;
     }
 

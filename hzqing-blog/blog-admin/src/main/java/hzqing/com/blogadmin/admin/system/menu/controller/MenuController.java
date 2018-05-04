@@ -1,5 +1,6 @@
 package hzqing.com.blogadmin.admin.system.menu.controller;
 
+import hzqing.com.blogadmin.admin.system.menu.vo.MenuVO;
 import hzqing.com.blogadmin.base.controller.BaseController;
 import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.blogadmin.admin.system.menu.service.IMenuService;
@@ -29,5 +30,9 @@ public class MenuController extends BaseController<Menu,IMenuService> {
     public ResponseMessage<String> getNextLevelCode(@PathVariable String parentId,@PathVariable String levelCode){
         String resCode = baseService.getNextLevelCode(parentId,levelCode);
         return  new ResponseMessage<>().success(resCode);
+    }
+    @GetMapping("/show/getDefaultMenus")
+    public ResponseMessage<List<MenuVO>> getDefaultMenus(){
+        return new ResponseMessage<>().success(baseService.getDefaultMenus());
     }
 }

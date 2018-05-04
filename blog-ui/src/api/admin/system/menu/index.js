@@ -7,6 +7,13 @@ export function tree(id) {
   })
 }
 
+export function getDefaultMenus() {
+  return request({
+    url: '/admin/menu/show/getDefaultMenus/',
+    method: 'get'
+  })
+}
+
 export function getNextLevelCode(id, lcode) {
   return request({
     url: '/admin/menu/getNextLevelCode/' + id + '/' + lcode,

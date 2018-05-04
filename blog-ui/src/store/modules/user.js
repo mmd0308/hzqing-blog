@@ -7,7 +7,8 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    resCode: []
+    resCode: [],
+    showMenus: []
   },
 
   mutations: {
@@ -25,6 +26,9 @@ const user = {
     },
     SET_RESCODE: (state, code) => {
       state.resCode = code
+    },
+    SET_SHOWMENUS: (state, menus) => {
+      state.showMenus = menus
     }
   },
 
@@ -53,7 +57,7 @@ const user = {
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
           commit('SET_RESCODE', data.resCode)
-          // commit('SET_AVATAR', data.avatar)
+          commit('SET_SHOWMENUS', data.menus)
           resolve(response)
         }).catch(error => {
           reject(error)

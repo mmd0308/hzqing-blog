@@ -16,6 +16,21 @@
         <result column="parentName" property="parentName"/>
         <result column="sort" property="sort"/>
     </resultMap>
+    <resultMap id="menuMapvo" type="menuvo">
+        <id column="id" property="id"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_code" property="menuCode"/>
+        <result column="levelcode" property="levelcode" />
+        <result column="parent_id" property="parentId"/>
+        <result column="href" property="href"/>
+        <result column="component" property="component"/>
+        <result column="icon" property="icon"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="note" property="note"/>
+        <result column="enabled" property="enabled"/>
+        <result column="parentName" property="parentName"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
     <sql id="table">
         sys_menu
     </sql>
@@ -85,7 +100,10 @@
         where
           1 = 1
         <if test="id != null and id != ''">
-            id = ${id}
+            AND id = ${id}
+        </if>
+        <if test="menuType != null adn menuType != ''">
+            AND menu_type = #{menuType}
         </if>
         ORDER BY sort ASC
     </select>
@@ -155,18 +173,30 @@
         id = #{0}
     </delete>
 
-    <select id="getMenusByRids" parameterType="list" resultMap="menuMap">
+    <select id="getMenusByRids" parameterType="map" resultMap="menuMapvo">
         SELECT  m.* FROM sys_menu m
-        where m.id IN (SELECT  resource_id FROM  rl_role_resource where role_id in (
-            <foreach collection="list" item="item" separator="," >
-               #{item}
-            </foreach>
-        ))
-
+        where  find_in_set(m.id,(SELECT  GROUP_CONCAT(resource_id) FROM  rl_role_resource where find_in_set (role_id,#{roleId})))
+          AND m.menu_type = #{menuType}
+        ORDER BY  sort ASC
+    </select>
+    <select id="queryMenuvo" parameterType="menuvo" resultMap="menuMapvo">
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where
+        1 = 1
+        <if test="id != null and id != ''">
+            AND id = ${id}
+        </if>
+        <if test="menuType != null and menuType != ''">
+            AND menu_type = #{menuType}
+        </if>
+        ORDER BY sort ASC
     </select>
     <select id="getMenusByUid" parameterType="string" resultMap="menuMap">
     SELECT m.* FROM  sys_menu m LEFT JOIN  rl_role_resource r ON  m.id = r.resource_id
     LEFT JOIN rl_user_role u ON  r.role_id = u.role_id
-    where u.user_id = #{0} AND  m.menu_type = 'menu'
+    where u.user_id = #{0}
     </select>
 </mapper>

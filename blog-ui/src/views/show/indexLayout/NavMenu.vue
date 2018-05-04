@@ -3,72 +3,48 @@
                 <h1 class="show-navbar-title">
                     <router-link to="/" >衡钊清的博客</router-link>
                 </h1>
-                <ul class="nav">
-                    <li>
-                        <el-dropdown placement="bottom" trigger="hover" @command="handleCommand">
-                            <div style="width:110px;">
-                                <router-link to="/blog?navHeader=学无止境">
-                                学无止境
+                <ul class="nav"
+                    v-loading="listLoading" 
+                    element-loading-text="拼命加载中..."
+                    element-loading-spinner="el-icon-loading"
+                    element-loading-background="#222"
+                >
+                    <li v-for="(item, index) in menuList" :key="index">
+                        <div style="width:110px;">
+                            <router-link :to="item.href">
+                                {{item.menuName}}
+                            </router-link>
+                        </div>
+                        <ul class="sub-menu">
+                            <li v-for="(it,ind) in item.menusvo" :key="ind">
+                                <router-link :to="it.href">
+                                    {{it.menuName}}
                                 </router-link>
-                            </div>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="java">Java</el-dropdown-item>
-                                <el-dropdown-item divided command="hadoop">Hadoop</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </li>
-                    <li>
-                        <el-dropdown placement="bottom" trigger="hover" @command="handleCommand">
-                            <div style="width:110px;">
-                                <router-link to="/blog">
-                                    Elastic Stack
-                                </router-link>
-                            </div>
-                            <!-- <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="java">Logstash</el-dropdown-item>
-                                <el-dropdown-item divided command="admin">Elasticsearch</el-dropdown-item>
-                                <el-dropdown-item divided command="admin">Kibana</el-dropdown-item>
-                            </el-dropdown-menu> -->
-                        </el-dropdown>
-                    </li>
-                    <li>
-                        <router-link to="/works" >
-                            作品展示
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/diary" >
-                            个人日记
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/message" >
-                            给我留言
-                        </router-link>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="navRight">
-                    <router-link to="/login" v-if="token === undefined">
+                    <router-link to="/login" v-if="showMenus === null || showMenus.length === 0">
                         <div class="login">
                             登录
                         </div>
                     </router-link>
                     <div v-else>
-                        <el-dropdown placement="bottom" trigger="click" @command="handleCommand">
-                            <div class="detail-comment-pic" style="height:40px;width:40px; line-height: 84px;">
-                                <img src="static/img/touxiang.jpeg"/>
-                            </div>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="write">写文章</el-dropdown-item>
-                                <el-dropdown-item command="set">设置</el-dropdown-item>
-                                <el-dropdown-item command="admin">平台管理</el-dropdown-item>
-                                <el-dropdown-item divided command="loyout">退出</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                        <div class="detail-comment-pic" style="height:52px;width:52px; padding:8px;">
+                            <img src="static/img/touxiang.jpeg"/>
+                        </div>
+                        <ul class="sub-menu">
+                            <li v-for="(it,ind) in showMenus" :key="ind">
+                                <router-link :to="it.href">
+                                    {{it.menuName}}
+                                </router-link>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="moblieRight">
-                    <el-dropdown placement="bottom" trigger="click" @command="mobileHandleCommand">
+                    <el-dropdown placement="bottom" trigger="click">
                         <span class="svg-container">
                             <svg-icon icon-class="phoneMenu" class="phoneNavMenu"></svg-icon>
                         </span>
@@ -86,28 +62,42 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getDefaultMenus } from '@/api/admin/system/menu/index'
 export default {
   computed: {
     ...mapGetters([
-      'token'
+      'token',
+      'showMenus'
     ])
   },
   data() {
     return {
       activeIndex: '1',
-      login: ''
+      login: '',
+      menuList: null,
+      listLoading: true
     }
+  },
+  created(){
+    this.getMenuList()
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
+    },
+    getMenuList() {
+      this.listLoading = true
+      getDefaultMenus().then(response => {
+        this.menuList = response.data
+        this.listLoading = false
+      })
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     },
-    handleCommand(command) { // web
+     handleCommand(command) { // web
       if (command === 'write') {
         this.$router.push({ path: '/write' })
       } else if (command === 'admin') {
@@ -116,30 +106,7 @@ export default {
         this.logout()
       } else if (command === 'set') {
         this.$router.push({ path: '/setting' })
-      } else if (command === 'java') {
-        this.$router.push(
-          { 
-            path: '/blog',
-            query: {
-              navHeader: 'JAVA',
-              tagId: '1'
-            }
-          }
-        )
-      } else if (command === 'hadoop') {
-         this.$router.push(
-          { 
-            path: '/blog',
-            query: {
-              navHeader: 'Hadoop',
-              tagId: '7f08cc6d356f11e8a5a50242ac110002'
-            }
-          }
-        ) 
       }
-    },
-    mobileHandleCommand(command) { // mobile
-
     }
   }
 }
@@ -162,10 +129,11 @@ export default {
         margin: 0 10px 0 0;
         font-size: 15px;
         list-style: none;
+        min-width: 550px;
+        height: 52px;
         li{
             position: relative;
             float: left;
-            margin-right: 1px;
             width: 110px;
             text-align: center;
             line-height: 52px;
@@ -173,17 +141,42 @@ export default {
         li:hover{
             background-color: #404040;
         }
-        .el-dropdown{
-            color: inherit;
+        li:hover .sub-menu{
+            background-color: #404040;
+            display: block;
+        }
+
+    }
+    .sub-menu{
+        position: absolute;
+        top: 52px;
+        z-index: 10;
+        display: none;
+        padding-bottom: 0;
+        min-width: 110px;
+        text-align: center;
+        li{
+            line-height: 30px;
+            font-size: 12px;
+        }
+        li:hover{
+            background: #ff7d44;
         }
     }
     .navRight{
         float: right;
         width: 59px;
         text-align: center;
+        .sub-menu{
+            
+        }
     }
     .navRight:hover{
         background-color: #404040;
+    }
+    .navRight:hover .sub-menu{
+        background-color: #404040;
+        display: block;
     }
     .login{
         line-height: 52px;
@@ -211,9 +204,5 @@ export default {
           display: none;
       }
     }
-.el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover{
-        background-color: #404040 !important;
-    color: #66b1ff !important;
-}
 }
 </style>
