@@ -88,10 +88,10 @@
 </template>
 
 <script>
-  import { page, getObj, addObj, putObj, delObj  } from '@/api/admin/system/button/index'
+  import { page, getObj, addObj, putObj, delObj } from '@/api/admin/system/button/index'
   // import roleMenu from '@/views/admin/system/role/roleMenu'
   export default {
-    props:[ 'menuId'],
+    props: ['menuId'],
     // components: {
     //   roleMenu: roleMenu
     // },
@@ -144,7 +144,7 @@
       },
       getList(id) {
         this.listQuery.menuId = this.menuId
-        if (id != undefined && id != null) {
+        if (id !== undefined && id != null) {
           this.listQuery.menuId = id
         }
         page(this.listQuery).then(response => {

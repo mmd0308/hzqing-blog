@@ -20,7 +20,7 @@ export function getButtonByMenuIdOrRoleId(id, obj) {
   return request({
     url: '/admin/button/getButtonByMenuIdOrRoleId/' + id,
     method: 'get',
-    params:  obj
+    params: obj
   })
 }
 

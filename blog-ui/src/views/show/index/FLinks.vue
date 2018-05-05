@@ -21,7 +21,7 @@ export default {
       dataList: []
     }
   },
-  created(){
+  created() {
     this.getList()
   },
   methods: {

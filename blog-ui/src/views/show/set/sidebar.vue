@@ -23,14 +23,14 @@ export default {
     }
   },
   data() {
-    return{
+    return {
       clickSidber: this.createBar
     }
   },
   methods: {
     clickSiberItem(item) {
       this.clickSidber = item
-      this.$emit("getRightMsg",item)
+      this.$emit('getRightMsg', item)
     }
   }
 }

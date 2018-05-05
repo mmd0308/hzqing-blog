@@ -142,21 +142,20 @@ export default {
       this.$router.push({
         path: '/detail',
         query: {
-          blodId: id 
+          blodId: id
         }
       })
     },
     blurHeader(item) {
-      this.isItem = item;
+      this.isItem = item
       if (item === '0') {
-          this.listQuery.arUp = ''
-          this.getList()
+        this.listQuery.arUp = ''
+        this.getList()
       }
-      if ( item === '1') {
-          this.listQuery.arUp = '1'
-          this.getList()
+      if (item === '1') {
+        this.listQuery.arUp = '1'
+        this.getList()
       }
-
     },
     handleSizeChange(val) {
       this.listQuery.pageSize = val
@@ -165,7 +164,7 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.page = val
       this.getList()
-    },
+    }
   }
 }
 </script>

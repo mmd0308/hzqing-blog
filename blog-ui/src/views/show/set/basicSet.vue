@@ -56,7 +56,7 @@
 
 <script>
 import { getUserById, putObj } from '@/api/admin/system/user/index'
-import myUpload from 'vue-image-crop-upload';
+import myUpload from 'vue-image-crop-upload'
 import { getToken } from '@/utils/auth'
 export default {
   created() {
@@ -96,17 +96,17 @@ export default {
     toggleShow() {
       this.show = !this.show
     },
-    cropSuccess(imgDataUrl, field){
-        console.log('-------- crop success --------');
-        this.basicForm.avatar = imgDataUrl;
+    cropSuccess(imgDataUrl, field) {
+      console.log('-------- crop success --------')
+      this.basicForm.avatar = imgDataUrl
     },
-    cropUploadSuccess(jsonData, field){
-        this.basicForm.avatar = process.env.BASE_API + jsonData.data
+    cropUploadSuccess(jsonData, field) {
+      this.basicForm.avatar = process.env.BASE_API + jsonData.data
     },
-    cropUploadFail(status, field){
-        console.log('-------- upload fail --------');
-        console.log(status);
-        console.log('field: ' + field);
+    cropUploadFail(status, field) {
+      console.log('-------- upload fail --------')
+      console.log(status)
+      console.log('field: ' + field)
     }
   },
   components: {

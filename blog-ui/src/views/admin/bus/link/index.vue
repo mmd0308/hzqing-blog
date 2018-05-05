@@ -181,9 +181,9 @@
           linkState: { required: true, message: '请选择状态', trigger: 'blur' }
         },
         optionsState: [
-          { label: '待审核', value: 'DS'},
-          { label: '通过', value: 'TG'},
-          { label: '驳回', value: 'BH'}
+          { label: '待审核', value: 'DS' },
+          { label: '通过', value: 'TG' },
+          { label: '驳回', value: 'BH' }
         ]
       }
     },

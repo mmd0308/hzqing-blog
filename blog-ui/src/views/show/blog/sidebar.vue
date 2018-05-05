@@ -84,8 +84,8 @@ export default {
     toQuery() {
       this.$emit('getArticleByTitle', this.queryAll)
     },
-    getArticleByLablesId(id,name) {
-      this.$emit('getArticleByLablesId', [id,name])
+    getArticleByLablesId(id, name) {
+      this.$emit('getArticleByLablesId', [id, name])
     },
     getList() {
       this.listLoading = true
@@ -112,7 +112,7 @@ export default {
       this.$router.push({
         path: '/detail',
         query: {
-          blodId: id 
+          blodId: id
         }
       })
     }

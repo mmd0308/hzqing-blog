@@ -53,7 +53,8 @@
         ar_ctime,
         ar_etime,
         ar_state,
-        ar_up
+        ar_up,
+        ar_img
     </sql>
     <sql id="fieldValue">
         #{id},
@@ -65,7 +66,8 @@
         #{arCtime},
         #{arEtime},
         #{arState},
-        #{arUp}
+        #{arUp},
+        #{arImg}
     </sql>
 
     <insert id="save" parameterType="article">

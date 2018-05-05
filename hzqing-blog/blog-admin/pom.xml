@@ -27,7 +27,7 @@
 		<mysql.version>5.1.44</mysql.version>
 		<mybatis-spring-boot-starter.version>1.3.1</mybatis-spring-boot-starter.version>
 		<mapper.version>3.4.0</mapper.version>
-		<docker.image.prefix>10.27.213.66:5000</docker.image.prefix>
+		<docker.image.prefix>localhost:5000</docker.image.prefix>
 		<docker.plugin.version>1.0.0</docker.plugin.version>
 		<jackson.version>2.8.10</jackson.version>
 	</properties>

@@ -103,7 +103,8 @@ export default {
         this.changeSave = true
       })
     },
-    $change(value, render){ // 编辑区发生变化的回调事件
+    $change(value, render) {
+      // 编辑区发生变化的回调事件
       this.blogEditState = '未保存'
       // if (this.changeSave) {
       //   this.blogEditState = '保存中...'

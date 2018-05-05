@@ -52,7 +52,7 @@
 
 <script>
 import { tree } from '@/api/admin/system/menu/index'
-import { getButtonByMenuIdOrRoleId  } from '@/api/admin/system/button/index'
+import { getButtonByMenuIdOrRoleId } from '@/api/admin/system/button/index'
 import { addRoleRes, getResIdByRoleId } from '@/api/admin/system/role/index'
 export default {
   props: ['roleId'],
@@ -86,7 +86,7 @@ export default {
     },
     clickTree(data) {
       this.checkRes.menuId = data.id
-      this.checkRes.roleId = ""
+      this.checkRes.roleId = ''
       this.getButtonByMenuId(data.id, this.checkRes)
     },
     getButtonByMenuId(id, obj) {
@@ -99,8 +99,8 @@ export default {
     },
     checkButtonByRoleIdAndMenuId() {
       this.list.forEach(element => {
-        if (this.roleMenuResId.indexOf(element.id) != -1) {
-          this.$refs.buttonsTable.toggleRowSelection(element);
+        if (this.roleMenuResId.indexOf(element.id) !== -1) {
+          this.$refs.buttonsTable.toggleRowSelection(element)
         }
       })
       // this.list.forEach(row => {
@@ -122,11 +122,10 @@ export default {
       var menuId = menus.map(menu => menu.id).join()
       this.checkRes.menuId = menuId
       this.checkRes.roleId = roleId
-      debugger
-      var buttons = this.$refs.buttonsTable.selection.map(button => button.id).join()      
+      var buttons = this.$refs.buttonsTable.selection.map(button => button.id).join()
       this.checkRes.buttons = buttons
       addRoleRes(roleId, this.checkRes).then(() => {
-         this.$notify({
+        this.$notify({
           title: '成功',
           message: '资源添加成功',
           type: 'success',
@@ -148,7 +147,7 @@ export default {
     },
     cancel() {
       // 清楚按钮选中
-      this.$refs.buttonsTable.clearSelection();
+      this.$refs.buttonsTable.clearSelection()
       this.$emit('roleMenuCancle', 'cancel')
     }
   }

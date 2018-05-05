@@ -55,10 +55,10 @@
     </div>
 </template>
 <script>
-  import { getObj } from '@/api/admin/blog/article/index'
-  import { parseTime } from '@/utils/index'
-  import ShowHeader from '@/components/ShowHeader/index'
-  import CommentsIndex from '@/views/show/comment/Index'
+import { getObj } from '@/api/admin/blog/article/index'
+import { parseTime } from '@/utils/index'
+import ShowHeader from '@/components/ShowHeader/index'
+import CommentsIndex from '@/views/show/comment/Index'
 export default {
   components: {
     ShowHeader,

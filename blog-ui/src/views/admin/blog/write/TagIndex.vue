@@ -106,7 +106,7 @@ export default {
     tagClick(key, item) {
       this.tagCancel()
       this.checkTag = key // 替换颜色
-      if(item != null) {
+      if (item != null) {
         this.formTag = item
         this.bus.$emit('getTagId', item.id)
       }
@@ -131,7 +131,7 @@ export default {
             this.getTags()
           })
         })
-      } else{
+      } else {
         console.log(command)
       }
     },

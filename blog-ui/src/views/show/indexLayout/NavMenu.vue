@@ -78,7 +78,7 @@ export default {
       listLoading: true
     }
   },
-  created(){
+  created() {
     this.getMenuList()
   },
   methods: {
@@ -96,17 +96,6 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
-    },
-     handleCommand(command) { // web
-      if (command === 'write') {
-        this.$router.push({ path: '/write' })
-      } else if (command === 'admin') {
-        this.$router.push({ path: '/admin' })
-      } else if (command === 'loyout') {
-        this.logout()
-      } else if (command === 'set') {
-        this.$router.push({ path: '/setting' })
-      }
     }
   }
 }

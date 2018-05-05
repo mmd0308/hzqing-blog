@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { showPage, getObj, putObj, delObj, addObj } from '@/api/admin/blogger/comments/index'
+import { showPage, delObj, addObj } from '@/api/admin/blogger/comments/index'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
 export default {
@@ -134,7 +134,7 @@ export default {
         coType: 'L'
       },
       form: this.initObj(),
-      btn_show_bl:false,
+      btn_show_bl: false,
       show_reply: null
     }
   },
@@ -165,7 +165,7 @@ export default {
       })
     },
     resetTemp() {
-      this.form = this.initObj() 
+      this.form = this.initObj()
     },
     handleDelete(index, row) {
       this.$confirm('是否刪除该记录？', '记录', {
@@ -174,13 +174,13 @@ export default {
         type: 'warning'
       }).then(() => {
         delObj(row.id).then(() => {
-        this.$notify({
+          this.$notify({
             title: '成功',
             message: '删除成功',
             type: 'success',
             duration: 2000
-        })
-        this.getList()
+          })
+          this.getList()
         })
       })
     },
@@ -210,11 +210,11 @@ export default {
       this.show_reply = id
       this.form.coId = id
       this.form.superId = id
-      if (null != name) {
-        this.form.coContent = "@"+name
+      if (name != null) {
+        this.form.coContent = '@' + name
       }
-      if (null != itId) {
-          this.form.coId = itId
+      if (itId != null) {
+        this.form.coId = itId
       }
     }
   }
