@@ -109,7 +109,7 @@
                             <el-form-item label="上传图片" prop="img" class="upload">
                                 <el-upload
                                     class="avatar-uploader"
-                                    action="http://localhost:8899/admin/blogger/diary/uploadImages"
+                                    :action="uploadUrl"
                                     :headers="uploadHeader"
                                     :show-file-list="false"
                                     :on-success="handleAvatarSuccess">
@@ -172,7 +172,8 @@
             { min: 10, max: 2000, message: '长度在10到20000个字符', trigger: 'blur' }
           ],
           img: { required: true, message: '请选择图片', trigger: 'blur' }
-        }
+        },
+        uploadUrl: process.env.BASE_API + '/admin/blogger/diary/uploadImages'
       }
     },
     created() {

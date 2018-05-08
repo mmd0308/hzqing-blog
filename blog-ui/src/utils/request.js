@@ -65,6 +65,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    // 如果拦截器拦截，就返回500错误信息 存在bug 稍后处理
     console.log('responseErr:' + error)// for debug
     Message({
       message: error.message,

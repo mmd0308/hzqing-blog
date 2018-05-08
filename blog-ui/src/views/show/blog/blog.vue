@@ -17,7 +17,7 @@
                         <div class="appMain-card-header"  @click="toDetail(item.id)">
                             <h3>{{ item.arTitle }}</h3>
                         </div>
-                        <div class="show-index-blog-abstract">
+                        <div class="show-index-blog-abstract show-blog-list-desc">
                             {{ item.arDesc }}
                         </div>
                         <div style="height:20px;">
@@ -44,7 +44,7 @@
                         <div class="appMain-card-header"  @click="toDetail(item.id)">
                             <h3>{{ item.arTitle }}</h3>
                         </div>
-                        <div class="show-index-blog-abstract">
+                        <div class="show-index-blog-abstract show-blog-list-desc">
                             {{ item.arDesc }}
                         </div>
                         <div style="height:20px;">

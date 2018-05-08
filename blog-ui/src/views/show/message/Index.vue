@@ -29,5 +29,8 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
     #message{
         border-radius: 10px;
+        .el-card__body{
+            padding: 0px;
+        }
     }
 </style>

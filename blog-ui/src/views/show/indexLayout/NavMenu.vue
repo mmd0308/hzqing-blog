@@ -32,7 +32,8 @@
                     </router-link>
                     <div v-else>
                         <div class="detail-comment-pic" style="height:52px;width:52px; padding:8px;">
-                            <img src="static/img/touxiang.jpeg"/>
+                            <img v-if="avatar === ''" src="static/img/touxiang.jpeg"/>
+                            <img v-else :src="avatar"/>
                         </div>
                         <ul class="sub-menu">
                             <li v-for="(it,ind) in showMenus" :key="ind">
@@ -67,7 +68,8 @@ export default {
   computed: {
     ...mapGetters([
       'token',
-      'showMenus'
+      'showMenus',
+      'avatar'
     ])
   },
   data() {

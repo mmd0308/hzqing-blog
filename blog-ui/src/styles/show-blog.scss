@@ -24,10 +24,15 @@
     height: 130px;
     float: left;
 }
-
-
 .show-index-blog-abstract {
     line-height: 24px;
+}
+.show-blog-list-desc{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .user-detail {
     font-size: 15px;

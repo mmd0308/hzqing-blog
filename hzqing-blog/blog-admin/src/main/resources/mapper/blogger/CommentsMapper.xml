@@ -19,8 +19,9 @@
         <result column="co_content" property="coContent"/>
         <result column="co_ctime" property="coCtime"/>
         <result column="super_id" property="superId"/>
-        <result column="full_name" property="userFullName" />
+        <result column="nick_name" property="userNickName" />
         <result column="co_type" property="coType"/>
+        <result column="avatar" property="avatar" />
     </resultMap>
 
     <sql id="table">
@@ -88,7 +89,8 @@
             b.co_content,
             b.co_id,
             b.super_id,
-            u.full_name
+            u.nick_name,
+            u.avatar
         FROM blogger_comments b
         LEFT JOIN sys_user u  ON b.user_id = u.id
         WHERE 1 = 1

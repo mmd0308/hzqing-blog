@@ -58,9 +58,11 @@ ul {
 }
 li {
   line-height: 20px;
-  // list-style: none;
 }
-
+img {
+  width: 100%;
+  height: 100%;
+}
 .clearfix {
   &:after {
     visibility: hidden;
@@ -114,8 +116,7 @@ li {
   float: left;
 }
 .detail-comment-pic img{
-  width: 100%;
-  height: 100%;
+
   border-radius: 50%;
 }
 .el-card{
@@ -134,14 +135,36 @@ li {
 .fr{
   float: right;
 }
-@media screen and (min-width:1024px) {
-  h2{
-    font-size: 20px;
-  }
+@media screen and (max-width:1400px) { // 屏幕宽度小于 1400px
+
+}
+
+@media screen and (max-width:1280px) { // 屏幕宽度小于 1280px
+
 }
 
 @media screen and (max-width:1024px){
   h2{
     font-size: 15px;
   }
+  .detail-comment-textarea{
+    width: 90%;
+  }
 }
+
+@media screen and (max-width:768px){
+  .detail-comment-textarea{
+    width: 85%;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  h2{
+    font-size: 20px;
+  }
+  .detail-comment-textarea{
+    width: 94%;
+  }
+}
+
+

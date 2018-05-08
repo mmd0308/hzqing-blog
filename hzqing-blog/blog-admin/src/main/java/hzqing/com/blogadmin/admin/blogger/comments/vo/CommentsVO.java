@@ -11,17 +11,28 @@ import java.util.List;
 @Alias("commentsvo")
 public class CommentsVO extends Comments{
 
-    private String userFullName;
+    private String userNickName;
+    /**
+     * 用户头像
+     */
+    private String avatar;
 
     private List<CommentsVO> lists;
 
-
-    public String getUserFullName() {
-        return userFullName;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setUserFullName(String userFullName) {
-        this.userFullName = userFullName;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public List<CommentsVO> getLists() {

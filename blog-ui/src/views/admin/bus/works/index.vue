@@ -107,7 +107,7 @@
                     <el-form-item label="上传图片" prop="workImg" class="upload">
                         <el-upload
                             class="avatar-uploader"
-                            action="http://localhost:8899/admin/bus/works/uploadImages"
+                            :action="uploadUrl"
                             :headers="uploadHeader"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess">
@@ -163,7 +163,8 @@
             { required: true, message: '请输入名稱', trigger: 'blur' }
           ],
           workImg: { required: true, message: '请选择图片', trigger: 'blur' }
-        }
+        },
+        uploadUrl: process.env.BASE_API + '/admin/bus/works/uploadImages'
       }
     },
     created() {

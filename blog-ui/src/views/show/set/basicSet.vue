@@ -46,7 +46,7 @@
             field="file"
             :width="300"
             :height="300"
-            url="http://localhost:8899/admin/user/uploadImages"
+            :url="uploadUrl"
             :headers="headers"
             v-model="show"
             img-format="png">
@@ -74,6 +74,7 @@ export default {
       headers: {
         'ACCESS-TOKEN': getToken()
       },
+      uploadUrl: process.env.BASE_API + '/admin/user/uploadImages',
       show: false
     }
   },

@@ -75,8 +75,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements IArt
     public int update(Article article) {
         if (null != article.getArContentHtml() && article.getArContentHtml() != "") {
             String desc = ReplaceStrUtil.delHtmlTag(article.getArContentHtml());
-            if (desc.length() > 200)
-                article.setArDesc(desc.substring(0, 200));
+            if (desc.length() > 300)
+                article.setArDesc(desc.substring(0, 300));
             else
                 article.setArDesc(desc);
             //获取博客图片

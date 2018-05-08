@@ -58,6 +58,7 @@ const user = {
           commit('SET_NAME', data.name)
           commit('SET_RESCODE', data.resCode)
           commit('SET_SHOWMENUS', data.menus)
+          commit('SET_AVATAR',data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)

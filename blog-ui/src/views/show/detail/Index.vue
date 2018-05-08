@@ -1,6 +1,6 @@
 <template>
     <div id="detail">
-        <show-header :message='msg'></show-header>
+        <!-- <show-header :message='msg'></show-header> -->
         <el-card class="detail-card" 
             v-loading="listLoading" 
             element-loading-text="拼命加载中..."

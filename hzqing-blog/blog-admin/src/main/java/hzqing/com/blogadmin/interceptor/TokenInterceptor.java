@@ -22,7 +22,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         String tokens = request.getHeader(Constant.ACCESS_TOKEN_KEY);
         request.setAttribute(Constant.REPLACE_TOKEN_KEY,false);
         if (null == tokens) { //判断token是否存在
-
             return false;
         }
         long res = JwtTokenUtil.checkJwtExpired(tokens,Constant.JWT_SECRET);

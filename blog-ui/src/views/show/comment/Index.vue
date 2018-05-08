@@ -3,7 +3,7 @@
         <div class="detail-comment-topic" >
             <div  class="detail-comment ">
                 <div class="detail-comment-pic">
-                    <img src="static/img/touxiang.jpeg"/>
+                    <img :src="avatar"/>
                 </div>
                 <div class="detail-comment-textarea" @click="toCreate">
                     <el-input
@@ -12,9 +12,9 @@
                         placeholder="写下你的评论..."
                         v-model="commentContent">
                         </el-input>
-                    <div class="detail-comment-submit" v-if="btn_show_bl">
+                    <div class="detail-comment-submit" v-if="btn_show_bl == true">
                         <el-button type="success" style="float:right;padding:9px 23px;" round  @click="create" >发送</el-button>
-                        <el-button type="info" style="float:right;padding:9px 23px; margin-right:10px;" round>取消</el-button>
+                        <el-button type="info" style="float:right;padding:9px 23px; margin-right:10px;" round @click="cancel">取消</el-button>
                     </div> 
                 </div>
             </div>
@@ -27,12 +27,12 @@
         <div class="detail-comment-body" v-for="(item,index) in list" :key="index">
             <div style="margin-bottom: 15px;">
                 <div class="detail-comment-pic">
-                    <img src="static/img/touxiang.jpeg"/>
+                    <img :src="item.avatar" />
                 </div>
                 <div class="comment-msg">
                     <div class="comment-head">
                         <span class="author">
-                            {{ item.userFullName}}
+                            {{ item.userNickName}}
                         </span>
                         <span class="fr see-font">
                             {{ item.coCtime | formatDate}}
@@ -55,11 +55,11 @@
                         <div class="other-reply bb-dash"  v-for="(it,ind) in item.lists" :key="ind">
                             <div style="margin:10px 0px;">
                                 <span class="author">
-                                    {{ it.userFullName}}
+                                    {{ it.userNickName}}
                                 </span>
                                 ：
                                 <span class="author">
-                                    @{{ item.userFullName }}
+                                    @{{ item.userNickName }}
                                 </span> 
                                 <span>
                                     {{ it.coContent}}
@@ -69,7 +69,7 @@
                                 <span>
                                     {{ it.coCtime | formatDate}}
                                 </span>
-                                <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1" @click="toReply(item.id, it.userFullName, it.id)">
+                                <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1" @click="toReply(item.id, it.userNickName, it.id)">
                                     <svg-icon icon-class="user-reply"></svg-icon>
                                     回复
                                 </span>
@@ -108,7 +108,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters([
-      'resCode'
+      'resCode',
+      'avatar'
     ])
   },
   props: {
@@ -206,6 +207,9 @@ export default {
         this.getList()
       })
     },
+    cancel() {
+      this.btn_show_bl = false
+    },
     toReply(id, name, itId) {
       this.show_reply = id
       this.form.coId = id
@@ -239,7 +243,6 @@ export default {
         position: relative;
         display: inline-block;
         margin-left: 10px;
-        width: 94%;
     }
     .detail-comment-reply{
         position: relative;
@@ -268,10 +271,10 @@ export default {
         font-size: 14px;
         
     }
-
     .svg-comment:nth-child(2){
         margin-left: 10px;
     }
+
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name:{{name}}</div>
+    <div class="dashboard-text">avatar:{{avatar}}</div>
     <div class="dashboard-text">roles:<span v-for='role in roles' :key='role'>{{role}}</span></div>
     <div class="dashboard-text">resCode:<span v-for='role in resCode' :key='role'>{{role}},</span></div>
     <div class="dashboard-text">showMenus:<span v-for='menu in showMenus' :key='menu'>{{menu}},</span></div>
@@ -17,7 +18,8 @@ export default {
       'name',
       'roles',
       'resCode',
-      'showMenus'
+      'showMenus',
+      'avatar'
     ])
   }
 }
