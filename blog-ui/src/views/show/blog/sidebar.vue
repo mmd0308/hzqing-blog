@@ -148,6 +148,7 @@ export default {
     }
     .right-commend{
         margin-bottom: 20px;
+        list-style: none;
     }
     .right-commend:last-child{
         margin-bottom: 0px;

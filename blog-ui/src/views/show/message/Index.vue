@@ -1,22 +1,27 @@
 <template>
     <div id="message">
-        <show-header :message='msg'></show-header>
-        <comment></comment>
+        <el-card class="box-card"  >
+            <div slot="header" class="clearfix">
+                <span>{{navHeader}}</span>
+            </div>
+            <comment></comment>
+        </el-card>
     </div>
 </template>
 
 <script>
-import ShowHeader from '@/components/ShowHeader/index'
 import Comment from '@/views/show/comment/Index'
 export default {
   components: {
-    ShowHeader,
     Comment
   },
   data() {
     return {
-      msg: '留言板'
+      navHeader: ''
     }
+  },
+  created() {
+    this.navHeader = this.$route.query.navHeader
   }
 }
 </script>

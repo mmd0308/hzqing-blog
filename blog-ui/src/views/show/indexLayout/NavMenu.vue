@@ -1,7 +1,7 @@
 <template>
     <div class="showNavMenu">
                 <h1 class="show-navbar-title">
-                    <router-link to="/" >衡钊清的博客</router-link>
+                    <router-link to="/" >衡钊清博客</router-link>
                 </h1>
                 <ul class="nav"
                     v-loading="listLoading" 
@@ -147,6 +147,7 @@ export default {
         li{
             line-height: 30px;
             font-size: 12px;
+            list-style: none;
         }
         li:hover{
             background: #ff7d44;

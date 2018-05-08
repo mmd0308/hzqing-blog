@@ -1,21 +1,21 @@
 <template>
     <div id="diary">
-        <show-header :message='msg'></show-header>
-        <div class="dirary-body" style="background:#fff">
-             <hzqing-vue-timeline timelineColor="#fff" timeContentColor="#f1f1f1" :dataList="timeItemList"></hzqing-vue-timeline>
-        </div>
+        <el-card class="box-card"  >
+            <div slot="header" class="clearfix">
+                <span>{{navHeader}}</span>
+            </div>
+          <div class="dirary-body" style="background:#fff">
+              <hzqing-vue-timeline timelineColor="#fff" timeContentColor="#f1f1f1" :dataList="timeItemList"></hzqing-vue-timeline>
+          </div>
+        </el-card>
     </div>
 </template>
 <script>
 import { showAll } from '@/api/admin/blogger/diary/index'
-import ShowHeader from '@/components/ShowHeader/index'
 export default {
-  components: {
-    ShowHeader
-  },
   data() {
     return {
-      msg: '个人日记',
+      navHeader: '',
       timeItemList: [],
       listQuery: {
         title: ''
@@ -24,6 +24,7 @@ export default {
   },
   created() {
     this.getAll()
+    this.navHeader = this.$route.query.navHeader
   },
   methods: {
     getAll() {

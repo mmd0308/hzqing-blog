@@ -1,43 +1,46 @@
 <template>
     <div id="works">
-        <show-header :message='msg'></show-header>
-        <div class="works-body fl" style="background:#fff;">
-            <el-row>
-                <el-col :span="6" v-for="o in 4" :key="o" >
-                    <div class="item fl" >
-                        <div class="item-img fl">
-                            <img src="static/img/timeline.png"/> 
-                        </div>
-                        <div class="itme-title fl"> 
-                            <h2>
-                                衡钊清个人博客（hzqing-blog）个人博客
-                            </h2>
-                            <div class="see-font fl"> 
-                                <span>
-                                    2018-03-20
-                                </span>
-                                <span>
-                                    阅读 258
-                                </span>
+        <el-card class="box-card"  >
+            <div slot="header" class="clearfix">
+                <span>{{navHeader}}</span>
+            </div>
+            <div class="works-body fl" style="background:#fff;">
+                <el-row>
+                    <el-col :span="6" v-for="o in 4" :key="o" >
+                        <div class="item fl" >
+                            <div class="item-img fl">
+                                <img src="static/img/timeline.png"/> 
+                            </div>
+                            <div class="itme-title fl"> 
+                                <h2>
+                                    衡钊清个人博客（hzqing-blog）个人博客
+                                </h2>
+                                <div class="see-font fl"> 
+                                    <span>
+                                        2018-03-20
+                                    </span>
+                                    <span>
+                                        阅读 258
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </el-col>
-            </el-row>
-        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-card>
     </div>
 </template>
 
 <script>
-import ShowHeader from '@/components/ShowHeader/index'
 export default {
-  components: {
-    ShowHeader
-  },
   data() {
     return {
-      msg: '作品展示'
+      navHeader: ''
     }
+  },
+  created() {
+    this.navHeader = this.$route.query.navHeader
   }
 }
 </script>

@@ -224,7 +224,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
 .comment{
     background: #fff;
-    padding: 35px;
+    padding: 20px;
     border-radius: 10px;
     .detail-comment-submit{
         margin: 10px 0px;
