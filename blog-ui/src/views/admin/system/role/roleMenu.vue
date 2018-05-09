@@ -21,6 +21,7 @@
               :data="list"
               style="width: 100%"
               :highlight-current-row="true"
+              @select="changeTableCBox"
               class="system-table"
               >
                   <el-table-column
@@ -73,7 +74,8 @@ export default {
         buttons: ''
       },
       list: null,
-      roleMenuResId: null,
+      roleMenusId: null,
+      roleButtonsId: null,
       menuTreeLoading: false
     }
   },
@@ -93,13 +95,13 @@ export default {
       getButtonByMenuIdOrRoleId(id, obj).then(response => {
         this.list = response.data
         this.$nextTick(() => {
-          this.checkButtonByRoleIdAndMenuId(id)
+          this.checkButtonByRoleIdAndMenuId()
         })
       })
     },
     checkButtonByRoleIdAndMenuId() {
       this.list.forEach(element => {
-        if (this.roleMenuResId.indexOf(element.id) !== -1) {
+        if (this.roleButtonsId.indexOf(element.id) !== -1) {
           this.$refs.buttonsTable.toggleRowSelection(element)
         }
       })
@@ -122,8 +124,8 @@ export default {
       var menuId = menus.map(menu => menu.id).join()
       this.checkRes.menuId = menuId
       this.checkRes.roleId = roleId
-      var buttons = this.$refs.buttonsTable.selection.map(button => button.id).join()
-      this.checkRes.buttons = buttons
+      // var buttons = this.$refs.buttonsTable.selection.map(button => button.id).join()
+      this.checkRes.buttons = this.roleButtonsId.join()
       addRoleRes(roleId, this.checkRes).then(() => {
         this.$notify({
           title: '成功',
@@ -137,9 +139,10 @@ export default {
     getMenuIdByRoleId() {
       getResIdByRoleId(this.roleId).then(response => {
         this.resetChecked()
-        this.$refs.roleMenuTree.setCheckedKeys(response.data)
+        this.$refs.roleMenuTree.setCheckedKeys(response.data.menuIds)
         this.menuTreeLoading = false
-        this.roleMenuResId = response.data
+        this.roleMenusId = response.data.menuIds
+        this.roleButtonsId = response.data.buttonIds
       })
     },
     resetChecked() {
@@ -149,6 +152,15 @@ export default {
       // 清楚按钮选中
       this.$refs.buttonsTable.clearSelection()
       this.$emit('roleMenuCancle', 'cancel')
+    },
+    changeTableCBox(selection, row) {
+      var buttons = selection.map(button => button.id).join()
+      if (buttons.indexOf(row.id) !== -1) { // 表示选中状态
+        this.roleButtonsId.push(row.id)
+      } else { // 取消状态
+        var buIndex = this.roleButtonsId.indexOf(row.id)
+        this.roleButtonsId.splice(buIndex, 1)
+      }
     }
   }
 }

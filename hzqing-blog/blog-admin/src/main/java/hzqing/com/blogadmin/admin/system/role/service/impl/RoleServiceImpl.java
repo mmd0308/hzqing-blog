@@ -4,6 +4,7 @@ import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
+import hzqing.com.blogadmin.constant.Constant;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +43,17 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
     }
 
     @Override
-    public List<String> getResIdByRoleId(String roleId) {
-        return (List<String>) baseDao.findForList(mapper+".getResIdByRoleId",roleId);
+    public Map<String,List<String>> getResIdByRoleId(String roleId) {
+        Map<String,String> params = new HashMap<>();
+        params.put("roleId",roleId);
+        params.put("resType",Constant.RES_TYPE_MENU);
+        List<String> menus = (List<String>) baseDao.findForList(mapper+".getResIdByRoleIdAndType",params);
+        params.put("resType",Constant.RES_TYPE_BUTTON);
+        List<String> buttons = (List<String>) baseDao.findForList(mapper+".getResIdByRoleIdAndType",params);
+        Map<String,List<String>> res = new HashMap<>();
+        res.put("menuIds",menus);
+        res.put("buttonIds",buttons);
+        return  res;
     }
 
     @Override
@@ -77,6 +87,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
         }
         return (int) baseDao.batchSave(mapper+".addBatchRoleMenuButton",lists);
     }
+
 }
 
 

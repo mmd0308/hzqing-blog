@@ -2,8 +2,10 @@
     font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif !important;
     font-size: 14px !important;
     line-height: 1.5 !important;
-  }
-
+}
+.markdown-body code{
+    font-size: 100% !important;
+}
 .v-note-wrapper .v-note-op {
     background: #d9d9d9 !important;
     box-shadow: none !important;

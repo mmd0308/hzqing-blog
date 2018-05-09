@@ -119,8 +119,8 @@
     <delete id="deleteRoleMenuButtonByRid" parameterType="map">
         DELETE  FROM  rl_role_resource WHERE role_id = #{roleId} AND resource_type = #{resourceType}
     </delete>
-    <select id="getResIdByRoleId" parameterType="string" resultType="string">
-        SELECT resource_id FROM  rl_role_resource WHERE role_id  = #{0}
+    <select id="getResIdByRoleIdAndType" parameterType="map" resultType="string">
+        SELECT resource_id FROM  rl_role_resource WHERE role_id  = #{roleId} AND resource_type = #{resType}
     </select>
     <select id="getRoleByType" parameterType="string" resultMap="roleMap" >
         SELECT

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/role")
@@ -50,8 +51,8 @@ public class RoleController extends BaseController<Role,IRoleService> {
      * @return
      */
     @GetMapping("/getResIdByRoleId/{roleId}")
-    public ResponseMessage<List<String>> getResIdByRoleId(@PathVariable String roleId){
-        List<String> mIds = baseService.getResIdByRoleId(roleId);
+    public ResponseMessage<Map<String,List<String>>> getResIdByRoleId(@PathVariable String roleId){
+        Map<String,List<String>> mIds = baseService.getResIdByRoleId(roleId);
         return  new ResponseMessage<>().success(mIds);
     }
 }

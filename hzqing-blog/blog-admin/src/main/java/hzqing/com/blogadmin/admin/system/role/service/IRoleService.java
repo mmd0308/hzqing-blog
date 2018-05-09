@@ -5,6 +5,7 @@ import hzqing.com.blogadmin.admin.system.role.entity.Role;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface IRoleService extends IBaseService<Role> {
     List<Role> getAllEnabledRole();
@@ -13,7 +14,7 @@ public interface IRoleService extends IBaseService<Role> {
 
     int addRoleRes(HashMap<String, Object> resouce);
 
-    List<String> getResIdByRoleId(String roleId);
+    Map<String,List<String>> getResIdByRoleId(String roleId);
 
     List<Role> getDefautsRole(String roleType);
 

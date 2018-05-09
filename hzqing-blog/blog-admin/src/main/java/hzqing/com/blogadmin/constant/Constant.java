@@ -65,4 +65,13 @@ public class Constant {
      *  博客状态 草稿
      */
     public static final String BLOG_STATE_CG_REP = "草稿";
+
+    /**
+     * 资源类型，按钮
+     */
+    public static final String RES_TYPE_BUTTON="button";
+    /**
+     * 资源类型，菜单
+     */
+    public static final String RES_TYPE_MENU="menu";
 }

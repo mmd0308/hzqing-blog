@@ -42,14 +42,15 @@
                         {{ item.coContent }}
                     </div>
                     <div class="see-font comment-bar">
-                        <span class="svg-container svg-comment">
+                        <span class="svg-container svg-comment mp">
                             <svg-icon icon-class="comment-star"></svg-icon>
                             1人赞
                         </span>
-                        <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1"  @click="toReply(item.id, null, null)">
+                        <span class="svg-container svg-comment mp" v-if="resCode.indexOf('BUTTON_LY_HH') != -1"  @click="toReply(item.id, null, null)">
                             <svg-icon icon-class="user-reply"></svg-icon>
                               回复
                         </span>
+                        <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" type="text" size="mini" icon="el-icon-delete">删除</el-button>
                     </div>
                      <div class="comment-reply-other">
                         <div class="other-reply bb-dash"  v-for="(it,ind) in item.lists" :key="ind">
@@ -73,6 +74,7 @@
                                     <svg-icon icon-class="user-reply"></svg-icon>
                                     回复
                                 </span>
+                                <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" type="text" size="mini" icon="el-icon-delete">删除</el-button>
                             </div>
                         </div>
                         <div class="other-reply detail-comment-reply" v-if="show_reply === item.id">
@@ -271,7 +273,7 @@ export default {
         font-size: 14px;
         
     }
-    .svg-comment:nth-child(2){
+    .svg-comment{
         margin-left: 10px;
     }
 

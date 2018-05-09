@@ -4,7 +4,7 @@
             <div slot="header" class="clearfix">
                 <span>{{navHeader}}</span>
                 <div class="fr">
-                  <el-button class="el-header-right-button" v-if="resCode.indexOf('BUTTON_GRRJ_SZ') != -1" @click="toAdd" type="text">新增</el-button>
+                  <el-button class="el-header-right-button" v-if="resCode.indexOf('BUTTON_GRRJ_XZ') != -1" @click="toAdd" type="text">新增</el-button>
                 </div>
             </div>
           <div class="dirary-body" style="background:#fff">
