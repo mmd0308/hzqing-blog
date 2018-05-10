@@ -170,8 +170,7 @@
           content: [
             { required: true, message: '请输入内容', trigger: 'blur' },
             { min: 10, max: 2000, message: '长度在10到20000个字符', trigger: 'blur' }
-          ],
-          img: { required: true, message: '请选择图片', trigger: 'blur' }
+          ]
         },
         uploadUrl: process.env.BASE_API + '/admin/blogger/diary/uploadImages'
       }
@@ -296,24 +295,6 @@
 
 <style rel="stylesheet/scss" lang="scss">
 #diary{
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    .avatar-uploader .el-upload:hover {
-        border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 120px;
-        height: 120px;
-        line-height: 120px;
-        text-align: center;
-    }
     .avatar {
         width: 120px;
         height: 120px;

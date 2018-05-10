@@ -50,7 +50,7 @@
                             <svg-icon icon-class="user-reply"></svg-icon>
                               回复
                         </span>
-                        <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                        <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" @click="deleteById(item.id)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
                     </div>
                      <div class="comment-reply-other">
                         <div class="other-reply bb-dash"  v-for="(it,ind) in item.lists" :key="ind">
@@ -74,7 +74,7 @@
                                     <svg-icon icon-class="user-reply"></svg-icon>
                                     回复
                                 </span>
-                                <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                                <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" @click="deleteById(it.id)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
                             </div>
                         </div>
                         <div class="other-reply detail-comment-reply" v-if="show_reply === item.id">
@@ -170,13 +170,13 @@ export default {
     resetTemp() {
       this.form = this.initObj()
     },
-    handleDelete(index, row) {
+    deleteById(id) {
       this.$confirm('是否刪除该记录？', '记录', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        delObj(row.id).then(() => {
+        delObj(id).then(() => {
           this.$notify({
             title: '成功',
             message: '删除成功',
