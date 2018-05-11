@@ -33,6 +33,23 @@ public class ArticleVO extends Article{
      */
     private String countNum;
 
+    /**
+     * 文章列表排序规则
+     * UP
+     * ETIME
+     * UPETIME
+     */
+    private String arOrder;
+
+
+    public String getArOrder() {
+        return arOrder;
+    }
+
+    public void setArOrder(String arOrder) {
+        this.arOrder = arOrder;
+    }
+
     public String getCountNum() {
         return countNum;
     }

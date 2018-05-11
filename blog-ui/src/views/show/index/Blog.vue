@@ -93,7 +93,8 @@ export default {
         page: 1,
         pageSize: 5,
         arTitle: '',
-        arUp: ''
+        arUp: '',
+        arOrder: 'ETIME'
       },
       isItem: '0',
       listLoading: false

@@ -131,7 +131,14 @@
         <if test="tagId != null and tagId != ''">
             AND find_in_set(b.id,(SELECT GROUP_CONCAT(a.article_id) FROM (SELECT article_id FROM rl_article_tag WHERE tag_id = #{tagId}) a))
         </if>
-        ORDER  BY b.ar_up DESC, b.ar_etime DESC
+        <choose>
+            <when test="arOrder == 'ETIME'">
+                ORDER BY b.ar_etime DESC
+            </when>
+            <otherwise>
+                ORDER  BY b.ar_up DESC, b.ar_etime DESC
+            </otherwise>
+        </choose>
     </select>
     <select id="query" parameterType="article" resultMap="articleMap">
         SELECT
