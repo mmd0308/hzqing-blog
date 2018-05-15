@@ -11,7 +11,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/admin':{
-        target: 'http://localhost:8899',
+        target: 'http://hzqing.com',
+        //target: 'http://localhost:8899',
         pathRewrite: {
           '^/admin': '/admin'
         },

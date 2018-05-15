@@ -56,7 +56,7 @@
     </div>
 </template>
 <script>
-import { showAll, addObj } from '@/api/admin/blogger/diary/index'
+import { showAll, addObj } from '@/api/manager/blogger/diary/index'
 import { mapGetters } from 'vuex'
 import { getToken } from '@/utils/auth'
 export default {

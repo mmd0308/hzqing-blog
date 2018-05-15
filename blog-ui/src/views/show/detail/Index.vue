@@ -47,15 +47,53 @@
                  >
                 </mavon-editor>
             </div>
+            <div  class="copyright see-font">
+              版权声明：本文为博主原创文章，未经博主允许不得转载。
+            </div>
         </el-card>
         <div class="comments">
           <comments-index :articleId="form.id">
           </comments-index>
         </div>
+
+        <div class="tool-box" ref="toolBox">
+          <ul class="meau-list">
+            <li>
+              <div class="btn-like mp" >
+                <svg-icon class="detail-icon" icon-class="detail-star"></svg-icon>
+                <p>1</p>
+              </div>
+            </li>
+            <li>
+              <div class="btn-like mp">
+                <svg-icon class="detail-icon" icon-class="detail-pinglun"></svg-icon>
+                <p>评论</p>
+              </div>
+            </li>
+            <li>
+              <div class="btn-like mp" >
+                <svg-icon class="detail-icon" icon-class="detail-weibo"></svg-icon>
+                <p>微博</p>
+              </div>
+            </li>
+            <li>
+              <div class="btn-like mp" title="点赞">
+                <svg-icon class="detail-icon" icon-class="detail-weixin"></svg-icon>
+                <p>微信</p>
+              </div>
+            </li>
+            <li>
+              <div class="btn-like mp" title="点赞">
+                <svg-icon class="detail-icon" icon-class="detail-qq"></svg-icon>
+                <p>QQ</p>
+              </div>
+            </li>
+          </ul>
+        </div>
     </div>
 </template>
 <script>
-import { getObj } from '@/api/admin/blog/article/index'
+import { getObj } from '@/api/manager/blog/article/index'
 import { parseTime } from '@/utils/index'
 import ShowHeader from '@/components/ShowHeader/index'
 import CommentsIndex from '@/views/show/comment/Index'
@@ -110,7 +148,19 @@ export default {
         this.listLoading = false
         this.msg = response.data.tag.tagName
       })
+    },
+    handleScroll() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const tools = this.$refs.toolBox
+      if (scrollTop < 50) {
+        tools.style.setProperty('--toolBoxHeight', (80 - scrollTop) + 'px')
+      } else {
+        tools.style.setProperty('--toolBoxHeight', '50px')
+      }
     }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -151,9 +201,48 @@ export default {
             }
        }
    }
+   .copyright{
+    padding: 16px 0px;
+    border-bottom: 1px dashed #ccc;
+    border-top: 1px dashed #ccc;
+    margin: 5px 20px 20px;
+   }
    .comments{
      margin-top: 20px;
    }
+   .tool-box{
+      --toolBoxHeight: 80px;
+      position: fixed;
+      left: 290px;
+      top: var(--toolBoxHeight);
+      ul {
+        li {
+          list-style: none;
+          .btn-like {
+            color: #6b6b6b;
+            width: 44px;
+            background: #fff;
+            height: 56px;
+            text-align: center;
+            margin-bottom: 6px;
+            border-radius: 6px;
+          }
+          .btn-like:hover{
+            color: #f56c6c;            
+          }
+          .detail-icon {
+            margin-top: 7px;
+            margin-bottom: 3px;
+            font-size: 18px;
+          }
+        }
+        p {
+          margin: 0px;
+          font-size: 12px;
+        }
+      }
+   }
+
 
 }
 </style>

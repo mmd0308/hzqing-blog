@@ -107,18 +107,6 @@ img {
   border-bottom: 1px dashed #f0f0f0;
 }
 
-.detail-comment-pic{
-  width: 40px;
-  height: 40px;
-  display: block;
-  cursor: pointer;
-  margin: auto;
-  float: left;
-}
-.detail-comment-pic img{
-
-  border-radius: 50%;
-}
 .el-card{
   border-radius: 10px;
 }
@@ -146,6 +134,7 @@ img {
 }
 
 @media screen and (max-width:1024px){
+  --detail-tool-box-left:290px;
   h2{
     font-size: 15px;
   }

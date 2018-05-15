@@ -9,9 +9,10 @@ const whiteList = ['/index', '/write', '/login', '/', '/detail', '/message', '/a
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) { // 如果token存在
-    console.log(getToken())
+    console.log('token 存在 ' + getToken())
+    console.log('路径 ：  ' + to.path)
     if (to.path === '/login') {
-      next({ path: '/admin' })
+      next({ path: '/manager' })
     } else {
       if (store.getters.roles.length === 0) { // 如果没有角色，获取用户信息
         store.dispatch('GetUserInfo').then(res => { // 拉取用户信息
@@ -30,6 +31,7 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) { // 白名单中是否存在
       next()
     } else {
+      console.log('-----permission token 不存在 不再白名单')
       next('/index') // 如果没有权限，直接返回首页面
       NProgress.done()
     }

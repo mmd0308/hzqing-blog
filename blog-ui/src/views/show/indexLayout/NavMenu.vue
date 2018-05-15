@@ -31,15 +31,10 @@
                         </div>
                     </router-link>
                     <div v-else>
-                        <div class="detail-comment-pic" style="height:52px;width:52px; padding:8px;">
-                            <img v-if="avatar === ''" src="static/img/touxiang.jpeg"/>
-                            <img v-else :src="avatar"/>
-                        </div>
+                        <vue-avatar class="vue-avatar fl" username='h' :src="avatar" size="40"></vue-avatar>
                         <ul class="sub-menu">
-                            <li v-for="(it,ind) in showMenus" :key="ind">
-                                <router-link :to="it.href">
-                                    {{it.menuName}}
-                                </router-link>
+                            <li v-for="(it,ind) in showMenus" :key="ind" @click="handlerNav(it.href)">
+                              {{it.menuName}}
                             </li>
                         </ul>
                     </div>
@@ -63,8 +58,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getDefaultMenus } from '@/api/admin/system/menu/index'
+import { getDefaultMenus } from '@/api/manager/system/menu/index'
+import vueAvatar from 'vue-avatar'
 export default {
+  components: {
+    vueAvatar
+  },
   computed: {
     ...mapGetters([
       'token',
@@ -98,6 +97,15 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
+    },
+    handlerNav(href) {
+      if (href === '/logout') {
+        this.logout()
+      } else {
+        this.$router.push({
+          path: href
+        })
+      }
     }
   }
 }
@@ -159,9 +167,6 @@ export default {
         float: right;
         width: 59px;
         text-align: center;
-        .sub-menu{
-            
-        }
     }
     .navRight:hover{
         background-color: #404040;

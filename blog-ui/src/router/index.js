@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '../views/admin/layout/Layout'
+import Layout from '../views/manager/layout/Layout'
 import ShowIndexLayout from '../views/show/indexLayout/Layout'
 
 /**
@@ -64,133 +64,106 @@ export const constantRouterMap = [
       }
     ]
   },
-  { path: '/write', component: () => import('@/views/admin/blog/write/Index'), hidden: true },
-  { path: '/login', component: () => import('@/views/admin/login/index'), hidden: true },
+  { path: '/write', component: () => import('@/views/manager/blog/write/Index'), hidden: true },
+  { path: '/login', component: () => import('@/views/manager/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
-    path: '/admin',
+    path: '',
     component: Layout,
-    redirect: '/admin/index',
-    name: 'Index',
+    name: 'managerIndex',
     children: [{
-      path: 'index',
+      path: 'managerIndex',
       meta: { title: 'Weclome', icon: 'example' },
-      component: () => import('@/views/admin/dashboard/index')
+      component: () => import('@/views/manager/dashboard/index')
     }]
   },
   {
-    path: '/blog',
+    path: '',
     component: Layout,
-    redirect: '/blog/article',
     name: 'Blog',
     meta: { title: '博客管理', icon: 'admin-blog' },
     children: [
       {
-        path: 'write',
+        path: 'blogWrite',
         name: 'Write',
-        redirect: '/write',
         meta: { title: '写文章', icon: 'admin-blog-write' }
       },
       {
-        path: 'article',
+        path: 'blogArticle',
         name: 'Article',
-        component: () => import('@/views/admin/blog/article/Index'),
+        component: () => import('@/views/manager/blog/article/Index'),
         meta: { title: '文章管理', icon: 'table' }
       },
       {
-        path: 'tag',
+        path: 'blogTag',
         name: 'Tag',
-        component: () => import('@/views/admin/blog/tag/index'),
+        component: () => import('@/views/manager/blog/tag/index'),
         meta: { title: '标签管理', icon: 'admin-blog-tag' }
       }
     ]
   },
   {
-    path: '/system',
+    path: '',
     component: Layout,
-    redirect: '/system/user',
     name: 'System',
     meta: { title: '系统管理', icon: 'admin-system' },
     children: [
       {
-        path: 'user',
+        path: 'sysUser',
         name: 'User',
-        component: () => import('@/views/admin/system/user/index'),
+        component: () => import('@/views/manager/system/user/index'),
         meta: { title: '用户管理', icon: 'user' }
       },
       {
-        path: 'role',
+        path: 'sysRole',
         name: 'Role',
-        component: () => import('@/views/admin/system/role/index'),
+        component: () => import('@/views/manager/system/role/index'),
         meta: { title: '角色管理', icon: 'tree' }
       },
       {
-        path: 'menu',
+        path: 'sysMenu',
         name: 'Menu',
-        component: () => import('@/views/admin/system/menu/index'),
+        component: () => import('@/views/manager/system/menu/index'),
         meta: { title: '资源管理', icon: 'tree' }
       }
     ]
   },
   {
-    path: '/comment',
+    path: '',
     component: Layout,
-    redirect: '/comment/user',
-    name: 'Comment',
-    meta: { title: '评论管理', icon: 'admin-comment' },
-    children: [
-      {
-        path: 'user',
-        name: 'User',
-        component: () => import('@/views/admin/system/user/index'),
-        meta: { title: '用户管理', icon: 'table' }
-      },
-      {
-        path: 'role',
-        name: 'Role',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '角色管理', icon: 'tree' }
-      }
-    ]
-  },
-  {
-    path: '/blogger',
-    component: Layout,
-    redirect: '/blogger/me',
     name: 'Blogger',
     meta: { title: '博主管理', icon: 'admin-comment' },
     children: [
       {
-        path: 'diary',
+        path: 'bloggerDiary',
         name: 'Diary',
-        component: () => import('@/views/admin/blogger/diary/index'),
+        component: () => import('@/views/manager/blogger/diary/index'),
         meta: { title: '个人日记', icon: 'admin-comment' }
       },
       {
-        path: 'me',
+        path: 'bloggerMe',
         name: 'me',
-        component: () => import('@/views/admin/system/user/index'),
+        component: () => import('@/views/manager/system/user/index'),
         meta: { title: '关于我', icon: 'admin-comment' }
       }
     ]
   },
   {
-    path: '/bus',
+    path: '',
     component: Layout,
-    redirect: '/bus/link',
     name: 'Bus',
     meta: { title: '博客管理', icon: 'admin-comment' },
     children: [
       {
-        path: 'works',
+        path: 'busWorks',
         name: 'Works',
-        component: () => import('@/views/admin/bus/works/index'),
+        component: () => import('@/views/manager/bus/works/index'),
         meta: { title: '作品管理', icon: 'admin-comment' }
       },
       {
-        path: 'link',
+        path: 'busLink',
         name: 'Link',
-        component: () => import('@/views/admin/bus/link/index'),
+        component: () => import('@/views/manager/bus/link/index'),
         meta: { title: '友情链接', icon: 'admin-comment' }
       }
     ]
@@ -199,7 +172,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
+  mode: 'history', // 后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

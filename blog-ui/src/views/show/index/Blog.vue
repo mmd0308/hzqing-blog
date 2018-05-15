@@ -1,8 +1,8 @@
 <template>
     <div class="showWebIndex">
         <div class="blog-header">
-            <div :class="{item: isItem === '0'}" class="items" @mouseover="blurHeader('0')" > 最新发布</div>
-            <div :class="{item: isItem === '1'}" class="items" @mouseover="blurHeader('1')" > 博文推荐</div>
+            <div :class="{item: isItem === '0'}" class="items mp" @mouseover="blurHeader('0')" > 最新发布</div>
+            <div :class="{item: isItem === '1'}" class="items mp" @mouseover="blurHeader('1')" > 博文推荐</div>
             <!-- <div :class="{item: isItem === '2'}" class="items" @mouseover="blurHeader('2')" > 最新发布</div>
             <div :class="{item: isItem === '3'}" class="items" @mouseover="blurHeader('3')" > 最新发布</div> -->
         </div>
@@ -17,7 +17,7 @@
                             <img class="show-index-blog-topic-pic" :src="item.arImg" alt="">
                         </el-col>
                         <el-col :md="19" :lg="19" :xl="19" v-if="item.arImg != null && item.arImg != ''">
-                            <div class="appMain-card-header"  @click="toDetail(item.id)">
+                            <div class="appMain-card-header mp"  @click="toDetail(item.id)">
                                 <h3>{{ item.arTitle }}</h3>
                             </div>
                             <div class="show-index-blog-abstract" style=" overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
@@ -44,7 +44,7 @@
                             </div>
                         </el-col>
                         <el-col :md="24" :lg="24" :xl="24" v-else>
-                            <div class="appMain-card-header"  @click="toDetail(item.id)">
+                            <div class="appMain-card-header mp"  @click="toDetail(item.id)">
                                 <h3>{{ item.arTitle }}</h3>
                             </div>
                             <div class="show-index-blog-abstract" style=" overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
@@ -77,7 +77,7 @@
     </div>
 </template>
 <script>
-import { showPage } from '@/api/admin/blog/article/index'
+import { showPage } from '@/api/manager/blog/article/index'
 import { parseTime } from '@/utils/index'
 export default {
   filters: {

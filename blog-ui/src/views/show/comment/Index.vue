@@ -2,9 +2,7 @@
   <div class="comment">
         <div class="detail-comment-topic" >
             <div  class="detail-comment ">
-                <div class="detail-comment-pic">
-                    <img :src="avatar"/>
-                </div>
+                <vue-avatar class="vue-avatar fl" username='h' :src="avatar" size="40"></vue-avatar>
                 <div class="detail-comment-textarea" @click="toCreate">
                     <el-input
                         type="textarea"
@@ -26,9 +24,7 @@
         </div>
         <div class="detail-comment-body" v-for="(item,index) in list" :key="index">
             <div style="margin-bottom: 15px;">
-                <div class="detail-comment-pic">
-                    <img :src="item.avatar" />
-                </div>
+                <vue-avatar class="vue-avatar fl" username='h' :src="item.avatar" size="40"></vue-avatar>
                 <div class="comment-msg">
                     <div class="comment-head">
                         <span class="author">
@@ -104,10 +100,14 @@
 </template>
 
 <script>
-import { showPage, delObj, addObj } from '@/api/admin/blogger/comments/index'
+import { showPage, delObj, addObj } from '@/api/manager/blogger/comments/index'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
+import vueAvatar from 'vue-avatar'
 export default {
+  components: {
+    vueAvatar
+  },
   computed: {
     ...mapGetters([
       'resCode',
@@ -276,7 +276,7 @@ export default {
     .svg-comment{
         margin-left: 10px;
     }
-
+    
 }
 
 </style>

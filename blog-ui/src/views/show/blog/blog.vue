@@ -14,7 +14,7 @@
                             <img class="show-index-blog-topic-pic" width="100%" :src="item.arImg" alt="">
                         </el-col>
                         <el-col :md="19" :lg="19" :xl="19" v-if="item.arImg != null && item.arImg != ''">
-                            <div class="appMain-card-header"  @click="toDetail(item.id)">
+                            <div class="appMain-card-header mp"  @click="toDetail(item.id)">
                                 <h3>{{ item.arTitle }}</h3>
                             </div>
                             <div class="show-index-blog-abstract" style=" overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
@@ -37,13 +37,15 @@
                                      <span>
                                         评论： 0
                                     </span> 
-                                    <span class="el-header-right-button mp disply-blog-button" v-if="item.arUp === '0'" @click="updateArUp(item.id, '1')"  type="text">置顶</span>
-                                    <span class="el-header-right-button mp disply-blog-button" v-if="item.arUp === '1'" @click="updateArUp(item.id, '0')" type="text">取消置顶</span>
+                                    <span class="disply-blog-button" v-if="resCode.indexOf('BUTTON_BLOGLIST_UP') != -1">
+                                        <span class="el-header-right-button mp " v-if="item.arUp === '0'" @click="updateArUp(item.id, '1')"  type="text">置顶</span>
+                                        <span class="el-header-right-button mp " v-if="item.arUp === '1'" @click="updateArUp(item.id, '0')" type="text">取消置顶</span>
+                                    </span>
                                 </div>
                             </div>
                         </el-col>
                         <el-col :md="24" :lg="24" :xl="24" v-else>
-                            <div class="appMain-card-header"  @click="toDetail(item.id)">
+                            <div class="appMain-card-header mp"  @click="toDetail(item.id)">
                                 <h3>{{ item.arTitle }}</h3>
                             </div>
                             <div class="show-index-blog-abstract" style=" overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
@@ -66,8 +68,10 @@
                                     <span>
                                         评论： 0 
                                     </span> 
-                                    <span class="el-header-right-button mp disply-blog-button" v-if="item.arUp === '0'" @click="updateArUp(item.id, '1')"  type="text">置顶</span>
-                                    <span class="el-header-right-button mp disply-blog-button" v-if="item.arUp === '1'" @click="updateArUp(item.id, '0')" type="text">取消置顶</span>
+                                    <span class="disply-blog-button" v-if="resCode.indexOf('BUTTON_BLOGLIST_UP') != -1">
+                                        <span class="el-header-right-button mp"   v-if="item.arUp === '0'" @click="updateArUp(item.id, '1')"  type="text">置顶</span>
+                                        <span class="el-header-right-button mp" v-if="item.arUp === '1'" @click="updateArUp(item.id, '0')" type="text">取消置顶</span>
+                                    </span>
                                 </div>
                             </div>
                         </el-col>
@@ -89,9 +93,15 @@
     </div>
 </template>
 <script>
-import { showPage, putObj } from '@/api/admin/blog/article/index'
+import { showPage, putObj } from '@/api/manager/blog/article/index'
 import { parseTime } from '@/utils/index'
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters([
+      'resCode'
+    ])
+  },
   filters: {
     formatDate(time) {
       return parseTime(time, '{y}-{m}-{d} {h}:{i}')

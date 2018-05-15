@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import { showPage } from '@/api/admin/blog/article/index'
-import { showAll } from '@/api/admin/blog/tag/index'
+import { showPage } from '@/api/manager/blog/article/index'
+import { showAll } from '@/api/manager/blog/tag/index'
 import { parseTime } from '@/utils/index'
 export default {
   filters: {

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { showAll } from '@/api/admin/bus/link/index'
+import { showAll } from '@/api/manager/bus/link/index'
 export default {
   data() {
     return {
