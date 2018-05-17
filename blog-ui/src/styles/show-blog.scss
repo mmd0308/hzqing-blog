@@ -7,17 +7,17 @@
     margin-bottom: 18px;
 }
 .appMain-card-header h3 {
-    margin: 0px 0px 15px 0px;
+    margin: 0px 0px 10px 0px;
     color: #2f2f2f;
     font-weight: 700;
-    font-size: 20px;
+    font-size: var(--hzq-h3-font-size);
 }
 /* // #0593d3;} */
 .phone-appMain-card-header h3 {
     margin: 0px;
     color: #2f2f2f;
     font-weight: 700;
-    font-size: 20px;
+    font-size: var(--hzq-h3-font-size);
 }
 .show-index-blog-topic-pic{
     width: 88%;

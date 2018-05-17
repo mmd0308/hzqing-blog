@@ -152,21 +152,26 @@ export default {
     handleScroll() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       const tools = this.$refs.toolBox
+      console.log(scrollTop)
       if (scrollTop < 50) {
-        tools.style.setProperty('--toolBoxHeight', (80 - scrollTop) + 'px')
+        tools.style.setProperty('--toolBoxHeight', '0px')
       } else {
-        tools.style.setProperty('--toolBoxHeight', '50px')
+        tools.style.setProperty('--toolBoxHeight', (scrollTop - 50) + 'px')
       }
     }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
 #detail{
+    position: relative;
     .el-card__header{
         border: none;
         padding: 18px 20px 5px 20px;
@@ -211,9 +216,10 @@ export default {
      margin-top: 20px;
    }
    .tool-box{
-      --toolBoxHeight: 80px;
-      position: fixed;
-      left: 290px;
+     --toolBoxHeight: 0px;
+      z-index: 2;
+      position: absolute;
+      left: -50px;
       top: var(--toolBoxHeight);
       ul {
         li {

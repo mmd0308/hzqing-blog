@@ -73,9 +73,6 @@ export default {
                         margin: 0px 0px 12px;
                         font-size: 14px;
                     }
-                    .see-font{
-                    	font-size: 12px;
-                    }
                 }
             }
             .item:nth-child(2n){

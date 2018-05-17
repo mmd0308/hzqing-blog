@@ -66,11 +66,11 @@
                                 <span>
                                     {{ it.coCtime | formatDate}}
                                 </span>
-                                <span class="svg-container svg-comment" v-if="resCode.indexOf('BUTTON_LY_HH') != -1" @click="toReply(item.id, it.userNickName, it.id)">
+                                <span class="svg-container svg-comment " v-if="resCode.indexOf('BUTTON_LY_HH') != -1" @click="toReply(item.id, it.userNickName, it.id)">
                                     <svg-icon icon-class="user-reply"></svg-icon>
                                     回复
                                 </span>
-                                <el-button class="el-header-right-button-deleted svg-comment"  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" @click="deleteById(it.id)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                                <el-button class="el-header-right-button-deleted svg-comment "  v-if="resCode.indexOf('BUTTON_LY_SC') != -1" @click="deleteById(it.id)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
                             </div>
                         </div>
                         <div class="other-reply detail-comment-reply" v-if="show_reply === item.id">

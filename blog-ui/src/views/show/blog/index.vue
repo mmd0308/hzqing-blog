@@ -1,16 +1,11 @@
 <template>
   <div class="showBlog">
-      <!-- <show-header :message='msg'></show-header> -->
-      <el-row>
-            <el-col :lg="18" :xl="18">
-                  <web-blog ref="blog"></web-blog>
-            </el-col>
-            <el-col  :lg="6" :xl="6">
-                <div>
-                    <web-sidebar v-on:getArticleByLablesId="getArticleByTagId" v-on:getArticleByTitle="getArticleByTitle" ></web-sidebar>
-                </div>
-            </el-col>
-        </el-row>
+        <div class="blog">
+          <web-blog ref="blog"></web-blog>
+        </div>
+        <div class="blog-sidebar">
+          <web-sidebar v-on:getArticleByLablesId="getArticleByTagId" v-on:getArticleByTitle="getArticleByTitle" ></web-sidebar>
+        </div>
   </div>
 </template>
 
@@ -40,6 +35,18 @@ export default {
 }
 </script>
 
-<style>
+<style rel="stylesheet/scss" lang="scss">
+  .showBlog{
+    display: var(--hzq-blog-index-display);
+    .blog{
+      display: var(--hzq-blog-display);
+      vertical-align: top;
+      width: var(--hzq-blog-width);
+    }
+    .blog-sidebar {
+      width:300px;
+      display: var(--hzq-blog-sidebar-display)
+    }
+  }
 
 </style>

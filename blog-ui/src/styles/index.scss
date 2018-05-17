@@ -6,6 +6,8 @@
 @import './markdown.scss';
 @import './system-index.scss';
 @import './show-blog.scss';
+@import './layout.scss';
+@import './color.scss';
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +52,7 @@ a:hover {
 }
 .see-font {
   color: #787878;
-  font-size: 13px;
+  font-size: var(--hzq-see-font-size);
 }
 ul {
   padding: 0px;
@@ -125,37 +127,3 @@ img {
 .fr{
   float: right;
 }
-@media screen and (max-width:1400px) { // 屏幕宽度小于 1400px
-
-}
-
-@media screen and (max-width:1280px) { // 屏幕宽度小于 1280px
-
-}
-
-@media screen and (max-width:1024px){
-  --detail-tool-box-left:290px;
-  h2{
-    font-size: 15px;
-  }
-  .detail-comment-textarea{
-    width: 90%;
-  }
-}
-
-@media screen and (max-width:768px){
-  .detail-comment-textarea{
-    width: 85%;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  h2{
-    font-size: 20px;
-  }
-  .detail-comment-textarea{
-    width: 94%;
-  }
-}
-
-

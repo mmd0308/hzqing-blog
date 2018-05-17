@@ -1,10 +1,12 @@
 <template>
   <div id="showLayout">
     <el-container>
-      <el-header>
-        <nav-menu></nav-menu>
-      </el-header>
-      <el-main>
+      <div class="header">
+        <el-header class="hzq_main">
+          <nav-menu></nav-menu>
+        </el-header>
+      </div>
+      <el-main class="hzq_main">
         <router-view ref="show_index_router_view"></router-view>
       </el-main>
       <el-footer>
@@ -25,46 +27,12 @@
 </script>
 <style rel="stylesheet/scss" lang="scss">
   #showLayout{
+    .header{
+      background-color: var(--hzq-show-header-bg)
+    }
     .el-header{
-      background-color: #222;
       height: 52px !important;
-      color: #fff;
-      padding: 0% 18%;
-    }
-    .el-main{
-      margin: 0% 18%;
-    }
-    @media screen and (max-width:1400px){
-      .el-header{
-        padding: 0% 11%;
-      }
-      .el-main{
-        margin: 0% 11%;
-      }
-    }
-    @media screen and (max-width:1280px){
-      .el-header{
-        padding: 0% 7%;
-      }
-      .el-main{
-        margin: 0% 7%;
-      }
-    }
-    @media screen and (max-width:1024px){
-      .el-header{
-        padding: 0% 5%;
-      }
-      .el-main{
-        margin: 0% 5%;
-      }
-    }
-    @media screen and (max-width:768px){
-      .el-header{
-        padding: 0% 3%;
-      }
-      .el-main{
-        margin:0%  3%;
-      }
+      color: var(--hzq-show-header-font-color);
     }
   }
 </style>

@@ -203,6 +203,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss">
 .show-article{
+    margin-right: 15px;
     .el-card__body{
         padding: 0px;
     }

@@ -156,5 +156,8 @@ export default {
        border-radius: 10px;
       }
   }
+  #hzqing .timeline-row .timeline-img{
+    padding: 0px;
+  }
 }
 </style>

@@ -121,7 +121,6 @@ export default {
 </script>
 <style rel="stylesheet/scss" lang="scss">
 #showIndexSidebar{
-    margin-left: 15px;
     .right-img{
         width: 90px;
         height: 60px;

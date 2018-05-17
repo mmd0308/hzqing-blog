@@ -10,7 +10,7 @@
                     element-loading-background="#222"
                 >
                     <li v-for="(item, index) in menuList" :key="index">
-                        <div style="width:110px;">
+                        <div>
                             <router-link :to="item.href">
                                 {{item.menuName}}
                             </router-link>
@@ -31,7 +31,9 @@
                         </div>
                     </router-link>
                     <div v-else>
-                        <vue-avatar class="vue-avatar fl" username='h' :src="avatar" size="40"></vue-avatar>
+                        <div style="width:52px;height:52px;padding:6px">
+                            <vue-avatar class="vue-avatar fl" username='Heng Zhao Qing' :src="avatar" size="40"></vue-avatar>
+                        </div>
                         <ul class="sub-menu">
                             <li v-for="(it,ind) in showMenus" :key="ind" @click="handlerNav(it.href)">
                               {{it.menuName}}
@@ -40,18 +42,14 @@
                     </div>
                 </div>
                 <div class="moblieRight">
-                    <el-dropdown placement="bottom" trigger="click">
-                        <span class="svg-container">
-                            <svg-icon icon-class="phoneMenu" class="phoneNavMenu"></svg-icon>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>写文章</el-dropdown-item>
-                            <el-dropdown-item>狮子头</el-dropdown-item>
-                            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                    <span class="svg-container">
+                        <svg-icon icon-class="phoneMenu" class="phoneNavMenu"></svg-icon>
+                    </span>
+                    <ul class="moblie-menu sub-menu">
+                        <li v-for="(it,ind) in menuList" :key="ind" @click="handlerNav(it.href)">
+                            {{it.menuName}}
+                        </li>
+                    </ul>
                 </div>
     </div>
 </template>
@@ -114,7 +112,7 @@ export default {
 .showNavMenu {
     .show-navbar-title{
         margin: 0px;
-        width: 200px;
+        width: var(--hzq-nav-web-headers);
         font-weight: 700;
         line-height: 52px;
         float: left;
@@ -124,16 +122,15 @@ export default {
         padding: 0px;
         left: 0;
         float: left;
-        display: block;
         margin: 0 10px 0 0;
         font-size: 15px;
         list-style: none;
-        min-width: 550px;
         height: 52px;
+        display: var(--hzq-nav-web-disply);
         li{
             position: relative;
             float: left;
-            width: 110px;
+            width: var(--hzq-nav-web-menus);
             text-align: center;
             line-height: 52px;
         }
@@ -167,6 +164,7 @@ export default {
         float: right;
         width: 59px;
         text-align: center;
+        display: var(--hzq-nav-web-disply);
     }
     .navRight:hover{
         background-color: #404040;
@@ -185,21 +183,19 @@ export default {
         width: 59px;
         text-align: center;
         line-height: 52px;
-        display: none;
+        display: var(--hzq-nav-moblie-disply);
+        .moblie-menu{
+            width: 100%;
+            right: 0px;
+            z-index: 50;
+        }
     }
     .moblieRight:hover{
         background-color: #404040;
     }
-    @media screen and (max-width:980px){
-      .moblieRight{
+    .moblieRight:hover .sub-menu{
+        background-color: #404040;
         display: block;
-      }
-      .nav{
-          display: none;
-      }
-      .navRight{
-          display: none;
-      }
     }
 }
 </style>
