@@ -53,8 +53,8 @@
 
 <script>
 import { tree } from '@/api/manager/system/menu/index'
-import { getButtonByMenuIdOrRoleId } from '@/api/manager/system/button/index'
-import { addRoleRes, getResIdByRoleId } from '@/api/manager/system/role/index'
+import { getButtonByMenuIdOrRoleId } from '@/api/system/button/index'
+import { addRoleRes, getResIdByRoleId } from '@/api/system/role/index'
 export default {
   props: ['roleId'],
   created() {

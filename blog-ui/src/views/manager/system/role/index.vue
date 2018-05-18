@@ -126,7 +126,7 @@
 </template>
 
 <script>
-  import { page, getObj, putObj, delObj, addObj } from '@/api/manager/system/role/index'
+  import { page, getObj, putObj, delObj, addObj } from '@/api/system/role/index'
   import roleMenu from '@/views/manager/system/role/roleMenu'
   export default {
     components: {

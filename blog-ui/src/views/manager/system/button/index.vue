@@ -88,7 +88,7 @@
 </template>
 
 <script>
-  import { page, getObj, addObj, putObj, delObj } from '@/api/manager/system/button/index'
+  import { page, getObj, addObj, putObj, delObj } from '@/api/system/button/index'
   // import roleMenu from '@/views/manager/system/role/roleMenu'
   export default {
     props: ['menuId'],

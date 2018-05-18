@@ -10,7 +10,7 @@
             </div>
             <mavon-editor 
                 v-model="formArticle.arContent" 
-                style="height: 93%"
+                style="height: 100%"
                 ref="mavonEditor"
                 :subfield="false"
                 defaultOpen="edit"
@@ -147,6 +147,7 @@ export default {
     height: 100%;
     .blogMKDown{
         height: 100%;
+        overflow: hidden;
         .blogTopic{
             padding: 11px 0px;
             .el-input{

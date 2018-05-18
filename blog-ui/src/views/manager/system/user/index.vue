@@ -116,7 +116,6 @@
             label="备注">
             <template scope="scope">{{ scope.row.note }}</template>
           </el-table-column>
-          </el-table-column>
         </el-table>
         <div slot="footer" class="dialog-footer">
             <el-button @click="roleCancel()">取 消</el-button>
@@ -129,7 +128,7 @@
 
 <script>
   import { page, getObj, putObj, delObj, addObj, saveUserRole } from '@/api/system/user/index'
-  import { getAllEnabledRole, getRoleByUserId } from '@/api/manager/system/role/index'
+  import { getAllEnabledRole, getRoleByUserId } from '@/api/system/role/index'
   export default {
     data() {
       return {
