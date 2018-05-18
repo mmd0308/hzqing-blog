@@ -37,9 +37,9 @@
             label="是否启用" >
                 <template scope="scope">
                     <span style="margin-left: 10px">
-                        <el-tag v-if="scope.row.enabled == '1'" type="success">启用</el-tag>
-                        <el-tag v-else type="danger">禁用</el-tag>
-                        </span>
+                      <el-tag v-if="scope.row.enabled == '1'" type="success">启用</el-tag>
+                      <el-tag v-else type="danger">禁用</el-tag>
+                    </span>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="300px">
@@ -230,9 +230,13 @@
         })
       },
       handleSizeChange(val) {
+        this.listQuery.pageSize = val
+        this.getList()
       },
       handleCurrentChange(val) {
-      }
+        this.listQuery.page = val
+        this.getList()
+      },
     }
   }
 </script>

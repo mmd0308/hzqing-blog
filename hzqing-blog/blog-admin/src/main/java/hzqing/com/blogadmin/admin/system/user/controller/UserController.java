@@ -4,7 +4,7 @@ import hzqing.com.blogadmin.admin.system.user.service.IUserService;
 import hzqing.com.blogadmin.base.controller.BaseController;
 import hzqing.com.blogadmin.admin.system.user.entity.User;
 import hzqing.com.blogadmin.constant.Constant;
-import hzqing.com.blogadmin.vo.sys.UserVo;
+import hzqing.com.blogadmin.admin.system.user.vo.UserVo;
 import hzqing.com.blogadmin.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/admin/user")
+@RequestMapping("/api/user")
 public class UserController extends BaseController<User,IUserService> {
 
     @PostMapping("/show/register")

@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { register } from '@/api/manager/system/user/login'
+import { register } from '@/api/system/user/login'
 export default {
   name: 'login',
   data() {

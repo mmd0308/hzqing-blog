@@ -272,9 +272,13 @@
         this.dialogMenuVisible = false
       },
       handleSizeChange(val) {
+        this.listQuery.pageSize = val
+        this.getList()
       },
       handleCurrentChange(val) {
-      }
+        this.listQuery.page = val
+        this.getList()
+      },
     }
   }
 </script>

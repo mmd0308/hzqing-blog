@@ -1,8 +1,15 @@
 import request from '@/utils/request'
 
+export function tree(id) {
+  return request({
+    url: '/api/dict/tree/' + id,
+    method: 'get'
+  })
+}
+
 export function page(query) {
   return request({
-    url: '/admin/user/page',
+    url: '/api/dict/page',
     method: 'get',
     params: query
   })
@@ -10,7 +17,7 @@ export function page(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/admin/user/add',
+    url: '/api/dict/add',
     method: 'post',
     data: obj
   })
@@ -18,38 +25,29 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/user/get/' + id,
+    url: '/api/user/get/' + id,
     method: 'get'
   })
 }
 
-export function getUserById(id) {
+export function checkCode(code, id) {
   return request({
-    url: '/admin/user/getUserById',
+    url: '/api/dict/check/' + code + '/code' + '?id=' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/admin/user/delete/' + id,
+    url: '/api/dict/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/user/put/' + id,
+    url: '/api/dict/put/' + id,
     method: 'put',
     data: obj
   })
 }
-
-export function saveUserRole(obj) {
-  return request({
-    url: '/admin/user/saveUserRole',
-    method: 'post',
-    data: obj
-  })
-}
-

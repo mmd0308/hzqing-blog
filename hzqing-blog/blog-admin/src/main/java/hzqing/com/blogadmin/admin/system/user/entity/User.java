@@ -88,12 +88,16 @@ public class User {
 
     @Override
     public String toString() {
-        return "Button{" +
+        return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", note='" + note + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", phone='" + phone + '\'' +
+                ", nickName='" + nickName + '\'' +
                 '}';
     }
 }

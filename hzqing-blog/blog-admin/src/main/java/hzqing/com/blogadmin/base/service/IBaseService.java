@@ -18,4 +18,6 @@ public interface IBaseService<T> {
     int update(T t);
 
     int deletedById(String id);
+
+    boolean checkCode(String code,String id);
 }

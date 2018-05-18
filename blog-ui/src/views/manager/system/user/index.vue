@@ -128,7 +128,7 @@
 </template>
 
 <script>
-  import { page, getObj, putObj, delObj, addObj, saveUserRole } from '@/api/manager/system/user/index'
+  import { page, getObj, putObj, delObj, addObj, saveUserRole } from '@/api/system/user/index'
   import { getAllEnabledRole, getRoleByUserId } from '@/api/manager/system/role/index'
   export default {
     data() {

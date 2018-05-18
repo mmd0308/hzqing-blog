@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class BaseServiceImpl<T> implements IBaseService<T> {
     @Autowired
@@ -51,6 +54,15 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     @Override
     public int deletedById(String id) {
         return (int) baseDao.delete(mapper+".deletedById",id);
+    }
+
+    @Override
+    public boolean checkCode(String code, String id) {
+        Map<String,String> params = new HashMap<>();
+        params.put("code",code);
+        params.put("id",id);
+        List<T> res = (List<T>) baseDao.findForList("selectByCode", params);
+        return res.size() == 0 ? true : false;
     }
 
 

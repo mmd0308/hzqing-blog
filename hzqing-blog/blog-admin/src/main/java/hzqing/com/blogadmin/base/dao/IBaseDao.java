@@ -45,14 +45,13 @@ public interface IBaseDao{
     public Object selectById(String str, String id);
 
     /**
-     * 获取所有的数据 带分页
+     * 获取所有的数据
      * @param str
      * @param obj
      * @return
      */
     public Object findForList(String str, Object obj) ;
 
-    public Object findForMap(String sql, Object obj, String key, String value) ;
 
     /**
      * 批量新增

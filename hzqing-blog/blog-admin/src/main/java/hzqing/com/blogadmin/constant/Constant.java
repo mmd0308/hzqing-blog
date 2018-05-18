@@ -74,4 +74,14 @@ public class Constant {
      * 资源类型，菜单
      */
     public static final String RES_TYPE_MENU="menu";
+
+
+    /**
+     * 数据字典类型 业务字典
+     */
+    public static final String DICT_TYPE_BUS="BUS";
+    /**
+     * 数据字典类型  系统字典
+     */
+    public static final String DICT_TYPE_SYS="SYS";
 }

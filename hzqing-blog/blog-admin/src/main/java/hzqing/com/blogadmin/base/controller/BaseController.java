@@ -1,6 +1,7 @@
 package hzqing.com.blogadmin.base.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.utils.ResponseMessage;
 import hzqing.com.hzqingcommon.util.DateUtils;
@@ -40,6 +41,17 @@ public class BaseController<T,M extends IBaseService<T>> {
     public ResponseMessage<T> get(@PathVariable String id){
         T t = baseService.getById(id);
         return new ResponseMessage<T>().success(t);
+    }
+
+    /**
+     * 檢查code是否唯一
+     * @param code
+     * @return code不存在true表示可以使用  存在false
+     */
+    @GetMapping("/check/{code}/code")
+    public ResponseMessage checkCode(@PathVariable String code, String id){
+        boolean res = baseService.checkCode(code,id);
+        return new ResponseMessage<Boolean>().success(res);
     }
 
     /**

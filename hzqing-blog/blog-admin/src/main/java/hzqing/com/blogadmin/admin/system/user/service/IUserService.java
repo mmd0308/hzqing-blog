@@ -2,7 +2,7 @@ package hzqing.com.blogadmin.admin.system.user.service;
 
 import hzqing.com.blogadmin.base.service.IBaseService;
 import hzqing.com.blogadmin.admin.system.user.entity.User;
-import hzqing.com.blogadmin.vo.sys.UserVo;
+import hzqing.com.blogadmin.admin.system.user.vo.UserVo;
 
 import java.util.HashMap;
 
