@@ -1,4 +1,4 @@
-import { login, logout, getUserInfo } from '@/api/system/user/login'
+import { login, logout, getUserInfo } from '@/api/manager/system/user/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -57,11 +57,12 @@ const user = {
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
           commit('SET_RESCODE', data.resCode)
-          commit('SET_SHOWMENUS', data.menus)
+          commit('SET_SHOWMENUS', data.indexMenus)
           commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
-          reject(error)
+           reject(error)
+          // console.log('user.js' + error)
         })
       })
     },

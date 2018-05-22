@@ -29,9 +29,10 @@
                       :highlight-current-row="true"
                       class="system-table"
                       >
-                        <el-table-column align="center" label="序号" type="index" width="90"></el-table-column>
+                        <el-table-column align="center" label="序号" type="index" width="50"></el-table-column>
                         <el-table-column
                         label="名称"
+                        width="100px"
                         sortable>
                             <template scope="scope">
                                 <span style="margin-left: 10px">{{ scope.row.dictName }}</span>
@@ -135,7 +136,7 @@
 </template>
 
 <script>
-  import { tree, addObj, getNextLevelCode, putObj, delObj, page, checkCode } from '@/api/system/dict/index'
+  import { tree, addObj, getNextLevelCode, putObj, delObj, page, checkCode } from '@/api/manager/system/dict/index'
   import ButtonView from '@/views/manager/system/button/index'
   import { guid } from '@/utils/uuid'
   export default {
@@ -292,9 +293,10 @@
           if (vaild) {
             putObj(this.form.id, this.form).then(() => {
               // this.getTree()
-              if (this.form.enabled === '1') {
-                this.$refs.tree.append(this.form,this.form.parentId)
-              }
+              // if (this.form.enabled === '1') {
+              //   this.$refs.tree.append(this.form,this.form.parentId)
+              // }
+              this.getTree()
               this.listQuery.parentId = this.form.parentId
               this.getList()
               this.cancel()

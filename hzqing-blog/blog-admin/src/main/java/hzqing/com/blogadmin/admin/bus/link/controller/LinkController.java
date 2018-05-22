@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/bus/link")
+@RequestMapping("/api/bus/link")
 public class LinkController extends BaseController<Link,ILinkService> {
 
     @GetMapping("/show/all")

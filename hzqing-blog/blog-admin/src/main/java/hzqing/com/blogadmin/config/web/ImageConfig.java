@@ -32,8 +32,8 @@ public class ImageConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenInterceptor()).addPathPatterns("/**").excludePathPatterns("/admin/user/login","/**/show/**");
-        registry.addInterceptor(visitInterceptor()).addPathPatterns("/admin/blog/article/show/get/**");
+        registry.addInterceptor(tokenInterceptor()).addPathPatterns("/**").excludePathPatterns("/api/user/login","/**/show/**");
+        //registry.addInterceptor(visitInterceptor()).addPathPatterns("/system/blog/article/show/get/**");
         super.addInterceptors(registry);
     }
 

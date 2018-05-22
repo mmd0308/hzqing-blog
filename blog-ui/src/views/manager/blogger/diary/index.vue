@@ -172,7 +172,7 @@
             { min: 10, max: 2000, message: '长度在10到20000个字符', trigger: 'blur' }
           ]
         },
-        uploadUrl: process.env.BASE_API + '/admin/blogger/diary/uploadImages'
+        uploadUrl: process.env.BASE_API + '/api/blogger/diary/uploadImages'
       }
     },
     created() {

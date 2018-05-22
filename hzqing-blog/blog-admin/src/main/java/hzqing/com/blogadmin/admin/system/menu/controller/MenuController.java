@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/menu")
+@RequestMapping("/api/menu")
 public class MenuController extends BaseController<Menu,IMenuService> {
     @GetMapping("/tree/{id}")
-    public ResponseMessage<List<Menu>> getTree(@PathVariable String id){
-        List<Menu> trees = baseService.getTree(id);
-        return new ResponseMessage<>().success(trees);
+    public ResponseMessage<List<MenuVO>> getTree(@PathVariable String id){
+        List<MenuVO> menus = baseService.getTree(id);
+        return new ResponseMessage<>().success(menus);
     }
 
     /**
@@ -31,8 +31,15 @@ public class MenuController extends BaseController<Menu,IMenuService> {
         String resCode = baseService.getNextLevelCode(parentId,levelCode);
         return  new ResponseMessage<>().success(resCode);
     }
-    @GetMapping("/show/getDefaultMenus")
-    public ResponseMessage<List<MenuVO>> getDefaultMenus(){
-        return new ResponseMessage<>().success(baseService.getDefaultMenus());
+
+    /**
+     * 根据权限，父级别编码，拉去菜单
+     * @param auth  权限编码
+     * @param code  父级编码
+     * @return
+     */
+    @GetMapping("/show/getDefaultMenus/{auth}/{code}")
+    public ResponseMessage<List<MenuVO>> getDefaultMenus(@PathVariable String auth, @PathVariable String code){
+        return new ResponseMessage<>().success(baseService.getMenusByAuthAndCode(auth,code));
     }
 }

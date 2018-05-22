@@ -84,7 +84,7 @@ export default {
       uploadHeader: {
         'ACCESS-TOKEN': getToken()
       },
-      uploadUrl: process.env.BASE_API + '/admin/blogger/diary/uploadImages'
+      uploadUrl: process.env.BASE_API + '/api/bus/diary/uploadImages'
     }
   },
   created() {

@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/admin/blog/article")
+@RequestMapping("/api/blog/article")
 public class ArticleController extends BaseController<Article,IArticleService> {
     /**
      * 博客展示页面

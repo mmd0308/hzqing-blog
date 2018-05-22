@@ -164,7 +164,7 @@
           ],
           workImg: { required: true, message: '请选择图片', trigger: 'blur' }
         },
-        uploadUrl: process.env.BASE_API + '/admin/bus/works/uploadImages'
+        uploadUrl: process.env.BASE_API + '/api/bus/works/uploadImages'
       }
     },
     created() {

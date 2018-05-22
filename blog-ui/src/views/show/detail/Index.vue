@@ -84,7 +84,7 @@
             </li>
             <li>
               <div class="btn-like mp" title="点赞">
-                <svg-icon class="detail-icon" icon-class="detail-qq"></svg-icon>
+                <svg-icon class="detail-icon" icon-class="hzqing-qq"></svg-icon>
                 <p>QQ</p>
               </div>
             </li>

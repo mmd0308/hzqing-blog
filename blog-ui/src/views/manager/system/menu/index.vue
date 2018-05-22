@@ -4,10 +4,18 @@
         <el-col :span="5">
             <el-input placeholder="输入关键字进行过滤" v-model="filterText">
             </el-input>
-            <el-tree class="filter-tree" style="margin-top:10px;"  :data="menuTreeDate" 
-            :props="defaultProps" :default-expand-all="true"  :filter-node-method="filterNode" 
-            :default-expanded-keys="[0,1]" ref="menuTree"
-             @node-click="clickTree" @node-expand="expandTree">
+            <el-tree 
+            class="filter-tree" 
+            style="margin-top:10px;"  
+            node-key="id"
+            :data="menuTreeDate" 
+            :props="defaultProps" 
+            :default-expand-all="true"  
+            :filter-node-method="filterNode" 
+            :default-expanded-keys="[0,1]" 
+            ref="tree"
+            @node-click="clickTree" 
+            @node-expand="expandTree">
             </el-tree>
         </el-col>
         <el-col :span="19">
@@ -24,7 +32,7 @@
                     <el-button v-if="this.state == 'edit'" type="primary" native-type="submit"  @click="updateMenu('form')">保存</el-button>
                 </div>
                  <el-card class="box-card" style="margin-bottom: 10px;">
-                     <el-form :model="form"  ref="form" label-width="120px" >
+                     <el-form :model="form"  ref="form" label-width="120px" :rules="rules" >
                         <el-row aria-disabled="">
                             <el-col :span="8">
                             <el-form-item  label="菜单名称" prop="menuName">
@@ -38,9 +46,9 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
-                            <el-form-item label="菜单编码" prop="menuCode">
-                                <el-input v-model="form.menuCode" v-if="this.state == 'see'" disabled="disabled" ></el-input>
-                                <el-input v-model="form.menuCode" v-else></el-input>
+                            <el-form-item label="菜单编码" prop="code">
+                                <el-input v-model="form.code" v-if="this.state == 'see'" disabled="disabled" ></el-input>
+                                <el-input v-model="form.code" v-else></el-input>
                             </el-form-item>
                             </el-col>
                         </el-row>
@@ -66,9 +74,10 @@
                         </el-row>
                         <el-row>
                             <el-col :span="8">
-                                <el-form-item label="层级编码" prop="levelcode">
-                                    <el-input v-model="form.levelcode" disabled="disabled"></el-input>
-                                </el-form-item>
+                              <el-form-item label="排序" prop="sort">
+                                <el-input v-if="this.state == 'see'" v-model="form.sort" disabled="disabled"></el-input>
+                                <el-input v-else v-model="form.sort" ></el-input>
+                              </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="是否可用" prop="enabled">
@@ -76,32 +85,18 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
-                                <el-form-item label="请求资源类型" prop="menuType">
-                                    <el-select v-model="form.menuType" placeholder="请选择机构类别" v-if="this.state == 'see'" disabled="disabled" >
-                                        <el-option label="链接" value="LK"></el-option>
-                                        <el-option label="默认菜单" value="NL"></el-option>
-                                        <el-option label="前台菜单" value="LQ"></el-option>
-                                        <el-option label="后端菜单" value="LH"></el-option>
-                                        <el-option label="其他" value="QT"></el-option>
+                                <el-form-item label="菜单类型" prop="menuType">
+                                    <el-select v-model="form.menuType" placeholder="请选择菜单类型" v-if="this.state == 'see'" disabled="disabled" >
+                                        <el-option v-for="item in dicts" :key="item.id" :label="item.dictName" :value="item.id"></el-option>
                                     </el-select>
-                                    <el-select v-model="form.menuType" placeholder="请选择机构类别" v-else >
-                                        <el-option label="链接" value="LK"></el-option>
-                                        <el-option label="默认菜单" value="NL"></el-option>
-                                        <el-option label="前台菜单" value="LQ"></el-option>
-                                        <el-option label="后端菜单" value="LH"></el-option>
-                                        <el-option label="其他" value="QT"></el-option>
+                                    <el-select v-model="form.menuType" placeholder="请选择菜单类型" v-else >
+                                        <el-option v-for="item in dicts" :key="item.id" :label="item.dictName" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
                         </el-row>
                         <el-row>
-                          <el-col :span="8">
-                            <el-form-item label="排序" prop="sort">
-                              <el-input v-if="this.state == 'see'" v-model="form.sort" disabled="disabled"></el-input>
-                              <el-input v-else v-model="form.sort" ></el-input>
-                            </el-form-item>
-                          </el-col>
-                          <el-col :span="16">
+                          <el-col :span="24">
                             <el-form-item label="机构说明" prop="note">
                               <el-input type="textarea" v-model="form.note" v-if="this.state == 'see'" disabled="disabled"></el-input>
                               <el-input type="textarea" v-model="form.note" v-else></el-input>
@@ -123,40 +118,64 @@
 </template>
 
 <script>
-  import { tree, addObj, getNextLevelCode, putObj, delObj } from '@/api/manager/system/menu/index'
+  import { tree, addObj, putObj, delObj, checkCode } from '@/api/manager/system/menu/index'
+  import { getDictByCode } from '@/api/manager/system/dict/index'
   import ButtonView from '@/views/manager/system/button/index'
+  import { guid } from '@/utils/uuid'
   export default {
     components: {
       ButtonView
     },
     watch: {
       filterText(val) {
-        this.$refs.menuTree.filter(val)
+        this.$refs.tree.filter(val)
       }
     },
     created() {
       this.getTree()
+      this.getDictByCode()
     },
     data() {
+      const validateCode = (rule, value, callback) => {
+        if (this.form.code === '') {
+          callback(new Error('请输入编码'))
+        } else {
+          checkCode(this.form.code, this.form.id).then(response => {
+            if (response.data) {
+              callback()
+            } else {
+              callback(new Error('编码重复，请重新输入'))
+            }
+          })
+        }
+      }
       return {
         state: 'see',
         form: this.initObj(),
         filterText: '',
         defaultProps: {
-          children: 'menus',
+          children: 'children',
           label: 'menuName'
         },
         menuTreeDate: null,
-        listLoading: false
+        listLoading: false,
+        dicts: [],
+        rules: {
+          code: {required: true, trigger: 'blur', validator: validateCode},
+          enabled: {required: true, trigger: 'blur', message: '请选择是否启用'}
+        },
+        parent: {
+          parentId: '',
+          parentName: ''
+        }
       }
     },
     methods: {
       initObj() {
         return {
-          id: '',
+          id: guid(),
           menuName: '',
-          menuCode: '',
-          levelcode: '',
+          code: '',
           parentId: '',
           parentName: '',
           href: '',
@@ -192,19 +211,19 @@
         this.state = 'add'
         var parentId = this.form.id
         var name = this.form.menuName
-        var levelcode = this.form.levelcode
         this.resetTemp()
         this.form.parentId = parentId
         this.form.parentName = name
-        getNextLevelCode(parentId, levelcode).then(response => {
-          this.form.levelcode = response.data
-        })
       },
       createMenu(form) {
         this.$refs[form].validate(vaild => {
           if (vaild) {
             addObj(this.form).then(() => {
-              this.getTree()
+              // this.getTree()
+              this.$refs.tree.append(this.form,this.form.parentId)
+              this.state = 'see'
+              this.$refs.button.getList(this.form.id)
+
               this.$notify({
                 title: '成功',
                 message: '菜单新增成功',
@@ -241,7 +260,9 @@
         }).then(() => {
           delObj(this.form.id).then(response => {
             if (response.data) {
-              this.getTree()
+              // this.getTree()
+              this.$refs.tree.remove(this.form.id)
+              this.form = this.$refs.tree.getNode(this.form.parentId).data
               this.$notify({
                 title: '成功',
                 message: '删除成功',
@@ -261,8 +282,12 @@
       },
       resetTemp() {
         this.form = this.initObj()
+      },
+      getDictByCode() {
+        getDictByCode('DICT_MENU_TYPE').then(response => {
+          this.dicts = response.data
+        })        
       }
-
     }
   }
 </script>

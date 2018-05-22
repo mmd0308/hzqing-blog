@@ -8,8 +8,7 @@ import java.util.List;
 public class Menu {
     private String id;
     private String menuName;
-    private String menuCode;
-    private String levelcode;
+    private String code;
     private String parentId;
     private String href;
     private String component;
@@ -20,7 +19,7 @@ public class Menu {
     private int sort;
 
     private List<Menu> menus;
-    private String parentName;
+
 
     public int getSort() {
         return sort;
@@ -28,14 +27,6 @@ public class Menu {
 
     public void setSort(int sort) {
         this.sort = sort;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
     }
 
     public List<Menu> getMenus() {
@@ -62,20 +53,12 @@ public class Menu {
         this.menuName = menuName;
     }
 
-    public String getMenuCode() {
-        return menuCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setMenuCode(String menuCode) {
-        this.menuCode = menuCode;
-    }
-
-    public String getLevelcode() {
-        return levelcode;
-    }
-
-    public void setLevelcode(String levelcode) {
-        this.levelcode = levelcode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getParentId() {
@@ -135,22 +118,5 @@ public class Menu {
     }
 
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "id='" + id + '\'' +
-                ", menuName='" + menuName + '\'' +
-                ", menuCode='" + menuCode + '\'' +
-                ", levelcode='" + levelcode + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", href='" + href + '\'' +
-                ", component='" + component + '\'' +
-                ", icon='" + icon + '\'' +
-                ", menuType='" + menuType + '\'' +
-                ", note='" + note + '\'' +
-                ", enabled='" + enabled + '\'' +
-                ", menus=" + menus +
-                ", parentName='" + parentName + '\'' +
-                '}';
-    }
+
 }

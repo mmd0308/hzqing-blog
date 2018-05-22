@@ -10,11 +10,18 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/admin':{
-        target: 'http://hzqing.com',
-        //target: 'http://localhost:8899',
+      // '/admin':{
+      //   //target: 'http://hzqing.com',
+      //   target: 'http://localhost:8899',
+      //   pathRewrite: {
+      //     '^/admin': '/admin'
+      //   },
+      // },
+      '/api':{
+        //target: 'http://hzqing.com',
+        target: 'http://localhost:8899',
         pathRewrite: {
-          '^/admin': '/admin'
+          '^/api': '/api'
         },
       }
     },

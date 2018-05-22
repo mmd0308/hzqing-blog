@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/button")
+@RequestMapping("/api/button")
 public class ButtonController extends BaseController<Button,IButtonService> {
 
     @GetMapping("/getButtonByMenuIdOrRoleId/{id}")

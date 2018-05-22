@@ -111,7 +111,7 @@
         WHERE
         id = #{0}
     </delete>
-    <select id="selectByCode" parameterType="map" resultMap="dictMap" >
+    <select id="checkCode" parameterType="map" resultMap="dictMap" >
         SELECT
         <include refid="field"/>
         FROM
@@ -121,5 +121,14 @@
         <if test="id != null and id != ''">
             AND  id != #{id}
         </if>
+    </select>
+    <select id="getDictByPCode" parameterType="string" resultMap="dictMap" >
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where
+        parent_id = (SELECT id FROM sys_dict WHERE code = #{code})
+        AND enabled = '1'
     </select>
 </mapper>

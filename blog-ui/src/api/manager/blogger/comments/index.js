@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function page(query) {
   return request({
-    url: '/admin/blogger/comments/page',
+    url: '/api/bus/comments/page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function page(query) {
 
 export function showPage(query) {
   return request({
-    url: '/admin/blogger/comments/show/pageTree',
+    url: '/api/bus/comments/show/pageTree',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function showPage(query) {
 
 export function showAll(query) {
   return request({
-    url: '/admin/blogger/comments/show/all',
+    url: '/api/bus/comments/show/all',
     method: 'get',
     params: query
   })
@@ -26,7 +26,7 @@ export function showAll(query) {
 
 export function getAll(query) {
   return request({
-    url: '/admin/blogger/comments/all',
+    url: '/api/bus/comments/all',
     method: 'get',
     params: query
   })
@@ -34,7 +34,7 @@ export function getAll(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/admin/blogger/comments/add',
+    url: '/api/bus/comments/add',
     method: 'post',
     data: obj
   })
@@ -42,21 +42,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/blogger/comments/get/' + id,
+    url: '/api/bus/comments/get/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/admin/blogger/comments/delete/' + id,
+    url: '/api/bus/comments/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/blogger/comments/put/' + id,
+    url: '/api/bus/comments/put/' + id,
     method: 'put',
     data: obj
   })
@@ -64,7 +64,7 @@ export function putObj(id, obj) {
 
 export function saveUserRole(obj) {
   return request({
-    url: '/admin/blogger/comments/saveUserRole',
+    url: '/api/bus/comments/saveUserRole',
     method: 'post',
     data: obj
   })

@@ -40,7 +40,7 @@
               <svg-icon class="login-icon" icon-class="weixin"></svg-icon> 
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
-              <svg-icon class="login-icon" icon-class="qq"></svg-icon> 
+              <svg-icon class="login-icon" icon-class="hzqing-qq"></svg-icon> 
             </el-tooltip>
           </div>
         </div>
@@ -92,7 +92,7 @@
               <svg-icon class="login-icon" icon-class="weixin"></svg-icon> 
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="待开发...." placement="bottom-end">
-              <svg-icon class="login-icon" icon-class="qq"></svg-icon> 
+              <svg-icon class="login-icon" icon-class="hzqing-qq"></svg-icon> 
             </el-tooltip>
           </div>
         </div>
@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { register } from '@/api/system/user/login'
+import { register } from '@/api/manager/system/user/login'
 export default {
   name: 'login',
   data() {

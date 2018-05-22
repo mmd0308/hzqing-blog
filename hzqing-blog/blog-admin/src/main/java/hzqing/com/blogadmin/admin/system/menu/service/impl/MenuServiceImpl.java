@@ -1,5 +1,8 @@
 package hzqing.com.blogadmin.admin.system.menu.service.impl;
 
+import hzqing.com.blogadmin.admin.system.dict.entity.Dict;
+import hzqing.com.blogadmin.admin.system.dict.service.IDictService;
+import hzqing.com.blogadmin.admin.system.dict.vo.DictVO;
 import hzqing.com.blogadmin.admin.system.menu.service.IMenuService;
 import hzqing.com.blogadmin.admin.system.menu.vo.MenuVO;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
@@ -7,6 +10,7 @@ import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.hzqingcommon.util.LevelCodeUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +26,52 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
     }
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IDictService dictService;
 
     @Override
-    public List<Menu> getTree(String id) {
-        List<Menu> menuByPId = getMenuByPId(id);
-        return trees(menuByPId);
+    public List<MenuVO> getTree(String id) {
+        MenuVO menu = new MenuVO();
+//        展示所有的菜单
+//        menu.setEnabled("1");
+        List<MenuVO> vos = (List<MenuVO>) baseDao.findForList(mapper+".queryMenuvo",menu);
+        List<MenuVO> menuVOS = this.listByPId(vos, id);
+        return listToTree(vos,menuVOS);
+    }
+
+
+    /**
+     * 将list页面转成树行结构
+     * @param vos
+     * @param menuVOS
+     * @return
+     */
+    private List<MenuVO> listToTree(List<MenuVO> vos, List<MenuVO> menuVOS) {
+        for (MenuVO vo : menuVOS) {
+            List<MenuVO> res = this.listByPId(vos, vo.getId());
+            if (res.size() > 0) {
+                vo.setChildren(res);
+                this.listToTree(vos,res);
+            }
+        }
+        return menuVOS;
+    }
+
+    /**
+     * 根据父级别id，获取父级别列表
+     * @param menuvos
+     * @param parentId
+     * @return
+     */
+    private List<MenuVO> listByPId(List<MenuVO> menuvos,String parentId) {
+        List<MenuVO> menuVOS = new ArrayList<>();
+        for (MenuVO vo :
+                menuvos) {
+            if (vo.getParentId().equals(parentId)) {
+                menuVOS.add(vo);
+            }
+        }
+        return menuVOS;
     }
 
     @Override
@@ -38,11 +83,12 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
 
 
     @Override
-    public List<MenuVO> getMenusByRids(Map<String,String> map) {
-        List<MenuVO> res = (List<MenuVO>) baseDao.findForList(mapper+".getMenusByRids",map);
-        res = listToTree(res);
-        return res;
+    public List<MenuVO> getMenusByRids(Map<String,String> map, String id) {
+        List<MenuVO> res = this.getListMenusByRids(map);
+        List<MenuVO> menuVOS = this.listByPId(res, id);
+        return listToTree(res,menuVOS);
     }
+
 
     @Override
     public List<Menu> getMenusByUid(String id) {
@@ -60,6 +106,32 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
     public List<MenuVO> getMenusVoTree(MenuVO menuVO) {
         List<MenuVO> res = (List<MenuVO>) baseDao.findForList(mapper+".queryMenuvo",menuVO);
         res = listToTree(res);
+        return res;
+    }
+
+    @Override
+    public List<MenuVO> getMenusByAuthAndCode(String auth, String code) {
+        Dict dict = dictService.getIdByCode(auth);
+        if (dict == null)
+            return null;
+        Menu menu = new Menu();
+        menu.setEnabled("1");
+        menu.setMenuType(dict.getId());
+        List<MenuVO> vos = (List<MenuVO>) baseDao.findForList(mapper+".queryMenuvo",menu);
+        List<MenuVO> menuVOS = this.listByPId(vos, this.getMenuByCode(code).getId());
+        return listToTree(vos,menuVOS);
+    }
+    @Override
+    public Menu getMenuByCode(String code) {
+        Menu menu = new Menu();
+        menu.setCode(code);
+        List<Menu> menus = this.findAll(menu);
+        return menus.size() > 0 ? menus.get(0) : null;
+    }
+
+    @Override
+    public List<MenuVO> getListMenusByRids(Map<String, String> maps) {
+        List<MenuVO> res = (List<MenuVO>) baseDao.findForList(mapper+".getMenusByRids",maps);
         return res;
     }
 
@@ -116,6 +188,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
      * @param list
      * @return
      */
+    //@TODO 暂时保留，等会删除
     private List<MenuVO> listToTree(List<MenuVO> list){
         List<MenuVO> res = new ArrayList<>();
         int length = getMinLenthLevelCode(list); // 获取顶层菜单的levelcode长度
@@ -123,19 +196,19 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
             return null;
         }
         for (MenuVO menuvo : list) {
-            if (menuvo.getLevelcode().length() == length)
+           // if (menuvo.getLevelcode().length() == length)
             res.add(menuvo);
         }
-        for (MenuVO menuVO: res) {
-            for (MenuVO m: list) {
-                if (menuVO.getId() != null && menuVO.getId().equals(m.getParentId())){
-                    if (menuVO.getMenusvo() == null){
-                        menuVO.setMenusvo(new ArrayList<MenuVO>());
-                    }
-                    menuVO.getMenusvo().add(m);
-                }
-            }
-        }
+//        for (MenuVO menuVO: res) {
+//            for (MenuVO m: list) {
+//                if (menuVO.getId() != null && menuVO.getId().equals(m.getParentId())){
+//                    if (menuVO.getMenusvo() == null){
+//                        menuVO.setMenusvo(new ArrayList<MenuVO>());
+//                    }
+//                    menuVO.getMenusvo().add(m);
+//                }
+//            }
+//        }
         return  res;
     }
 
@@ -146,14 +219,14 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements IMenuServi
      */
     private int getMinLenthLevelCode(List<MenuVO> list){
         int res = 0;
-        for (MenuVO menuVO: list){
-            int length = menuVO.getLevelcode().length();
-            if (res == 0){
-                res = length;
-            }else if (length < res) {
-                res = length;
-            }
-        }
+//        for (MenuVO menuVO: list){
+//            int length = menuVO.getLevelcode().length();
+//            if (res == 0){
+//                res = length;
+//            }else if (length < res) {
+//                res = length;
+//            }
+//        }
         return res;
     }
 }

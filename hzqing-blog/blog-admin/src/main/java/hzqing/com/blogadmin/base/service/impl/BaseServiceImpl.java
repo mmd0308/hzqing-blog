@@ -61,7 +61,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         Map<String,String> params = new HashMap<>();
         params.put("code",code);
         params.put("id",id);
-        List<T> res = (List<T>) baseDao.findForList("selectByCode", params);
+        List<T> res = (List<T>) baseDao.findForList(mapper + ".checkCode", params);
         return res.size() == 0 ? true : false;
     }
 

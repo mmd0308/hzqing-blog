@@ -38,6 +38,19 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements IDictServi
         return listToTree(dicts,dictVOS);
     }
 
+    @Override
+    public List<Dict> getDictByPCode(String code) {
+        return (List<Dict>) baseDao.findForList(mapper + ".getDictByPCode",code);
+    }
+
+    @Override
+    public Dict getIdByCode(String code) {
+        Dict dict = new Dict();
+        dict.setCode(code);
+        List<Dict> dicts = this.findAll(dict);
+        return dicts.size() > 0 ? dicts.get(0) : null;
+    }
+
     /**
      * 将list页面转成树行结构
      * @param dicts
@@ -47,8 +60,10 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements IDictServi
     private List<DictVO> listToTree(List<Dict> dicts,List<DictVO> dictVOS) {
         for (DictVO vo:dictVOS) {
             List<DictVO> vos = this.listByPId(dicts, vo.getId());
-            vo.setChildren(vos);
-            this.listToTree(dicts,vos);
+            if (vos.size() > 0 ) {
+                vo.setChildren(vos);
+                this.listToTree(dicts,vos);
+            }
         }
         return dictVOS;
     }

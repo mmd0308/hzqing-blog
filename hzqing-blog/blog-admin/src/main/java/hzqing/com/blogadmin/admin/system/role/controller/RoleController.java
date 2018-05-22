@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/role")
+@RequestMapping("/api/role")
 public class RoleController extends BaseController<Role,IRoleService> {
     /**
      * 获取所有的启用角色

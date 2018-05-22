@@ -14,9 +14,8 @@ public class Swagger2 {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("hzqing.com.blogadmin"))
+                .apis(RequestHandlerSelectors.basePackage("hzqing.com.blogadmin.system.system.user.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

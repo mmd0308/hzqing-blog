@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/blog/tag")
+@RequestMapping("/api/blog/tag")
 public class TagController extends BaseController<Tag,ITagService> {
     @GetMapping("/show/all")
     public ResponseMessage<List<Tag>> showAll(Tag t){

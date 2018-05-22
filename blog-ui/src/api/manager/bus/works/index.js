@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function page(query) {
   return request({
-    url: '/admin/bus/works/page',
+    url: '/api/bus/works/page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function page(query) {
 
 export function showAll(query) {
   return request({
-    url: '/admin/bus/works/show/all',
+    url: '/api/bus/works/show/all',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function showAll(query) {
 
 export function getAll(query) {
   return request({
-    url: '/admin/bus/works/all',
+    url: '/api/bus/works/all',
     method: 'get',
     params: query
   })
@@ -26,7 +26,7 @@ export function getAll(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/admin/bus/works/add',
+    url: '/api/bus/works/add',
     method: 'post',
     data: obj
   })
@@ -34,21 +34,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/bus/works/get/' + id,
+    url: '/api/bus/works/get/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/admin/bus/works/delete/' + id,
+    url: '/api/bus/works/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/bus/works/put/' + id,
+    url: '/api/bus/works/put/' + id,
     method: 'put',
     data: obj
   })
@@ -56,7 +56,7 @@ export function putObj(id, obj) {
 
 export function saveUserRole(obj) {
   return request({
-    url: '/admin/bus/works/saveUserRole',
+    url: '/api/bus/works/saveUserRole',
     method: 'post',
     data: obj
   })

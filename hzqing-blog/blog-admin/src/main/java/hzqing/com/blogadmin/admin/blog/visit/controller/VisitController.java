@@ -13,7 +13,7 @@ import java.util.Date;
 
 
 @RestController
-@RequestMapping("/admin/blog/visit")
+@RequestMapping("/api/blog/visit")
 public class VisitController extends BaseController<Visit,IVisitService> {
     /**
      * 访问次数

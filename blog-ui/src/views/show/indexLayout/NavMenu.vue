@@ -16,7 +16,7 @@
                             </router-link>
                         </div>
                         <ul class="sub-menu">
-                            <li v-for="(it,ind) in item.menusvo" :key="ind">
+                            <li v-for="(it,ind) in item.children" :key="ind">
                                 <router-link :to="it.href">
                                     {{it.menuName}}
                                 </router-link>
@@ -86,7 +86,7 @@ export default {
     },
     getMenuList() {
       this.listLoading = true
-      getDefaultMenus().then(response => {
+      getDefaultMenus('MENU_TYPE_INDEX_NO_AUTH', 'MENU_INDEX').then(response => {
         this.menuList = response.data
         this.listLoading = false
       })

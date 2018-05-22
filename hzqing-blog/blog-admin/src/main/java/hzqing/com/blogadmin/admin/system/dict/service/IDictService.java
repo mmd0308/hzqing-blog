@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface IDictService extends IBaseService<Dict> {
     List<DictVO> getTree(String id);
+
+    List<Dict> getDictByPCode(String code);
+
+    Dict getIdByCode(String auth);
 }

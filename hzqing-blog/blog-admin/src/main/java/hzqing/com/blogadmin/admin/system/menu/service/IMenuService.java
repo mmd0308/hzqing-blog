@@ -14,7 +14,7 @@ public interface IMenuService extends IBaseService<Menu> {
      * @param id
      * @return
      */
-    List<Menu> getTree(String id);
+    List<MenuVO> getTree(String id);
 
     /**
      * 根据父级别的id,获取子类下一个levelcode
@@ -28,7 +28,7 @@ public interface IMenuService extends IBaseService<Menu> {
      * @param role
      * @return
      */
-    List<MenuVO> getMenusByRids(Map<String,String> role);
+    List<MenuVO> getMenusByRids(Map<String,String> role,String id);
 
     /**
      * 根据用户id，获取菜单
@@ -40,4 +40,10 @@ public interface IMenuService extends IBaseService<Menu> {
     List<MenuVO> getDefaultMenus();
 
     List<MenuVO> getMenusVoTree(MenuVO menuVO);
+
+    List<MenuVO> getMenusByAuthAndCode(String auth, String code);
+
+    public Menu getMenuByCode(String code);
+
+    List<MenuVO> getListMenusByRids(Map<String, String> maps);
 }

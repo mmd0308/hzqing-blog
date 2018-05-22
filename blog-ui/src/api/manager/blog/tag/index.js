@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function page(query) {
   return request({
-    url: '/admin/blog/tag/page',
+    url: '/api/blog/tag/page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function page(query) {
 
 export function getAll(query) {
   return request({
-    url: '/admin/blog/tag/all',
+    url: '/api/blog/tag/all',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function getAll(query) {
 
 export function showAll(query) {
   return request({
-    url: '/admin/blog/tag/show/all',
+    url: '/api/blog/tag/show/all',
     method: 'get',
     params: query
   })
@@ -26,7 +26,7 @@ export function showAll(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/admin/blog/tag/add',
+    url: '/api/blog/tag/add',
     method: 'post',
     data: obj
   })
@@ -34,21 +34,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/blog/tag/get/' + id,
+    url: '/api/blog/tag/get/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/admin/blog/tag/delete/' + id,
+    url: '/api/blog/tag/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/blog/tag/put/' + id,
+    url: '/api/blog/tag/put/' + id,
     method: 'put',
     data: obj
   })
@@ -56,7 +56,7 @@ export function putObj(id, obj) {
 
 export function saveUserRole(obj) {
   return request({
-    url: '/admin/blog/tag/saveUserRole',
+    url: '/api/blog/tag/saveUserRole',
     method: 'post',
     data: obj
   })

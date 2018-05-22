@@ -91,4 +91,15 @@
         WHERE
         id = #{0}
     </delete>
+    <select id="checkCode" parameterType="map" resultMap="buttonMap" >
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where
+        code = #{code}
+        <if test="id != null and id != ''">
+            AND  id != #{id}
+        </if>
+    </select>
 </mapper>

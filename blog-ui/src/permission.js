@@ -16,7 +16,11 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) { // 如果没有角色，获取用户信息
         store.dispatch('GetUserInfo').then(res => { // 拉取用户信息
-          next()
+          store.dispatch('GenerateRoutes',res.data.adminMenus).then(() => { // 生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({ ...to }); // hack方法 确保addRoutes已完成
+          })
+          //  next()
         }).catch(() => {
           store.dispatch('FedLogOut').then(() => {
             // Message.error('验证失败,请重新登录')
@@ -34,7 +38,7 @@ router.beforeEach((to, from, next) => {
     } else {
       console.log('-----permission token 不存在 不再白名单')
       next('/index') // 如果没有权限，直接返回首页面
-      NProgress.done()
+      // NProgress.done(); // 在hash模式下 改变手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！
     }
   }
 })

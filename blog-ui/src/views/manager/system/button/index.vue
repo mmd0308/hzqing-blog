@@ -88,7 +88,7 @@
 </template>
 
 <script>
-  import { page, getObj, addObj, putObj, delObj } from '@/api/system/button/index'
+  import { page, getObj, addObj, putObj, delObj, checkCode } from '@/api/manager/system/button/index'
   // import roleMenu from '@/views/manager/system/role/roleMenu'
   export default {
     props: ['menuId'],
@@ -96,6 +96,19 @@
     //   roleMenu: roleMenu
     // },
     data() {
+      const validateCode = (rule, value, callback) => {
+        if (this.form.code === '') {
+          callback(new Error('请输入编码'))
+        } else {
+          checkCode(this.form.code, this.form.id).then(response => {
+            if (response.data) {
+              callback()
+            } else {
+              callback(new Error('编码重复，请重新输入'))
+            }
+          })
+        }
+      }
       return {
         list: null,
         query: '',
@@ -116,9 +129,7 @@
           name: [
             { required: true, message: '请输入名称', trigger: 'blur' }
           ],
-          code: [
-            { required: true, message: '请输入编码', trigger: 'blur' }
-          ]
+          code: {required: true, trigger: 'blur', validator: validateCode},
         }
       }
     },

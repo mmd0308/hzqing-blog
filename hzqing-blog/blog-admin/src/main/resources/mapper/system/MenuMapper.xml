@@ -4,8 +4,7 @@
     <resultMap id="menuMap" type="menu">
         <id column="id" property="id"/>
         <result column="menu_name" property="menuName"/>
-        <result column="menu_code" property="menuCode"/>
-        <result column="levelcode" property="levelcode" />
+        <result column="code" property="code"/>
         <result column="parent_id" property="parentId"/>
         <result column="href" property="href"/>
         <result column="component" property="component"/>
@@ -19,8 +18,7 @@
     <resultMap id="menuMapvo" type="menuvo">
         <id column="id" property="id"/>
         <result column="menu_name" property="menuName"/>
-        <result column="menu_code" property="menuCode"/>
-        <result column="levelcode" property="levelcode" />
+        <result column="code" property="code"/>
         <result column="parent_id" property="parentId"/>
         <result column="href" property="href"/>
         <result column="component" property="component"/>
@@ -37,8 +35,7 @@
     <sql id="field">
       id,
       menu_name,
-      menu_code,
-      levelcode,
+      code,
       parent_id,
       href,
       component,
@@ -51,8 +48,7 @@
     <sql id="fieldValue">
       #{id},
       #{menuName},
-      #{menuCode},
-      #{levelcode},
+      #{code},
       #{parentId},
       #{href},
       #{component},
@@ -80,8 +76,7 @@
                 </otherwise>
             </choose>
             #{menuName},
-            #{menuCode},
-            #{levelcode},
+            #{code},
             #{parentId},
             #{href},
             #{component},
@@ -102,8 +97,11 @@
         <if test="id != null and id != ''">
             AND id = ${id}
         </if>
-        <if test="menuType != null adn menuType != ''">
-            AND menu_type = #{menuType}
+        <if test="enabled != null">
+            AND enabled = #{enabled}
+        </if>
+        <if test="code != null and code != ''">
+            AND code = #{code}
         </if>
         ORDER BY sort ASC
     </select>
@@ -119,14 +117,6 @@
           m.parent_id = #{0}
         ORDER BY m.sort ASC
     </select>
-    <select id="getMaxLCodeByPid" parameterType="string" resultType="string">
-        SELECT
-          max(levelcode)
-        FROM
-          <include refid="table"/>
-        WHERE
-          parent_id = #{0}
-    </select>
     <update id="update" parameterType="menu" >
         UPDATE
         <include refid="table"/>
@@ -135,11 +125,8 @@
         <if test="menuName != null and menuName !=''">
             , menu_name = #{menuName}
         </if>
-        <if test="menuCode != null and menuCode !=''">
-            , menu_code = #{menuCode}
-        </if>
-        <if test="levelcode != null and levelcode !=''">
-            , levelcode = #{levelcode}
+        <if test="code != null and code !=''">
+            , code = #{code}
         </if>
         <if test="href != null and href !=''">
             , href = #{href}
@@ -176,21 +163,24 @@
     <select id="getMenusByRids" parameterType="map" resultMap="menuMapvo">
         SELECT  m.* FROM sys_menu m
         where  find_in_set(m.id,(SELECT  GROUP_CONCAT(resource_id) FROM  rl_role_resource where find_in_set (role_id,#{roleId})))
-          AND find_in_set (m.menu_type, (#{menuType}))
+          AND m.menu_type = #{menuType}
         ORDER BY  sort ASC
     </select>
     <select id="queryMenuvo" parameterType="menuvo" resultMap="menuMapvo">
         SELECT
-        <include refid="field"/>
-        FROM
-        <include refid="table"/>
-        where
-        1 = 1
+            s.*,
+            o.menu_name AS parentName
+        FROM sys_menu s
+          LEFT JOIN sys_menu o
+            ON s.parent_id = o.id
         <if test="id != null and id != ''">
-            AND id = ${id}
+            AND s.id = ${id}
         </if>
         <if test="menuType != null and menuType != ''">
-            AND menu_type = #{menuType}
+            AND s.menu_type = #{menuType}
+        </if>
+        <if test="enabled != null">
+            AND s.enabled = #{enabled}
         </if>
         ORDER BY sort ASC
     </select>
@@ -198,5 +188,16 @@
     SELECT m.* FROM  sys_menu m LEFT JOIN  rl_role_resource r ON  m.id = r.resource_id
     LEFT JOIN rl_user_role u ON  r.role_id = u.role_id
     where u.user_id = #{0}
+    </select>
+    <select id="checkCode" parameterType="map" resultMap="menuMap" >
+        SELECT
+        <include refid="field"/>
+        FROM
+        <include refid="table"/>
+        where
+        code = #{code}
+        <if test="id != null and id != ''">
+            AND  id != #{id}
+        </if>
     </select>
 </mapper>

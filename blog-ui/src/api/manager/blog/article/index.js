@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getAllByTagId(id, query) {
   return request({
-    url: '/admin/blog/article/getAllByTagId/' + id,
+    url: '/api/blog/article/getAllByTagId/' + id,
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function getAllByTagId(id, query) {
 
 export function page(query) {
   return request({
-    url: '/admin/blog/article/page',
+    url: '/api/blog/article/page',
     method: 'get',
     params: query
   })
@@ -18,14 +18,14 @@ export function page(query) {
 
 export function delObj(id) {
   return request({
-    url: '/admin/blog/article/delete/' + id,
+    url: '/api/blog/article/delete/' + id,
     method: 'delete'
   })
 }
 
 export function addObjVo(obj) {
   return request({
-    url: '/admin/blog/article/addVo',
+    url: '/api/blog/article/addVo',
     method: 'post',
     data: obj
   })
@@ -33,7 +33,7 @@ export function addObjVo(obj) {
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/blog/article/put/' + id,
+    url: '/api/blog/article/put/' + id,
     method: 'put',
     data: obj
   })
@@ -41,7 +41,7 @@ export function putObj(id, obj) {
 
 export function showPage(query) {
   return request({
-    url: '/admin/blog/article/show/page',
+    url: '/api/blog/article/show/page',
     method: 'get',
     params: query
   })
@@ -49,7 +49,7 @@ export function showPage(query) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/blog/article/show/get/' + id,
+    url: '/api/blog/article/show/get/' + id,
     method: 'get'
   })
 }

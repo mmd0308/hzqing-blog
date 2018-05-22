@@ -26,4 +26,15 @@ public class DictController extends BaseController<Dict,IDictService> {
         List<DictVO> trees = baseService.getTree(id);
         return new ResponseMessage<>().success(trees);
     }
+
+    /**
+     * 根据父级别的编码，获取其下面的字典
+     * @param code
+     * @return
+     */
+    @GetMapping("{code}/code")
+    public ResponseMessage getDictByCode(@PathVariable String code){
+        List<Dict> dicts = baseService.getDictByPCode(code);
+        return new ResponseMessage().success(dicts);
+    }
 }

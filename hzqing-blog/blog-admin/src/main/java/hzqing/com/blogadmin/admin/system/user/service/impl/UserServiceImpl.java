@@ -1,5 +1,8 @@
 package hzqing.com.blogadmin.admin.system.user.service.impl;
 
+import hzqing.com.blogadmin.admin.system.dict.entity.Dict;
+import hzqing.com.blogadmin.admin.system.dict.service.IDictService;
+import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.blogadmin.admin.system.menu.vo.MenuVO;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
@@ -25,6 +28,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     private IMenuService menuService;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IDictService dictService;
 
     public UserServiceImpl() {
         super.mapper="UserMapper";
@@ -93,10 +98,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         String roleIds = buffer.toString().substring(0,buffer.toString().length()-1);
         Map<String,String> maps = new HashMap<>();
         maps.put("roleId",roleIds);
-        maps.put("menuType","LQ");
-        //设置菜单 根据角色id获取菜单
-        List<MenuVO> menus = menuService.getMenusByRids(maps);
-        uservo.setMenus(menus);
+        Dict dict = dictService.getIdByCode(Constant.MENU_INDEX_TYPE);
+        maps.put("menuType",dict.getId());
+        //设置前段权限菜单 根据角色id获取菜单
+        List<MenuVO> indexMenus = menuService.getListMenusByRids(maps);
+        uservo.setIndexMenus(indexMenus);
+        Dict adminDict = dictService.getIdByCode(Constant.MENU_ADMIN_TYPE);
+        maps.put("menuType",adminDict.getId());
+        List<MenuVO> adminMenus = menuService.getListMenusByRids(maps);
+        uservo.setAdminMenus(adminMenus);
         // 设置所有的按钮资源编码根据角色id
         uservo.setResCode(this.getResCodeByRoleIds(roleIds));
         return uservo;

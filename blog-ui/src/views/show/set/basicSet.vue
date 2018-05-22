@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getUserById, putObj } from '@/api/system/user/index'
+import { getUserById, putObj } from '@/api/manager/system/user/index'
 import myUpload from 'vue-image-crop-upload'
 import { getToken } from '@/utils/auth'
 export default {
@@ -74,7 +74,7 @@ export default {
       headers: {
         'ACCESS-TOKEN': getToken()
       },
-      uploadUrl: process.env.BASE_API + '/admin/user/uploadImages',
+      uploadUrl: process.env.BASE_API + '/api/user/uploadImages',
       show: false
     }
   },

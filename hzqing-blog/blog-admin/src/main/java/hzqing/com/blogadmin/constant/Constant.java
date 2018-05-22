@@ -84,4 +84,14 @@ public class Constant {
      * 数据字典类型  系统字典
      */
     public static final String DICT_TYPE_SYS="SYS";
+    /**
+     * 菜单类型，前段展示权限菜单
+     */
+    public static final String MENU_INDEX_TYPE = "MENU_TYPE_INDEX_AUTH";
+    /**
+     * 菜单类型，后台管理权限菜单
+     */
+    public static final String MENU_ADMIN_TYPE = "MENU_TYPE_ADMIN_AUTH";
+
+
 }

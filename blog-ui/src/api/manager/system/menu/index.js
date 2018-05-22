@@ -2,28 +2,35 @@ import request from '@/utils/request'
 
 export function tree(id) {
   return request({
-    url: '/admin/menu/tree/' + id,
+    url: '/api/menu/tree/' + id,
     method: 'get'
   })
 }
 
-export function getDefaultMenus() {
+export function getDefaultMenus(auth,code) {
   return request({
-    url: '/admin/menu/show/getDefaultMenus/',
+    url: '/api/menu/show/getDefaultMenus/' + auth + '/' +code,
+    method: 'get'
+  })
+}
+
+export function checkCode(code, id) {
+  return request({
+    url: '/api/menu/check/' + code + '/code' + '?id=' + id,
     method: 'get'
   })
 }
 
 export function getNextLevelCode(id, lcode) {
   return request({
-    url: '/admin/menu/getNextLevelCode/' + id + '/' + lcode,
+    url: '/api/menu/getNextLevelCode/' + id + '/' + lcode,
     method: 'get'
   })
 }
 
 export function page(query) {
   return request({
-    url: '/admin/user/page',
+    url: '/api/user/page',
     method: 'get',
     params: query
   })
@@ -31,7 +38,7 @@ export function page(query) {
 
 export function addObj(obj) {
   return request({
-    url: '/admin/menu/add',
+    url: '/api/menu/add',
     method: 'post',
     data: obj
   })
@@ -39,21 +46,21 @@ export function addObj(obj) {
 
 export function getObj(id) {
   return request({
-    url: '/admin/user/get/' + id,
+    url: '/api/user/get/' + id,
     method: 'get'
   })
 }
 
 export function delObj(id) {
   return request({
-    url: '/admin/menu/delete/' + id,
+    url: '/api/menu/delete/' + id,
     method: 'delete'
   })
 }
 
 export function putObj(id, obj) {
   return request({
-    url: '/admin/menu/put/' + id,
+    url: '/api/menu/put/' + id,
     method: 'put',
     data: obj
   })
@@ -61,7 +68,7 @@ export function putObj(id, obj) {
 
 export function saveUserRole(obj) {
   return request({
-    url: '/admin/user/saveUserRole',
+    url: '/api/user/saveUserRole',
     method: 'post',
     data: obj
   })
