@@ -135,7 +135,7 @@
 </template>
 
 <script>
-  import { page, getObj, putObj, delObj, addObj } from '@/api/manager/blogger/diary/index'
+  import { page, getObj, putObj, delObj, addObj } from '@/api/manager/bus/diary/index'
   import { parseTime } from '@/utils/index'
   import { getToken } from '@/utils/auth'
   export default {
@@ -172,7 +172,7 @@
             { min: 10, max: 2000, message: '长度在10到20000个字符', trigger: 'blur' }
           ]
         },
-        uploadUrl: process.env.BASE_API + '/api/blogger/diary/uploadImages'
+        uploadUrl: process.env.BASE_API + '/api/bus/diary/uploadImages'
       }
     },
     created() {

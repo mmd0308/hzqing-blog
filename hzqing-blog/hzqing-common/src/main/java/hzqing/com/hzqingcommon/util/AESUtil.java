@@ -123,8 +123,4 @@ public class AESUtil {
         return null;
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(AESEncode("hzqing.com", "这是一个测试账号"));
-    }
 }

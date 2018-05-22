@@ -63,10 +63,10 @@ public class JwtTokenUtil {
             if (null != claims)
                 expired = (claims.getExpiration().getTime() - new Date().getTime())/1000;
         } catch (ExpiredJwtException e) {
-            System.out.println("jwt已经过期了，不可以使用");
+            // jwt已经过期了，不可以使用
             return expired;
         }
-        System.out.println("token距离过期时间为:" + expired + "秒");
+        //token距离过期时间为:" + expired + "秒"
         return expired;
     }
 

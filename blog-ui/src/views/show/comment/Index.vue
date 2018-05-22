@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { showPage, delObj, addObj } from '@/api/manager/blogger/comments/index'
+import { showPage, delObj, addObj } from '@/api/manager/bus/comments/index'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
 import vueAvatar from 'vue-avatar'

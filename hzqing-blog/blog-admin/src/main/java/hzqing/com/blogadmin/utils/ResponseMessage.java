@@ -20,7 +20,6 @@ public class ResponseMessage<T> {
 
 
     public ResponseMessage() {
-        System.out.println("创建对象...............");
         if (null == generateToken()){
             this.setToken("");
         }else {
@@ -49,6 +48,12 @@ public class ResponseMessage<T> {
     public ResponseMessage success(){
         if (this.getStatus() == 0 ) //不用覆盖原先的值
             this.setStatus(Constant.WEB_RESPONSE_STATUES_SUCCESS);
+        return this;
+    }
+
+    public ResponseMessage message(int status, T data){
+        this.setStatus(status);
+        this.setData(data);
         return this;
     }
 

@@ -132,9 +132,9 @@ export const asyncRouterMap = [
     component: Layout,
     children: [
       {
-        path: 'bloggerDiary',
+        path: 'busDiary',
         name: 'Diary',
-        component: () => import('@/views/manager/blogger/diary/index'),
+        component: () => import('@/views/manager/bus/diary/index'),
         meta: { title: '个人日记', icon: 'admin-comment' },
         code: 'MENU_ADMIN_AUTH_DIARY'
       }

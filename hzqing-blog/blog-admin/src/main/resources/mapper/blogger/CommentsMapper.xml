@@ -25,7 +25,7 @@
     </resultMap>
 
     <sql id="table">
-        blogger_comments
+        bus_comments
     </sql>
     <sql id="field">
         id,
@@ -91,7 +91,7 @@
             b.super_id,
             u.nick_name,
             u.avatar
-        FROM blogger_comments b
+        FROM bus_comments b
         LEFT JOIN sys_user u  ON b.user_id = u.id
         WHERE 1 = 1
         <if test="coId != null and coId != ''">

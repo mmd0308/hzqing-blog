@@ -14,6 +14,11 @@ public class Constant {
      * jwt的过期时间  单位秒
      */
     public static final int JWT_EXPIRATION = 1800;
+
+    /**
+     * jwt最后跟新时间
+     */
+    public static final int JWT_REPLACE_TOKEN = 600;
     /**
      * AES对称加密密钥
      */
@@ -32,7 +37,15 @@ public class Constant {
      * 返回成功 状态200
      */
     public static final int WEB_RESPONSE_STATUES_SUCCESS = 200;
+    /**
+     * TOKEN 失效
+     */
+    public static final int WEB_RESPONSE_STATUES_LOSE_TOKNE = 308300;
 
+    /**
+     * token不存在
+     */
+    public static final int WEB_RESPONSE_STATUES_NO_TOKNE = 308200;
 
     /**
      * 登录失败  登录名或者密码错误  308001
