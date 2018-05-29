@@ -61,7 +61,7 @@ const user = {
           commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
-           reject(error)
+          reject(error)
           // console.log('user.js' + error)
         })
       })

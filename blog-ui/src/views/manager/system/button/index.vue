@@ -129,7 +129,7 @@
           name: [
             { required: true, message: '请输入名称', trigger: 'blur' }
           ],
-          code: {required: true, trigger: 'blur', validator: validateCode},
+          code: { required: true, trigger: 'blur', validator: validateCode }
         }
       }
     },
@@ -247,7 +247,7 @@
       handleCurrentChange(val) {
         this.listQuery.page = val
         this.getList()
-      },
+      }
     }
   }
 </script>

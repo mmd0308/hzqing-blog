@@ -37,7 +37,6 @@ export function getDictByCode(code) {
   })
 }
 
-
 export function checkCode(code, id) {
   return request({
     url: '/api/dict/check/' + code + '/code' + '?id=' + id,

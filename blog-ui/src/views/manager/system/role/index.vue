@@ -278,7 +278,7 @@
       handleCurrentChange(val) {
         this.listQuery.page = val
         this.getList()
-      },
+      }
     }
   }
 </script>

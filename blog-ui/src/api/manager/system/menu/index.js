@@ -7,9 +7,9 @@ export function tree(id) {
   })
 }
 
-export function getDefaultMenus(auth,code) {
+export function getDefaultMenus(auth, code) {
   return request({
-    url: '/api/menu/show/getDefaultMenus/' + auth + '/' +code,
+    url: '/api/menu/show/getDefaultMenus/' + auth + '/' + code,
     method: 'get'
   })
 }

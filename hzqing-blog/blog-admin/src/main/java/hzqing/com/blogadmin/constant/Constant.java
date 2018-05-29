@@ -1,6 +1,8 @@
 package hzqing.com.blogadmin.constant;
 
 public class Constant {
+
+
     /**
      * 用户的id
      */

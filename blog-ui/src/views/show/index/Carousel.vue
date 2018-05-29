@@ -4,13 +4,10 @@
             <img src="static/img/banner_1.jpg"/>
         </el-carousel-item>
         <el-carousel-item>
-            <img src="static/img/banner_2.jpg"/>
-        </el-carousel-item>
-        <el-carousel-item>
-            <img src="static/img/banner_3.jpg"/>
-        </el-carousel-item>
-        <el-carousel-item>
             <img src="static/img/banner_4.jpg"/>
+        </el-carousel-item>
+        <el-carousel-item>
+            <img src="static/img/banner_5.jpeg"/>
         </el-carousel-item>
     </el-carousel>
 </template>
@@ -20,10 +17,13 @@ export default {
 
 }
 </script>
-
-<style>
+<style rel="stylesheet/scss" lang="scss">
     .carousel{
         border-radius: 10px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
     }
     .el-carousel__item h3 {
         color: #475669;

@@ -161,8 +161,8 @@
         listLoading: false,
         dicts: [],
         rules: {
-          code: {required: true, trigger: 'blur', validator: validateCode},
-          enabled: {required: true, trigger: 'blur', message: '请选择是否启用'}
+          code: { required: true, trigger: 'blur', validator: validateCode },
+          enabled: { required: true, trigger: 'blur', message: '请选择是否启用' }
         },
         parent: {
           parentId: '',
@@ -220,7 +220,7 @@
           if (vaild) {
             addObj(this.form).then(() => {
               // this.getTree()
-              this.$refs.tree.append(this.form,this.form.parentId)
+              this.$refs.tree.append(this.form, this.form.parentId)
               this.state = 'see'
               this.$refs.button.getList(this.form.id)
 
@@ -286,7 +286,7 @@
       getDictByCode() {
         getDictByCode('DICT_MENU_TYPE').then(response => {
           this.dicts = response.data
-        })        
+        })
       }
     }
   }

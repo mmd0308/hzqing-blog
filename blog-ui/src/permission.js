@@ -16,9 +16,9 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.roles.length === 0) { // 如果没有角色，获取用户信息
         store.dispatch('GetUserInfo').then(res => { // 拉取用户信息
-          store.dispatch('GenerateRoutes',res.data.adminMenus).then(() => { // 生成可访问的路由表
+          store.dispatch('GenerateRoutes', res.data.adminMenus).then(() => { // 生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to }); // hack方法 确保addRoutes已完成
+            next({ ...to }) // hack方法 确保addRoutes已完成
           })
           //  next()
         }).catch(() => {

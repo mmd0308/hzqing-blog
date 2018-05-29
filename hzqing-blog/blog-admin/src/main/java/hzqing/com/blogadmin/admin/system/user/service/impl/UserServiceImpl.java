@@ -103,10 +103,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         //设置前段权限菜单 根据角色id获取菜单
         List<MenuVO> indexMenus = menuService.getListMenusByRids(maps);
         uservo.setIndexMenus(indexMenus);
+
         Dict adminDict = dictService.getIdByCode(Constant.MENU_ADMIN_TYPE);
         maps.put("menuType",adminDict.getId());
         List<MenuVO> adminMenus = menuService.getListMenusByRids(maps);
         uservo.setAdminMenus(adminMenus);
+
         // 设置所有的按钮资源编码根据角色id
         uservo.setResCode(this.getResCodeByRoleIds(roleIds));
         return uservo;

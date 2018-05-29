@@ -6,7 +6,6 @@ Vue.use(Router)
 import Layout from '../views/manager/layout/Layout'
 import ShowIndexLayout from '../views/show/indexLayout/Layout'
 
-
 export const constantRouterMap = [
   {
     path: '/',
@@ -49,13 +48,12 @@ export const constantRouterMap = [
       }
     ]
   },
-
-  { 
+  {
     path: '/login',
     component: () => import('@/views/manager/login/index'),
     hidden: true
   },
-  { 
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -91,7 +89,6 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  
   {
     path: '',
     component: Layout,
@@ -121,7 +118,7 @@ export const asyncRouterMap = [
       }
     ]
   },
-  { 
+  {
     path: '/write',
     component: () => import('@/views/manager/blog/write/Index'),
     hidden: true,

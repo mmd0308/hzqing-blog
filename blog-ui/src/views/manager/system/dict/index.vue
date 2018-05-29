@@ -136,7 +136,7 @@
 </template>
 
 <script>
-  import { tree, addObj, getNextLevelCode, putObj, delObj, page, checkCode } from '@/api/manager/system/dict/index'
+  import { tree, addObj, putObj, delObj, page, checkCode } from '@/api/manager/system/dict/index'
   import ButtonView from '@/views/manager/system/button/index'
   import { guid } from '@/utils/uuid'
   export default {
@@ -188,7 +188,7 @@
           {
             label: '业务字典',
             value: 'BUS'
-          } 
+          }
         ],
         title: '',
         rules: {
@@ -198,8 +198,8 @@
           dictType: [
             { required: true, message: '请选择类型', trigger: 'blur' }
           ],
-          code: {required: true, trigger: 'blur', validator: validateCode},
-          enabled: {required: true, trigger: 'blur', message: '请选择是否启用'}
+          code: { required: true, trigger: 'blur', validator: validateCode },
+          enabled: { required: true, trigger: 'blur', message: '请选择是否启用' }
         },
         list: null,
         total: null,
@@ -272,7 +272,7 @@
                 duration: 2000
               })
               if (this.form.enabled === '1') {
-                this.$refs.tree.append(this.form,this.form.parentId)
+                this.$refs.tree.append(this.form, this.form.parentId)
               }
               this.listQuery.parentId = this.form.parentId
               this.getList()
@@ -318,7 +318,7 @@
         }).then(() => {
           delObj(row.id).then(response => {
             if (response.data) {
-              if( row.enabled === '1') {
+              if (row.enabled === '1') {
                 this.$refs.tree.remove(row.id)
               }
               this.listQuery.parentId = row.parentId
