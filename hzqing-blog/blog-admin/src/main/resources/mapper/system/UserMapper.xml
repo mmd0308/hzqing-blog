@@ -171,4 +171,5 @@
               AND b.enabled = '1'
               AND find_in_set(r.role_id ,#{ids})
     </select>
+
 </mapper>

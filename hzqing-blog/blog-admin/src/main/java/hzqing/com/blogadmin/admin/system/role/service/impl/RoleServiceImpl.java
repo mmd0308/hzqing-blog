@@ -1,10 +1,13 @@
 package hzqing.com.blogadmin.admin.system.role.service.impl;
 
+import hzqing.com.blogadmin.admin.system.dict.entity.Dict;
+import hzqing.com.blogadmin.admin.system.dict.service.IDictService;
 import hzqing.com.blogadmin.admin.system.menu.entity.Menu;
 import hzqing.com.blogadmin.base.service.impl.BaseServiceImpl;
 import hzqing.com.blogadmin.admin.system.role.entity.Role;
 import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
 import hzqing.com.blogadmin.constant.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,8 @@ import java.util.Map;
 
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleService {
+    @Autowired
+    private IDictService dictService;
 
     public RoleServiceImpl() {
         super.mapper = "roleMapper";
@@ -29,7 +34,12 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
 
     @Override
     public List<Role> getRoleByUserId(String id) {
-        return (List<Role>) baseDao.findForList(mapper+".getRoleByUserId",id);
+        List<Role> roles = (List<Role>) baseDao.findForList(mapper+".getRoleByUserId",id);
+        Dict roleType = dictService.getIdByCode(Constant.ROLE_TYPE_DEFAULT);
+        // 获取系统默认角色
+        List<Role> defaults = this.getDefautsRole(roleType.getId());
+        roles.addAll(defaults);
+        return roles;
     }
 
     @Transactional
@@ -59,6 +69,11 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleServi
     @Override
     public List<Role> getDefautsRole(String type) {
         return (List<Role>) baseDao.findForList(mapper+".getRoleByType", type);
+    }
+
+    @Override
+    public List<String> getResPathByRoleIds(String roleIds) {
+        return (List<String>) baseDao.findForList(mapper+".getResPathByRoleIds",roleIds);
     }
 
 

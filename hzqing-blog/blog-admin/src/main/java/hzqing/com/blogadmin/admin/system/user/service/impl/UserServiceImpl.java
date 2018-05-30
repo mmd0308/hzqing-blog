@@ -85,9 +85,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         BeanUtils.copyProperties(user,uservo);
         // 根据用户的id获取角色
         List<Role> rols = roleService.getRoleByUserId(userId);
-        // 获取系统默认角色
-        List<Role> defaults = roleService.getDefautsRole("G");
-        rols.addAll(defaults);
         //设置用户的角色
         uservo.setRoles(rols);
         StringBuffer buffer = new StringBuffer();
@@ -103,12 +100,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         //设置前段权限菜单 根据角色id获取菜单
         List<MenuVO> indexMenus = menuService.getListMenusByRids(maps);
         uservo.setIndexMenus(indexMenus);
-
         Dict adminDict = dictService.getIdByCode(Constant.MENU_ADMIN_TYPE);
         maps.put("menuType",adminDict.getId());
         List<MenuVO> adminMenus = menuService.getListMenusByRids(maps);
         uservo.setAdminMenus(adminMenus);
-
         // 设置所有的按钮资源编码根据角色id
         uservo.setResCode(this.getResCodeByRoleIds(roleIds));
         return uservo;

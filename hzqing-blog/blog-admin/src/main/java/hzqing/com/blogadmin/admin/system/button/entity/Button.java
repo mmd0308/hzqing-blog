@@ -9,7 +9,16 @@ public class Button {
     private String name;
     private String menuId;
     private String enabled;
+    private String path;
 
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getId() {
         return id;
@@ -49,5 +58,17 @@ public class Button {
 
     public void setEnabled(String enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "Button{" +
+                "id='" + id + '\'' +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", menuId='" + menuId + '\'' +
+                ", enabled='" + enabled + '\'' +
+                ", path='" + path + '\'' +
+                '}';
     }
 }

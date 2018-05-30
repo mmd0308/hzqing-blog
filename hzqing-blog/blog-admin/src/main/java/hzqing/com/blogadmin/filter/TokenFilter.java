@@ -1,5 +1,7 @@
 package hzqing.com.blogadmin.filter;
 
+import hzqing.com.blogadmin.admin.system.role.entity.Role;
+import hzqing.com.blogadmin.admin.system.role.service.IRoleService;
 import hzqing.com.blogadmin.admin.system.user.entity.User;
 import hzqing.com.blogadmin.admin.system.user.service.IUserService;
 import hzqing.com.blogadmin.constant.Constant;
@@ -21,6 +23,8 @@ import java.util.regex.Pattern;
 public class TokenFilter implements Filter{
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IRoleService roleService;
 
     /**
      * 不需要过滤的请求
@@ -72,7 +76,22 @@ public class TokenFilter implements Filter{
             request.setAttribute(Constant.USER_ID,split[0]); //存储用户id到request请求中
             String password = split[2];
             User user = userService.getById(split[0]);
-            if (null != user && user.getPassword().equals(password)){ //用户名和密码正确，校验通过
+            if (null != user && user.getPassword().equals(password)){ //用户名和密码正确
+                // @TODO 暂时先不校验资源 功能已经实现
+//                List<Role> rols = roleService.getRoleByUserId(user.getId());
+//                StringBuffer buffer = new StringBuffer();
+//                rols.forEach(role -> {
+//                    buffer.append(role.getId());
+//                    buffer.append(",");
+//                });
+//                String roleIds = buffer.toString().substring(0,buffer.toString().length()-1);
+//                List<String> ress = roleService.getResPathByRoleIds(roleIds);
+//                for (String item : ress) {
+//                    if (url.indexOf(item) != -1){ // 判断是否有访问资源的权限
+//                        chain.doFilter(request,response);
+//                        return;
+//                    }
+//                }
                 chain.doFilter(request,response);
                 return;
             }

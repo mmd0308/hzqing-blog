@@ -77,33 +77,26 @@
                     </el-pagination>
                 </div>
                  <!--编辑框-->
-                <el-dialog  :visible.sync="dialogFormVisible" :before-close="handleClose"  width="40%" :title="title">
-                <el-form :model="form" :inline="true" :rules="rules" ref="form" label-width="90px">
-                    <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="角色名称" prop="roleName" >
-                        <el-input v-model="form.roleName" placeholder="请输入姓名" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="角色编码" prop="roleCode">
-                        <el-input  v-model="form.roleCode" placeholder="请输入账户"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="12">
-                          <el-form-item label="是否可用" prop="enabled">
-                            <el-switch  active-value='1'  inactive-value='0' v-model="form.enabled"></el-switch>
-                          </el-form-item>
-                      </el-col>
-                      <el-col :span="12">
-                        <el-form-item label="备注" prop="note">
-                        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入备注"
-                                    v-model="form.note"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    </el-row>
+                <el-dialog  :visible.sync="dialogFormVisible" :before-close="handleClose"  width="25%" :title="title">
+                <el-form :model="form" :inline="false" :rules="rules" ref="form" label-width="90px">
+                  <el-form-item label="角色名称" prop="roleName" >
+                    <el-input v-model="form.roleName" placeholder="请输入姓名" style="width:80%"></el-input>
+                  </el-form-item>
+                  <el-form-item label="角色编码" prop="roleCode">
+                    <el-input  v-model="form.roleCode" placeholder="请输入账户" style="width:80%"></el-input>
+                  </el-form-item>
+                  <el-form-item label="角色类型" prop="menuType">
+                      <el-select v-model="form.roleType" placeholder="请选择角色类型">
+                          <el-option v-for="item in dicts" :key="item.id" :label="item.dictName" :value="item.id"></el-option>
+                      </el-select>
+                  </el-form-item>
+                  <el-form-item label="是否可用" prop="enabled">
+                    <el-switch  active-value='1'  inactive-value='0' v-model="form.enabled"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="备注" prop="note">
+                    <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5}" placeholder="请输入备注"
+                              v-model="form.note" style="width:80%"></el-input>
+                  </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="cancel('form')">取 消</el-button>
@@ -127,6 +120,7 @@
 
 <script>
   import { page, getObj, putObj, delObj, addObj } from '@/api/manager/system/role/index'
+  import { getDictByCode } from '@/api/manager/system/dict/index'
   import roleMenu from '@/views/manager/system/role/roleMenu'
   export default {
     components: {
@@ -142,6 +136,7 @@
           pageSize: 10,
           roleName: ''
         },
+        dicts: [],
         title: '',
         dialogStatus: '',
         dialogFormVisible: false,
@@ -161,6 +156,7 @@
     },
     created() {
       this.getList()
+      this.getDictByCode()
     },
     methods: {
       initObj() {
@@ -169,7 +165,8 @@
           roleName: '',
           roleCode: '',
           enabled: '0',
-          note: ''
+          note: '',
+          roleType: ''
         }
       },
       resetTemp() {
@@ -278,6 +275,11 @@
       handleCurrentChange(val) {
         this.listQuery.page = val
         this.getList()
+      },
+      getDictByCode() {
+        getDictByCode('DICE_ROLE_TYPE').then(response => {
+          this.dicts = response.data
+        })
       }
     }
   }

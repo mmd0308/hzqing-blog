@@ -7,6 +7,7 @@
         <result column="name" property="name"/>
         <result column="menu_id" property="menuId"/>
         <result column="enabled" property="enabled"/>
+        <result column="path" property="path" />
     </resultMap>
     <sql id="table">
         sys_button
@@ -16,14 +17,16 @@
         code,
         name,
         menu_id,
-        enabled
+        enabled,
+        path
     </sql>
     <sql id="fieldValue">
         #{id},
         #{code},
         #{name},
         #{menuId},
-        #{enabled}
+        #{enabled},
+        #{path}
     </sql>
     <insert id="save" parameterType="user">
         INSERT  INTO
@@ -44,7 +47,8 @@
         #{code},
         #{name},
         #{menuId},
-        #{enabled}
+        #{enabled},
+        #{path}
         )
     </insert>
     <select id="getButtonByMenuIdOrRoleId" parameterType="buttonvo" resultMap="buttonMap">
@@ -81,6 +85,9 @@
         </if>
         <if test="enabled != null">
             , enabled = #{enabled}
+        </if>
+        <if test="path != null and path != ''">
+            , path = #{path}
         </if>
         WHERE
         id = #{id}

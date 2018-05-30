@@ -18,4 +18,6 @@ public interface IRoleService extends IBaseService<Role> {
 
     List<Role> getDefautsRole(String roleType);
 
+    List<String> getResPathByRoleIds(String roleIds);
+
 }

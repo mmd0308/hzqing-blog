@@ -108,5 +108,10 @@ public class Constant {
      */
     public static final String MENU_ADMIN_TYPE = "MENU_TYPE_ADMIN_AUTH";
 
+    /**
+     * 角色类型 默认角色
+     */
+    public static final String ROLE_TYPE_DEFAULT = "ROLE_TYPE_DEFAULT";
+
 
 }

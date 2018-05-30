@@ -57,28 +57,6 @@ export const constantRouterMap = [
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
-  {
-    path: '',
-    component: Layout,
-    name: 'managerIndex',
-    children: [{
-      path: 'managerIndex',
-      meta: { title: 'Weclome', icon: 'example' },
-      component: () => import('@/views/manager/dashboard/index')
-    }]
-  },
-  {
-    path: '',
-    component: Layout,
-    children: [
-      {
-        path: 'icon',
-        name: 'Icon',
-        component: () => import('@/views/manager/svg-icons/index'),
-        meta: { title: '图标管理', icon: 'admin-comment' }
-      }
-    ]
   }
 ]
 
@@ -89,6 +67,17 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
+  {
+    path: '',
+    component: Layout,
+    name: 'managerIndex',
+    children: [{
+      path: 'managerIndex',
+      meta: { title: 'Weclome', icon: 'example' },
+      component: () => import('@/views/manager/dashboard/index'),
+      code: 'MENU_ADMIN_AUTH_INDEX'
+    }]
+  },
   {
     path: '',
     component: Layout,
@@ -209,6 +198,19 @@ export const asyncRouterMap = [
         component: () => import('@/views/manager/system/dict/index'),
         meta: { title: '数据字典管理', icon: 'tree' },
         code: 'MENU_ADMIN_AUTH_DICT'
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      {
+        path: 'icon',
+        name: 'Icon',
+        component: () => import('@/views/manager/svg-icons/index'),
+        meta: { title: '图标管理', icon: 'admin-comment' },
+        code: 'MENU_ADMIN_AUTH_ICON'
       }
     ]
   },

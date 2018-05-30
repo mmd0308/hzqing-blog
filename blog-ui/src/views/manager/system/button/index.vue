@@ -42,6 +42,12 @@
                     </span>
                 </template>
             </el-table-column>
+            <el-table-column
+            label="路径">
+                <template scope="scope">
+                    <span style="margin-left: 10px">{{ scope.row.path }}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="300px">
                 <template scope="scope">
                     <el-button
@@ -76,6 +82,9 @@
                 </el-form-item>
                 <el-form-item label="是否可用" prop="enabled">
                     <el-switch  active-value='1'  inactive-value='0' v-model="form.enabled"></el-switch>
+                </el-form-item>
+                <el-form-item label="请求路径" prop="path">
+                    <el-input  v-model="form.path" placeholder="请输入请求路径" style="width:80%"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -143,7 +152,8 @@
           code: '',
           name: '',
           menuId: '',
-          enabled: '0'
+          enabled: '0',
+          path: ''
         }
       },
       resetTemp() {
